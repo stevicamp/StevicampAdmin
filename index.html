@@ -14,7 +14,7 @@
 
         document.getElementById("loadCredentials").addEventListener("click", loadCredentialsFromLocalStorageToInputs);
         document.getElementById("saveCredentials").addEventListener("click", saveCredentials);
-        document.getElementById("submit").addEventListener("click", post('asdfghjkl'));
+        document.getElementById("submit").addEventListener("click", post);
         window.addEventListener("load", loadCredentialsFromLocalStorageToInputs); // Load credentials from local storage on page load
 
         let clientId ="";
@@ -42,12 +42,12 @@
 
 
         //Post
-        function post(data) {
+        function post() {
 
             fetch(`https://api.github.com/repos/stevicamp/Stevicamp/test.txt?access_token=${token}`, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json', 'Authorization':`${token}` },
-                body: JSON.stringify(data)
+                body: JSON.stringify('asdfghj')
             }).then(response => {
                 console.log("Request complete! response:", response);
             });
