@@ -40,11 +40,11 @@
             document.getElementById("token").value = token;
         }
 
-
+ 
         //Post
         function post() {
 
-            fetch(`https://api.github.com/repos/stevicamp/Stevicamp/test.txt?access_token=${token}`, {
+            fetch(`https://api.github.com/repos/stevicamp/Stevicamp/contents/test.txt?client_id=${clientId}&access_token=${token}`, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json', 'Authorization':`${token}` },
                 body: JSON.stringify('asdfghj')
@@ -55,7 +55,7 @@
     </script>
 
 
-    <form id="form">
+ 
         <div style="display: flex; flex-direction: column;">
             <input id="clientId" type="text" placeholder="clientId">
             <input id="token" type="password" placeholder="token">
@@ -66,7 +66,7 @@
         <input id="" type="text" />
 
         <button id="submit">Запаси</button>
-    </form>
+   
 </body>
 
 </html>
