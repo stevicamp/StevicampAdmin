@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+
+        document.getElementById("loadCredentials").addEventListener("click", loadCredentialsFromLocalStorageToInputs);
+        document.getElementById("saveCredentials").addEventListener("click", saveCredentials);
+        document.getElementById("submit").addEventListener("click", post('asdfghjkl'));
+        window.addEventListener("load", loadCredentialsFromLocalStorageToInputs); // Load credentials from local storage on page load
+
+        let clientId ="";
+        let token ="";
+
+        // Set Credentials
+        function saveCredentials() {
+            let clientId = document.getElementById("clientId").value;
+            let token = document.getElementById("token").value;
+
+            localStorage.setItem("clientId", clientId);
+            localStorage.setItem("token", token);
+        }
+
+
+        // Load Credentials
+        function loadCredentialsFromLocalStorageToInputs() {
+            
+            clientId = localStorage.getItem("clientId");
+            token = localStorage.getItem("token");
+
+            document.getElementById("clientId").value = clientId;
+            document.getElementById("token").value = token;
+        }
+
+
+        //Post
+        function post(data) {
+
+            fetch(`https://api.github.com/repos/stevicamp/Stevicamp/test.txt?access_token=${token}`, {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            }).then(response => {
+                console.log("Request complete! response:", response);
+            });
+        }
+    </script>
+
+
+    <form id="form">
+        <div style="display: flex; flex-direction: column;">
+            <input id="clientId" type="text" placeholder="clientId">
+            <input id="token" type="password" placeholder="token">
+            <button id="saveCredentials">Запази парола</button>
+            <button id="loadCredentials">Зареди парола</button>
+        </div>
+
+        <input id="" type="text" />
+
+        <button id="submit">Запаси</button>
+    </form>
+</body>
+
+</html>
