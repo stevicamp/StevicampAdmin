@@ -20,7 +20,7 @@ export const setTitle = (title, img) => {
     }
 
     // Show and hide the current searchbar ---------------------------------
-    if(img == "phone" || img == "info" || img == "recovery-truck" || img == "transport-goods")
+    if(img == "phone" || img == "info" || img == "recovery-truck" || img == "transport-goods" || img == "add" || img == "edit" || img == "delete")
     {
         document.getElementById('currentSearchContainer').style.display = "none";
     }

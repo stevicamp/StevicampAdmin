@@ -5,7 +5,7 @@ import * as Common from "./Common.js"
 
 // VIEW HTML ---------------------------------------------------
 export async function getHtmlAsync() {
-    return  `Добави ново:<div style="display: flex; flex-direction: column;">
+    return  `<div style="display: flex; flex-direction: column;">
             <input id="githubUser" type="text" placeholder="Github User - 'stevicamp'" value="stevicamp"/>
             <input id="githubRepo" type="text" placeholder="Github Repository - 'Stevicamp'" value="Stevicamp"/>
             <input id="githubToken" type="password" placeholder="Github acces token"/>
