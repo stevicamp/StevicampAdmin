@@ -23,17 +23,18 @@ export async function getHtmlAsync() {
             <input  id="loadCredentialsAutoCheckbox" type="checkbox" title="Автоматично зареждане на парола / данни">
             <button id="clearCredentials">Изчисти парола / данни</button>
 
+            <span>Поле за обновяване на ДБ:</span>
+            <textarea id="developerInput" type="text" cols="40" rows="5" placeholder="Json content to update the file with - UPDATES THE WHOLE DB WITH THE PROVIDED TEXT! - Erases all old."></textarea>
+           <button id="save">Запази в ДБ</button>
             </div>
                <button id="admin-credentials-toggler"  style="width: 100%;">
                     Покажи данни ▼
-               </button>
-
-            <textarea id="developerInput" type="text" cols="40" rows="5" placeholder="Json content to update the file with"></textarea>
-        </div>
+               </button> 
+            </div>
+            `;
 
          
 
-        <button id="save">Запази</button>`;
 }
 
 
@@ -61,7 +62,7 @@ export async function executeViewScriptAsync() {
 
        
      
-        // Toggle credentials cotnainer
+        // Toggle credentials cotnainer ................................................
         function toggleAdminCredentials()
         {
             let credentialsContainer = document.getElementById('credentialsContainer');

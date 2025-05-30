@@ -1278,7 +1278,6 @@ body {
 
 .admin-content-holder span
 {
-  color: rgb(0, 183, 255);
   text-decoration: underline;
   margin-top: 5px;
 }
@@ -1293,4 +1292,12 @@ body {
   /* border-radius: 5px; */
   /* border: 2px solid rgb(11, 158, 68); */
 
+}
+
+.admin-content-holder textarea
+{
+  max-width: 100%;
+  min-width: 100%;
+  min-height: 100px;
+  box-sizing: border-box;
 }
