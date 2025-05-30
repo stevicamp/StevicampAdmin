@@ -5,16 +5,29 @@ import * as Common from "./Common.js"
 
 // VIEW HTML ---------------------------------------------------
 export async function getHtmlAsync() {
-    return  `<div style="display: flex; flex-direction: column;">
-            <input id="githubUser" type="text" placeholder="Github User - 'stevicamp'" value="stevicamp"/>
-            <input id="githubRepo" type="text" placeholder="Github Repository - 'Stevicamp'" value="Stevicamp"/>
-            <input id="githubToken" type="password" placeholder="Github acces token"/>
-            <input id="githubFilePath" type="text" placeholder="Github file path - to update - 'test.json'" value="test.json"/>
+    return  `<div class="admin-content-holder">
+           
+            <div id="credentialsContainer" class="admin-credentials-holder" style="display: none;">
+            <span>Github User:</span>
+            <input id="githubUser" type="text" placeholder="Github User - 'stevicamp'" value="stevicamp"> 
+            <span>Github Repo:</span>
+            <input id="githubRepo" type="text" placeholder="Github Repository - 'Stevicamp'" value="Stevicamp">
+            <span>Github Token:</span>
+            <input id="githubToken" type="password" placeholder="Github acces token">
+            <span>File path:</span>
+            <input id="githubFilePath" type="text" placeholder="Github file path - to update - 'test.json'" value="test.json">
             
             <button id="saveCredentials">Запази парола / данни</button>
             <button id="loadCredentials">Зареди парола / данни</button>
-            <input  id="loadCredentialsAutoCheckbox" type="checkbox" title="Автоматично зареждане на парола / данни"/>
+            <span>Авто. Зареждане на парола</span>
+            <input  id="loadCredentialsAutoCheckbox" type="checkbox" title="Автоматично зареждане на парола / данни">
             <button id="clearCredentials">Изчисти парола / данни</button>
+
+            </div>
+               <button id="admin-credentials-toggler"  style="width: 100%;">
+                    Покажи данни ▼
+               </button>
+
             <textarea id="developerInput" type="text" cols="40" rows="5" placeholder="Json content to update the file with"></textarea>
         </div>
 
@@ -41,13 +54,32 @@ export async function executeViewScriptAsync() {
         document.getElementById("loadCredentials").addEventListener("click", loadCredentialsFromLocalStorageToInputs);
         document.getElementById("saveCredentials").addEventListener("click", saveCredentials);
         document.getElementById("clearCredentials").addEventListener("click", clearLocalStorageCredentials);
+        document.getElementById("admin-credentials-toggler").addEventListener("click", toggleAdminCredentials);
         document.getElementById("loadCredentialsAutoCheckbox").addEventListener("click", toggleAutoLoadCredentials);
         
-        document.getElementById("save").addEventListener("click", updateJsonFile);
-        window.addEventListener("load", autoLoadCredentials); // Load credentials from local storage on page load
+        document.getElementById("save").addEventListener("click", updateJsonFile); 
 
        
-    
+     
+        // Toggle credentials cotnainer
+        function toggleAdminCredentials()
+        {
+            let credentialsContainer = document.getElementById('credentialsContainer');
+            let adminCredentialsToggler = document.getElementById('admin-credentials-toggler');
+
+            if(credentialsContainer.style.display == 'none')
+            {
+                 credentialsContainer.style.display = 'flex';
+                 adminCredentialsToggler.innerHTML = 'Скрий данни ▲';
+            }
+            else
+            {
+                 credentialsContainer.style.display = 'none';
+                 adminCredentialsToggler.innerHTML = 'Покажи данни ▼';
+            }
+
+        }
+
 
         // Set Credentials
         function saveCredentials() 
@@ -98,7 +130,8 @@ export async function executeViewScriptAsync() {
           if(autoLoadCredentials !== undefined && autoLoadCredentials === 'true')
           {
             loadCredentialsFromLocalStorageToInputs(); 
-          }
+            document.getElementById("githubToken").type = "text";
+          } 
         }
 
 
@@ -216,6 +249,9 @@ async function updateJsonFile() {
   }
 }
 
+
+// Auto Load credentials
+autoLoadCredentials();
 }
 
 
