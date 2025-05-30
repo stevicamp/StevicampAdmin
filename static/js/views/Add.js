@@ -217,7 +217,12 @@ async function updateJsonFile() {
 
     newContent = document.getElementById("developerInput").value;
     const sha = await getFileSha();
-    const contentBase64 = btoa(JSON.stringify(newContent, null, 2)); // Encode to Base64
+    // const contentBase64 = new Blob(JSON.stringify(newContent, null, 2)); // Encode to Base64
+    const contentBase64 = btoa(JSON.stringify(encodeURI(newContent), null, 2)); // EncodeUri because of non latin character later in db on fetch decodeUri
+    // let newContentJson = JSON.stringify(newContent);
+    // let contentBase64 = new Blob([newContentJson], {type: "application/json"});
+    // const contentBase64 = new Blob([document.body.innerHTML], {type : 'text/html'}
+// ); 
 
     const body = {
       message: "Update myfile.json via API",
