@@ -1,0 +1,257 @@
+Stevicamp
+
+
+1. Да добавя сайта използва бисквити
+
+...................................
+1. Add swipe on mobile devics for the images
+
+Simple vanilla JS example for horizontal swipe:
+
+let touchstartX = 0
+let touchendX = 0
+    
+function checkDirection() {
+  if (touchendX < touchstartX) alert('swiped left!')
+  if (touchendX > touchstartX) alert('swiped right!')
+}
+
+document.addEventListener('touchstart', e => {
+  touchstartX = e.changedTouches[0].screenX
+})
+
+document.addEventListener('touchend', e => {
+  touchendX = e.changedTouches[0].screenX
+  checkDirection()
+})
+You can use pretty much the same logic for vertical swipe by replacing X with Y.
+
+https://stackoverflow.com/questions/2264072/detect-a-finger-swipe-through-javascript-on-the-iphone-and-android
+
+....................
+
+1. In info - add
+Call us - on click open call with number pre populated
+SMS us sms pre populated with phone
+Send us email - pre populated
+Send us viber pre populated
+etc
+...............................
+
+
+1. Телефона и вибъра в модала да се намаляват 
+................
+1. Sort by price, name, type etc.
+----------------------------------------
+1. Add image count current image - on slides
+.................................
+#1. Copy link does not work properly
+
+http://localhost:8080/?search=?search=id_Tires-2005-D2025-01-21T17-59-45.662Z!iuarh18q78
+
+
+#On search and if all is cleared in the textbox it copies http://localhost:8080/?search=
+
+
+#Copy Link should be seperate - showld get the path and add id with search
+
+
+
+2. THere is somethin when changing views the titel sometimes does strange changing, bu it is too fast to se what happens
+Somwere were code changes the title
+Транспорт на товар
+.....................................
+
+
+3. Show default image if there is no image items etc
+
+
+.......................
+1. Maybe Search History
+
+2. Radio button css for the clicked item icons in the menu
+to finish the icon style
+
+3. Add function on the app container 
+scrool to top, scroll to bottom, scroll to middle.
+
+4. Add tab index on all buttons for the views
+
+
+5. consider else if in globals search
+
+6. consider data = items --> avoid items just use data
+
+7. consider seperate search for the modal to search only in the id keys
+..................................
+#1. Searching "se" in global search gives Toyota Verso - 20025 г. two tiemes. 
+Two times the same obejct. In the microbus search is only one, but in the global is dublicated - it is working properly, one is car other is bus
+
+..........................
+FOR MODAL
+
+1. When item is generated there is added onclick in the generated html
+2. in the onclick there is a common function for all items
+3. The function gets the whole path and changes the url to only the current path, so in case there is ?search= or any other (maybe the search will be added to the history)
+4. The id is passed to the method from generated html item with onclick with the function
+5. the id is used to find the current item from the db
+6. the object is returned
+7. if empty object alert no such item
+8. the object is used to populate predefined html for caravans, cars etc.
+9. the modal is opened
+10. on modal close restore the url maybe push state or pop state should be used 
+
+
+
+
+.....................
+
+#1. Item links are not generated properly. itemType should be item.category
+
+now it is - http://localhost:8080/index.html/Caravan-Knaus-fendt-Sunshine-540-D2025-01-21T17-59-45.662Z!idfgd87873fgfdg8q78
+
+
+#1. To see if it is problem to search "Fendt" & "fendt". The search word is allways made to lower case in the code
+
+.......................................
+#1. To add keywords to every item to be easly finded
+#2. Add solar panel to caravans
+#3. Add documents to caravans and cars
+.........................................................................................................
+
+#To see why in the function empty db enters - getItems(itemType, itemsList) 
+
+itemsList is empty db - Because the Search does not find any result, search "f" but it does not find anything
+
+
+
+
+#To see why global search does not work alwaays shows all products - works now
+
+----------------------------------
+
+#1. Array wit text - 5D2025 
+#search not wrking - works but with only small letters not capital - now it works the match is toLowercase()
+
+#To chekc the new code if it is ncecery - not necesery
+
+
+
+#2. Text on paste ctrl.V or paste not searching - works - Toyota Verso - 20025 г. on paste finds it
+
+
+
+
+#3. Reset global search textxbox on view change
+
+
+
+#5. Global search not working. Shows all products allways
+
+#6. On global search change view to home
+
+
+#7. Need to add /search=my search words - in the adress bar and than the routes should detect it and search and get the result.
+
+
+#8. It seams that object search in obejct it returns the parrent obejct.
+
+#Ex. Seaarch for fendt in the db it returns caravans, because "fendt" was found in caravans, and does not return the object theat contains the fend but the parrent object with all caravans. Th e other strange thing is that the caravans are not shown in the result, but everything from the db
+
+
+
+#9. To check   let type = typeof obj[p]; how it looks when it is array than edit the code to search in an array when array is property of object this was missing. - does not distinguish array, I think
+
+
+
+
+
+.....................................................................................................
+
+<1. Make layout
+2. Integrate Github files through jsdelivr.net (The last thing to do)
+<3. Make 1 file database
+4. Make searching script to search the 1 file database. (The 1 file db may be .json file) 
+6. Create manually a product and integrate GET (The mobile app will only make Post to begin with, later on Post option from web may be added)
+MOBILE APP .....................................
+7. Make - Mobile App - layout
+7.1.1 Make Post New Item - Delete, Edit etc...
+
+
+7.1 Make image with the phone or chose from phone.
+7.2 Post the image to github to the specific product folder, and get the img link through jsdelivr.
+7.3 Make so for all IMAGES.
+7.4 Add description and data. 
+
+7.5 Get the whole db and add the new product to the db by using javascript - (add the description, the image jsdelivr links etc.) to the 1 file db local json object,
+7.6 Than Save the db to github using github api, than get the link through jsdelivr.net and view the new product in the app.
+
+
+8.1. Create all links in the static folder go through jsdelivr.net 
+8.2. Add the index.html to blogger through jsdelivr.net 
+9. Make .tk domain and keep the blospot.com. Maybe .tk may use iframe and blogspot will be without custome domain.
+10. Finish the final layout with colors, fonts etc.
+
+11. Add button share link on each item / product that is listed. Add share buttons - facebook, viber, whatsapp, messanger, pinterest, blogger, skype, email, tweeter, instagram, vk, gmail, abv, telegram, 
+12. Add button - Written, to save for later view
+13. Use versioning - https://abcd.bg?1.  The ?1 is the version. 
+
+
+1. facebook messanger - fb-messenger://share/?link= https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fsharing%2Freference%2Fsend-dialog&app_id=123456789
+
+Working ---- fb-messenger://share/?link=http://1234
+
+2. Viber -<a href="viber://forward?text=my_text">Share via viber</a>
+
+2.2 Viber chat to number - https://stackoverflow.com/questions/31339574/html-viber-link-to-specific-number
+<a href="viber://chat?number=12345678">Viber</a>
+
+3. whatsapp - Opens alwways browser - <a href="https://web.whatsapp.com/send?text=www.google.com" data-action="share/whatsapp/share">Share via Whatsapp web</a>
+
+opens the app - <a href="https://api.whatsapp.com/send?text=www.google.com" data-action="share/whatsapp/share">Share via Whatsapp web</a>
+
+4. facebook - <a href="https://www.facebook.com/sharer/sharer.php?u=[your blog post URL]"><img src="[share button image URL]" alt="Share on Facebook"></a>
+
+5. Email - <a href="mailto:?subject=I wanted you to see this site&amp;body=Check out this site http://www.website.com."
+   title="Share by Email">
+  <img src="http://png-2.findicons.com/files/icons/573/must_have/48/mail.png">
+</a>
+
+6. gmail - https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=Your+Subject+here&body='+msgbody+'&ui=2&tf=1&pli=1';
+
+
+
+
+7. telegram if needed  - https://t.me/share/url?url={url}&text={text}
+https://telegram.me/share/url?url={url}&text={text}
+tg://msg_url?url={url}&text={text}
+
+
+
+
+8. For sending email - mailto:{email_address}?subject={title}&body={url} {text}
+
+https://istockphoto.com/photo/small-trailer-isolated-gm613022806-105710527
+
+https://istockphoto.com/search/more-like-this/1150931120?assettype=image&istockcollection=main%2Cvalue&page=4
+
+
+
+
+https://icon-icons.com/search/icons/?filtro=video&style=6&page=1
+
+
+https://www.istockphoto.com/photo/small-trailer-isolated-gm613022806-105710527
+
+
+https://icon-icons.com/search/icons/?filtro=trailer
+
+
+
+https://icon-icons.com/icon/information-info/1064
+
+
+https://www.istockphoto.com/photo/travel-trailer-isolated-gm906621930-249861362
+
+
+https://www.istockphoto.com/search/more-like-this/1472989038?assettype=image&excludenudity=false&istockcollection=main%2Cvalue&phrase=category

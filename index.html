@@ -1,72 +1,210 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
+
+
+
+<!-- HEAD ------------------------------------------------------------------------------------------------------>
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>SteviCamp</title>
+    <link rel="icon" type="image/x-icon" href="./static/img/icons/logo.ico">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <!-- <link rel="stylesheet" href="./static/css/main.css"> -->
+    <!--<link rel="stylesheet" href="static/css/components.css" />-->
+    <!--<link rel="stylesheet" href="static/css/scrollbar.css" />-->
+    <!--<link rel="icon" type="image/png" href="img/Messages/ok.png" />-->
+    <!--<script src="static/js/api/api_adresses.js"></script>
+    <script type="module" src="static/js/api/crud/post.js"></script>
+    <script type="module" src="static/js/api/crud/get.js"></script>
+    <script type="module" src="static/js/components/messages.js"></script>
+    <script type="module" src="static/js/validations/input_validations.js"></script>
+    <script type="module" src="static/js/components/temp_graph.js"></script>--> 
 </head>
 
-<body>
-
-    
 
 
- 
-        <div style="display: flex; flex-direction: column;">
-            <input id="clientId" type="text" placeholder="clientId">
-            <input id="token" type="password" placeholder="token">
-            <button id="saveCredentials">Запази парола</button>
-            <button id="loadCredentials">Зареди парола</button>
+
+<!--BODY------------------------------------------------------------------------------------------------------>
+
+<body class="main-body">
+
+    <!--HOLDER------ALL BARS HOLDER--------------------------------------------------------------------------->
+    <div class="bars-holder">
+
+
+        <!--BARS-HOLDER--------------------------------------------------------------------------------------->
+        <div class="main-bars-holder">
+
+
+
+            <!-- ######################### LEFT ############################################################ -->
+            <!--LEFT-BAR--------------------------------------------------------------------------------------->
+            <div id="left-bar">
+                <a href="/Trailers" class="vertical-bar-content" data-link><img
+                        src="static/img/icons/trailer.png" /><br />Ремаркета </a>
+                <a href="/Microbuses" class="vertical-bar-content" data-link><img
+                        src="static/img/icons/microbus.png" /><br />Микробуси</a>
+                <a href="/TransportService" class="vertical-bar-content" data-link><img
+                        src="static/img/icons/recovery-truck.png" /><br />Транспортни услуги</a>
+                <a href="/GoodsTransport" class="vertical-bar-content" data-link><img
+                        src="static/img/icons/transport-goods.png" /><br />Транспорт на товар</a>
+                <a href="/Scooters" class="vertical-bar-content" data-link><img
+                        src="static/img/icons/scooter.png" /><br />Скутери</a>
+                <a href="/Wheels" class="vertical-bar-content" data-link><img
+                        src="static/img/icons/wheel.png" /><br />Гуми</a>
+                <a href="/Appliances" class="vertical-bar-content" data-link><img
+                        src="static/img/icons/appliances.png" /><br />Бяла Техника</a>
+
+            </div>
+
+
+            <!---TOGGLE LEFT-BAR-->
+            <button id="left-bar-toggler" value="left-bar" class="button-toggle-vertical-bar">
+                <span class="toggler">‹‹</span>
+            </button>
+
+
+
+
+
+
+            <!--:::::::::::::::::::::::MIDDLE :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
+            <div class="center-wrapper">
+
+                <!-- ######################### TOP ######################################################### -->
+                <!--TOP-BAR------------------------------------------------------------------------------------>
+                <div id="top-bar">
+                    <div id="top-bar-wrapper" class="horizontal-wrapper-container">
+
+                        <a href="/" class="horizontal-bar-content logo" data-link><img
+                                src="static/img/icons/caravan.png" /><br />SteviCamp</a>
+
+                        <div class="margin-auto horizontal-bar-content">
+                            <div class="horizontal-bar-content">
+                                <div class="search-wrapper"><img class="search-img"
+                                        src="static/img/icons/search.png" /><input id="global-search-input"
+                                        class="search-input" placeholder="Търсене във всичко" type="text" /></div>
+                            </div>
+                            <a href="/Viewed" class="horizontal-bar-content" data-link><img
+                                    src="static/img/icons/viewed.png" /><br />Прегледани</a>
+                            <a href="/Written" class="horizontal-bar-content" data-link><img
+                                    src="static/img/icons/list.png" /><br />Записани</a>
+                            <div class="horizontal-bar-content"><a id="translate" class="notranslate" style="display: block;" href="javascript:;">
+                                <img id="translateStatusImg" src="static/img/icons/translate.png" /><br/>Translate</a><div id=":0.targetLanguage"></div></div>  <div style="display: none;" id="google_translate_element"></div>
+                                 
+                        </div>
+                    </div>
+                </div>
+
+
+                <!----TOGGLER--TOGGLE TOP-BAR-------------------------------------------------------------------->
+                <button id="top-bar-toggler" value="top-bar" class="button-toggle-horizontal-bar">
+                    <span class="toggler rotate-m-180deg">››</span>
+                </button>
+
+
+
+                <!-- The items modal ---------------------------------------------------------------------------->
+                <div id="modalWindow"></div>
+
+                <!-- ######################### APP - CONTENT ################################################## -->
+                <!--APP - CONTENT--------------------------------------------------------------------------------->
+                <div class="content-bar">
+                    <div class="content_container_holder">
+                        <div class="content-container-holder-topbar">
+                            <p id="current-items-title" class="item-title"></p>
+
+                            <div id="currentSearchContainer" class="search-wrapper"><img class="search-img"
+                                    src="static/img/icons/search.png" /><input id="current-items-search-input"
+                                    class="search-input"></div>
+                        </div>
+
+                        <div id="app">
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+
+
+                <!-- ######################### BOTTOM ######################################################## -->
+                <!---TOGGLER---TOGGLE BOTTOM-BAR----------------------------------------------------------------->
+                <button id="bottom-bar-toggler" value="bottom-bar" class="button-toggle-horizontal-bar">
+                    <span class="toggler rotate-180deg">‹‹</span>
+                </button>
+
+
+                <!--BOTTOM-BAR----------------------------------------------------------------------------------->
+                <div id="bottom-bar">
+                    <div id="bottom-bar-wrapper" class="horizontal-wrapper-container">
+                        <div class="margin-auto">
+                          <div class="admin-widgets horizontal-bar-content">
+                            <a href="/Add" class="horizontal-bar-content" data-link><img
+                                src="static/img/icons/add.png" /><br />Добавяне</a>
+                            <a href="/Edit" class="horizontal-bar-content" data-link><img
+                                src="static/img/icons/edit.png" /><br />Редактиране</a>
+                            <a href="/Delete" class="horizontal-bar-content" data-link><img
+                                src="static/img/icons/delete.png" /><br />Изтриване</a>
+                            </div>
+                            <a href="/New" class="horizontal-bar-content" data-link><img
+                                src="static/img/icons/new-products.png" /><br />Най Нови</a>
+                            <a href="/Cars" class="horizontal-bar-content" data-link><img
+                                    src="static/img/icons/car.png" /><br />Коли</a>
+                            <a href="/Caravans" class="horizontal-bar-content" data-link><img
+                                    src="static/img/icons/caravan.png" /><br />Каравани</a>
+                            <a href="/Equipment" class="horizontal-bar-content" data-link><img
+                                    src="static/img/icons/reol.png" /><br />Екипировка</a>
+                            <a id="home-button" href="/" class="horizontal-bar-content" data-link><img
+                                    src="static/img/icons/home.png" /><br />Начало</a>
+                            <a href="/Products" class="horizontal-bar-content" data-link><img
+                                    src="static/img/icons/boxes.png" /><br />Продукти</a>
+                            <a href="/Contact" class="horizontal-bar-content" data-link><img
+                                    style=" border-radius: 5px;" src="static/img/icons/phone.png" /><br />За връзка</a>
+                            <a href="/About" class="horizontal-bar-content" data-link><img
+                                    src="static/img/icons/info.png" /><br />За Нас</a>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+
+
+
+            <!-- ######################### RIGHT ############################################################# -->
+            <!------TOGGLER--TOGGLE RIGHT-BAR-------------------------------------------------------------------->
+            <button id="right-bar-toggler" value="right-bar" class="button-toggle-vertical-bar">
+                <span class="toggler">››</span>
+            </button>
+
+
+
+            <!--RIGHT-BAR---------------------------------------------------------------------------------------->
+            <div id="right-bar">
+                <!-- <a href="/" class="vertical-bar-content" data-link><img src="static/img/car.png" /><br />HOME </a>
+                <a href="/Login" class="vertical-bar-content" data-link><img src="static/img/car.png" /><br />LOGIN</a>
+                <a href="/Profile" class="vertical-bar-content" data-link><img src="static/img/car.png" /><br />PROFILE</a>
+                <a href="/Register" class="vertical-bar-content" data-link><img src="static/img/car.png" /><br />REGISTER</a> -->
+            </div>
+
+
         </div>
+    </div>
 
-        <input id="" type="text" />
-
-        <button id="send">Запаси</button>
-   
-        <script>
-
-        document.getElementById("loadCredentials").addEventListener("click", loadCredentialsFromLocalStorageToInputs);
-        document.getElementById("saveCredentials").addEventListener("click", saveCredentials);
-        document.getElementById("send").addEventListener("click", updateJsonFile);
-        window.addEventListener("load", loadCredentialsFromLocalStorageToInputs); // Load credentials from local storage on page load
-
-        let clientId ="";
-        let token ="";
-
-        // Set Credentials
-        function saveCredentials() {
-            let clientId = document.getElementById("clientId").value;
-            let token = document.getElementById("token").value;
-
-            localStorage.setItem("clientId", clientId);
-            localStorage.setItem("token", token);
-        }
-
-
-        // Load Credentials
-        function loadCredentialsFromLocalStorageToInputs() {
-            
-            clientId = localStorage.getItem("clientId");
-            token = localStorage.getItem("token");
-
-            document.getElementById("clientId").value = clientId;
-            document.getElementById("token").value = token;
-        }
-
- 
-        //Post
-        // function update() {
-
-        //     fetch(`https://api.github.com/repos/stevicamp/Stevicamp/contents/test.txt?client_id=${clientId}&access_token=${token}`, {
-        //         method: "PUT",
-        //         headers: { 'Content-Type': 'application/json', 'Authorization':`${token}` },
-        //         body: JSON.stringify('asdfghj')
-        //     }).then(response => {
-        //         console.log("Request complete! response:", response);
-        //     });
-        // }
+    <!--SPA - JS - Default scrips such as HTML show hide bars --------------------------------------------------------------------------------------->
+    <script src="static/js/resources/default_scripts.js"></script>
+    <!--SPA - JS - Routing --------------------------------------------------------------------------------------->
+    <script type="module" src="static/js/main.js"></script>
 
 
 
@@ -74,96 +212,6 @@
 
 
 
-
-
-
-
-// Replace with your details
-const owner = "stevicamp";
-const repo = "Stevicamp";
-const path = "test.json";
-// const token = "3838828a07fe1baadd5934f0902c70deeac9b60f"; // Use a personal access token with 'repo' scope
-
-// New JSON content
-const newContent = {
-  title: "New DB",
-  author: "The name of author",
-  price: 14
-};
-
-//`https://corsproxy.io/?url=https://api.github.com/repos/${owner}/${repo}/contents/${path}`,
-// Function to get the file's SHA
-async function getFileSha() {
-  try {
-    const response = await fetch(
-      `https://api.github.com/repos/${owner}/${repo}/contents/${path}`,
-      {
-        method: "GET",
-        headers: {
-          "Authorization": `token ${token}`,
-          "Accept": "application/vnd.github.v3+json",
-          "Content-Type": "application/json"
-        }
-      }
-    );
-    if (!response.ok) 
-    {
-      if (response.status === 404) return null; // File doesn't exist
-      throw new Error(`Failed to fetch SHA: ${response.statusText}`);
-    }
-
-      const data = await response.json();
-      return data.sha;
-    } 
-
-     catch (error) 
-    {
-       console.error("Error fetching SHA:", error);
-       return null;
-    }
-}
-
-
-// `https://corsproxy.io/?url=https://api.github.com/repos/${owner}/${repo}/contents/${path}`,
-// Function to update the JSON file
-async function updateJsonFile() {
-  try {
-    const sha = await getFileSha();
-    const contentBase64 = btoa(JSON.stringify(newContent, null, 2));
-
-    const body = {
-      message: "Update myfile.json via API",
-      content: contentBase64,
-      sha: sha // Omit if creating a new file
-    };
-
-    const response = await fetch(
-      `https://api.github.com/repos/${owner}/${repo}/contents/${path}`,
-      {
-        method: "PUT",
-        headers: {
-          "Authorization": `token ${token}`,
-          "Accept": "application/vnd.github.v3+json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(body)
-      }
-    );
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(`Failed to update file: ${errorData.message}`);
-    }
-
-    const result = await response.json();
-    console.log("File updated! Commit URL:", result.commit.html_url);
-  } catch (error) {
-    console.error("Error updating file:", error);
-  }
-}
-
- 
-    </script>
 </body>
 
 </html>
