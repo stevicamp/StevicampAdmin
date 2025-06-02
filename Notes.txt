@@ -1,7 +1,42 @@
 Stevicamp
 
-1. DecodeUri on db fetch
+1. DecodeUri on db fetch - in Stevicamp App
+2. Add jsdeliver purg after adding item or update
+https://www.jsdelivr.com/tools/purge
 
+CREATE ITEM ..............................................
+2. Add photos to guthub - 
+2.1. Javascript make photo or upload. 
+2.2 Convert to lower quality img to reduce size 
+2.3 Make folder with specific name "caravan-Hoby...., 
+2.4 Post the images to the github api in the specific folder that is created
+2.5 Get the links by using jsdelivr
+2.6 Add the links to created item array of images
+2.7 Post to github the whole item
+2.8 Get link and open in new tab to see it
+
+
+
+EDIT ITEM ................................................
+1. Add edit button to the items like the share button on the items
+2. Add edit button in the modal wehn the item is opened in the modal - add the edit button beside the copy details
+3. On click the edit button open edit view
+4. In the edit view use the id of the item to search and find the specific item in the db - 
+than find the { and } of the obejct and get all that is in between including {}
+5. populate to generated inputboxes
+6. Editing...
+7. Than button Save.
+8. On Save get the whole db again and find the item with the specific id
+9. Get the {} and replace this with the new content
+10. Use PUT to send it to github 
+11. On succecfull edit - get link to show the item in new window
+
+
+DELETE ITEM ...............................................
+1. Add delete button beside the edit button in the item view and in the modal
+2. Get the db
+3. Find the item by using the id and get all that is between {}
+4. Ask - alert before delete 
 
 
 

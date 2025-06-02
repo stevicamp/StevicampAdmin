@@ -1301,3 +1301,15 @@ body {
   min-height: 100px;
   box-sizing: border-box;
 }
+
+
+
+/* Messages .................................................. */
+.msg
+{
+    position: fixed;
+    left: 50%;
+    top:8%;
+    transform: translate(-50%, -50%);
+    filter: drop-shadow(5px 0px 5px lime)drop-shadow(-5px 0px 5px lime)drop-shadow(0px -5px 5px lime)drop-shadow(0px 5px 5px lime);
+}

@@ -58,10 +58,16 @@ export async function executeViewScriptAsync() {
         document.getElementById("admin-credentials-toggler").addEventListener("click", toggleAdminCredentials);
         document.getElementById("loadCredentialsAutoCheckbox").addEventListener("click", toggleAutoLoadCredentials);
         
-        document.getElementById("save").addEventListener("click", updateJsonFile); 
+        document.getElementById("save").addEventListener("click", constructUpdateAndUpdate); 
 
-       
+
+        // Update the json file
+        function constructUpdateAndUpdate()
+        {
+         updateJsonFileAsync(githubUser, githubRepo, githubFilePath, githubToken, document.getElementById("developerInput").value, 'msg');
+        }
      
+
         // Toggle credentials cotnainer ................................................
         function toggleAdminCredentials()
         {
@@ -174,86 +180,10 @@ const path = "test.json";
 //   price: 50
 // };
  
-
+ 
  
 
-//`https://corsproxy.io/?url=https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePath}`,
-// Function to get the file's SHA
-async function getFileSha() {
-  try {
-    const response = await fetch(
-      `https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePath}`,
-      {
-        method: "GET",
-        headers: {
-          "Authorization": `token ${githubToken}`,
-          "Accept": "application/vnd.github.v3+json",
-          "Content-Type": "application/json"
-        }
-      }
-    );
-    if (!response.ok) 
-    {
-      if (response.status === 404) return null; // File doesn't exist
-      throw new Error(`Failed to fetch SHA: ${response.statusText}`);
-    }
 
-      const data = await response.json();
-      return data.sha;
-    } 
-
-     catch (error) 
-    {
-       console.error("Error fetching SHA:", error);
-       return null;
-    }
-}
-
-
-// `https://corsproxy.io/?url=https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePath}`,
-// Function to update the JSON file
-async function updateJsonFile() {
-  try {
-
-    newContent = document.getElementById("developerInput").value;
-    const sha = await getFileSha();
-    // const contentBase64 = new Blob(JSON.stringify(newContent, null, 2)); // Encode to Base64
-    const contentBase64 = btoa(JSON.stringify(encodeURI(newContent), null, 2)); // EncodeUri because of non latin character later in db on fetch decodeUri
-    // let newContentJson = JSON.stringify(newContent);
-    // let contentBase64 = new Blob([newContentJson], {type: "application/json"});
-    // const contentBase64 = new Blob([document.body.innerHTML], {type : 'text/html'}
-// ); 
-
-    const body = {
-      message: "Update myfile.json via API",
-      content: contentBase64,
-      sha: sha // Omit if creating a new file
-    };
-
-    const response = await fetch(
-      `https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePath}`,
-      {
-        method: "PUT",
-        headers: {
-          "Authorization": `token ${githubToken}`,
-          "Accept": "application/vnd.github.v3+json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(body)
-      }
-    );
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(`Failed to update file: ${errorData.message}`);
-    }
-
-    const result = await response.json();
-    console.log("File updated! Commit URL:", result.commit.html_url);
-  } catch (error) {
-    console.error("Error updating file:", error);
-  }
-}
 
 
 // Auto Load credentials
