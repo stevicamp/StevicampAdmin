@@ -64,14 +64,20 @@ async function updateJsonFileAsync(githubUser, githubRepo, githubFilePath, githu
       }
     );
 
-    if (!response.ok) {
+    if (response.ok) 
+    {
+      const result = await response.json();
+      console.log("File updated! Commit URL:", result.commit.html_url);
+      successMsg(); 
+    }
+    else
+    {
       const errorData = await response.json();
+      failedMsg();
       throw new Error(`Failed to update file: ${errorData.message}`);
     }
 
-    const result = await response.json();
-    console.log("File updated! Commit URL:", result.commit.html_url);
-    successMsg();
+   
 
   } catch (error) {
     console.error("Error updating file:", error);

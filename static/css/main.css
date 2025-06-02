@@ -1305,11 +1305,20 @@ body {
 
 
 /* Messages .................................................. */
-.msg
+.msg, .msg-success, .msg-fail
 {
     position: fixed;
     left: 50%;
-    top:8%;
+    top:10%;
     transform: translate(-50%, -50%);
+}
+
+.msg-success  
+{
     filter: drop-shadow(5px 0px 5px lime)drop-shadow(-5px 0px 5px lime)drop-shadow(0px -5px 5px lime)drop-shadow(0px 5px 5px lime);
+}
+
+.msg-fail
+{
+    filter: drop-shadow(5px 0px 5px rgb(255, 48, 48))drop-shadow(-5px 0px 5px rgb(255, 48, 48))drop-shadow(0px -5px 5px rgb(255, 48, 48))drop-shadow(0px 5px 5px rgb(255, 48, 48));
 }
