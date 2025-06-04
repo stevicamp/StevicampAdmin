@@ -40,6 +40,7 @@ async function updateJsonFileAsync(githubUser, githubRepo, githubFilePath, githu
 {
   try {
 
+    loadingMsg('Запазва се...');
     // newContent = document.getElementById("developerInput").value;
     const sha = await getFileSha(githubUser, githubRepo, githubFilePath, githubToken);
     const contentBase64 = btoa(JSON.stringify(encodeURI(content), null, 2)); // EncodeUri because of non latin character later in db on fetch decodeUri
@@ -64,6 +65,7 @@ async function updateJsonFileAsync(githubUser, githubRepo, githubFilePath, githu
       }
     );
 
+    document.getElementById('loadingMsg').remove(); // Remove loading msg
     if (response.ok) 
     {
       const result = await response.json();
