@@ -14,7 +14,7 @@ export async function getHtmlAsync() {
             <input id="githubRepo" type="text" placeholder="Github Repository - 'Stevicamp'" value="Stevicamp">
             <span>Github Token:</span>
             <input id="githubToken" type="password" placeholder="Github acces token">
-            <span>File path:</span>
+            <span>File path: <a target="_blank" href="https://github.com/stevicamp/Stevicamp/blob/main/test.json">Отваряне Файла</a></span>
             <input id="githubFilePath" type="text" placeholder="Github file path - to update - 'test.json'" value="test.json">
             
             <button id="saveCredentials">Запази парола / данни</button>
