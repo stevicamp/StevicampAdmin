@@ -5,9 +5,10 @@ import * as Common from "./Common.js"
 
 // VIEW HTML ---------------------------------------------------
 export async function getHtmlAsync() {
-    return  `<div class="admin-content-holder" style="height: 98%; box-sizing: border-box;">
+    return  `<div class="admin-content-holder" style="height: 98%; box-sizing: border-box; display: flex; flex-direction: column;
+    align-items: center;">
            
-    <div style="height: 10%;">
+   
             <div id="credentialsContainer" class="admin-credentials-holder" style="display: none;">
             <span>Github User:</span>
             <input id="githubUser" type="text" placeholder="Github User - 'stevicamp'" value="stevicamp"> 
@@ -43,8 +44,8 @@ export async function getHtmlAsync() {
                  <option value="scooters">8.Скутери</option>
                  <option value="equipment">9.Екипировка</option>
                </select>
-               </div>
-               <div style="width: 100%; height: 90%; box-sizing: border-box;" id="aproppiriateFieldsContainer"></div> 
+           
+               <div style="width: 100%; height: 90%; box-sizing: border-box; display: flex;" id="aproppiriateFieldsContainer"></div> 
                </div>
             `;
 
