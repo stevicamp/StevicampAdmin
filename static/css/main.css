@@ -745,6 +745,7 @@ html {
     font-weight: bold;
     font-family: Arial, Helvetica, sans-serif;
     overflow: auto;
+    box-sizing: border-box;
 }
 
 
@@ -793,8 +794,8 @@ h3 {
     padding: 5px;
     box-sizing: border-box;
     margin: 0;
-    max-width: 300px;
-    min-width: 50px;
+    max-width: 400px;
+    min-width: 230px;
     border: 1px solid rgb(78, 130, 182);
 
 }
@@ -885,7 +886,7 @@ h3 {
     position: relative;
     margin-left: auto;
     margin-right: auto;
-    width: 100%;
+    width: 100%; 
 }
 
 
@@ -1214,8 +1215,10 @@ body {
 }
 
 
+ 
 
-@media screen and (max-width: 850px) {
+
+@media screen and (max-width: 450px) {
 
     .modalItemContainer {
         display: flex;
@@ -1227,13 +1230,13 @@ body {
     }
 
     .img-preview-container {
-        height: 70%;
+        height: 20%;
     }
 
     .modalItemDetails {
         max-width: 100%;
         min-width: 100%;
-        height: 30%;
+        height: 80%;
         width: 100%;
         border: 2px solid rgb(78, 130, 182);
         border-top: 3px solid rgb(78, 130, 182);
@@ -1244,8 +1247,6 @@ body {
 
     }
 }
-
-
 
 
 /* ----------------------- FOR ADMIN ------------------------------------------------- */
@@ -1262,6 +1263,8 @@ body {
 {
     display: flex; 
     flex-direction: column;
+    margin-bottom: 0;
+    box-sizing: border-box;
 }
 
 .admin-content-holder input
@@ -1360,3 +1363,21 @@ body {
     }
 }
 
+
+
+/* Apporpirate fields in ADD view ........................................ */
+.apr-field
+{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.apr-field span
+{     
+    min-width: 100%;
+    margin: 0;
+    filter: drop-shadow(-2px 2px 3px black);
+}
+
+ 
