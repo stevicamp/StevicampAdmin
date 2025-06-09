@@ -34,6 +34,7 @@ export async function getHtmlAsync() {
                </button> 
 
               <select name="itemType" id="itemType">
+                 <option value="caravan">--Избери Артикул--</option>
                  <option value="caravan">1.Каравана</option>
                  <option value="trailer">2.Ремарке</option>
                  <option value="car">3.Кола</option>
@@ -45,7 +46,7 @@ export async function getHtmlAsync() {
                  <option value="equipment">9.Екипировка</option>
                </select>
            
-               <div style="width: 100%; height: 90%; box-sizing: border-box; display: flex;" id="aproppiriateFieldsContainer"></div> 
+               <div style="width: 100%; height: 88%; box-sizing: border-box; display: flex;" id="aproppiriateFieldsContainer"></div> 
                </div>
             `;
 
@@ -196,7 +197,7 @@ export async function executeViewScriptAsync() {
         }
 
 
-// Base HTML For caravans -----------------------------------------------------------------------
+// Base HTML For caravan -----------------------------------------------------------------------
 async function caravansHtmlTemplateFields() 
 {
    let db = await getDb();
@@ -220,7 +221,6 @@ async function caravansHtmlTemplateFields()
    
    <h3 class="item-title">
    <img src="static/img/icons/caravan.png"><u><input id="title" placeholder="Заглавие"></u></h3> 
-   <span style="margin: 0 0 0 auto;"><a class="item_share_button" href="javascript: copyToClipboard(copyElementTextById('modalItemDetails'));" title="Натиснете за да Копирате описанието"><img src="static/img/icons/copy.png"></a></span>
        <hr>
        <span><img src="static/img/icons/price.png"><b>Цена:</b> </br><input id="price" placeholder="Цена"></span>
        <hr>
@@ -262,40 +262,13 @@ async function caravansHtmlTemplateFields()
        <hr>
        <span><img src="static/img/icons/keywords.png"></br><input id="keywords" placeholder="Ключови думи"></span>
        <hr> 
+       <button id="saveItemButton">Запази</button>
    </div>
 </div>`;
 }
 
-        function caravanFields()
-        {
-          return `
-          
-          <div class="apr-field"><span>Заглавие:</span><input id="title" placeholder="Заглавие"></div>
-          <div class="apr-field"><span>Марка:</span><input id="brand" placeholder="Марка"></div>
-        
-          
-          <span>Модел:</span>
-          <input id="model">
-          <span>Ц:</span>
-          <input id="price">
-          <input id="length">
-          <input id="year">
-          <input id="documents">
-          <input id="sleepingPlaces">
-          <input id="condition">
-          <input id="plate">
-          <input id="toilet">
-          <input id="bath">
-          <input id="heating">
-          <input id="boiler">
-          <input id="ac">
-          <input id="solar">
-          <input id="fortelt">
-          <input id="markise">
-          <input id="location">
-          <input id="keywords">
-          `;
-        }
+ 
+
         
 // Github api ......................................................
 const owner = "stevicamp";
