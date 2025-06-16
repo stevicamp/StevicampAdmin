@@ -224,21 +224,62 @@ async function caravansHtmlTemplateFields()
        <hr>
        <span><img src="static/img/icons/price.png"><b>Цена:</b> </br><input id="price" placeholder="Цена"></span>
        <hr>
-       <span><img src="static/img/icons/brand.png"><b>Марка:</b> </br><input id="brand" placeholder="Марка"></span>
+       <span><img src="static/img/icons/brand.png"><b>Марка:</b> </br><input id="brand" type="text" placeholder="Марка" list="caravanBrands"></span>
+            <datalist id="caravanBrands">
+                <option value="Hobby"></option>
+                <option value="Knaus"></option>
+                <option value="Adria"></option>
+                <option value="LMC"></option>
+                <option value="Tabbert"></option>
+                <option value="Fendt"></option>
+                <option value="Dethleffs"></option>
+            </datalist>
        <hr>
        <span><img src="static/img/icons/model.png"><b>Модел:</b> </br><input id="model" placeholder="Модел"></span>
        <hr>
        <span><img src="static/img/icons/calendar.png"><b>Година:</b> </br><input id="year" placeholder="Година"></span>
        <hr>
-       <span><img src="static/img/icons/ruler.png"><b>Дължина:</b> </br><input id="length" placeholder="Дължинна"></span>
+       <span><img src="static/img/icons/ruler.png"><b>Дължина:</b> </br><input id="length" placeholder="Дължинна" list="caravanLength"></span>
+       <datalist id="caravanLength">
+                <option value="380см"></option>
+                <option value="390см"></option>
+                <option value="450см"></option>
+                <option value="460см"></option>
+                <option value="495см"></option>
+                <option value="500см"></option>
+                <option value="502см"></option>
+                <option value="520см"></option>
+                <option value="530см"></option>
+                <option value="540см"></option>
+                <option value="560см"></option>
+                <option value="590см"></option>
+                <option value="610см"></option>
+            </datalist>
        <hr>
-       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> </br><input id="condition" placeholder="Състощние"></span>
+       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> </br><input id="condition" placeholder="Състояние">Използвана</span>
        <hr>
-       <span><img src="static/img/icons/toilet.png"><b>Тоалетна:</b> </br><input id="toilet" placeholder="Тоалетна"></span>
+       <span><img src="static/img/icons/toilet.png"><b>Тоалетна:</b> </br><input id="toilet" placeholder="Тоалетна" list="caravanToilet"></span>
+            <datalist id="caravanToilet">
+                <option value="Да"></option>
+                <option value="Не"></option>
+                <option value="Химическа"></option>
+                <option value="Проточна"></option>
+            </datalist>
        <hr>
-       <span><img src="static/img/icons/bath.png"><b>Баня:</b> </br><input id="bath" placeholder="Баня"></span>
+       <span><img src="static/img/icons/bath.png"><b>Баня:</b> </br><input id="bath" placeholder="Баня" list="caravanBath"></span>
+            <datalist id="caravanBath">
+                <option value="Да-душ"></option>
+                <option value="Не"></option>
+                <option value="Да-душ кабина"></option>
+            </datalist>
        <hr>
-       <span><img src="static/img/icons/heater.png"><b>Отопление:</b> </br><input id="heating" placeholder="Отопление"></span>
+       <span><img src="static/img/icons/heater.png"><b>Отопление:</b> </br><input id="heating" placeholder="Отопление" list="heating"></span>
+            <datalist id="caravanHeating">
+                <option value="Да"></option>
+                <option value="Не"></option>
+                <option value="Газово"></option>
+                <option value="Електрическо"></option>
+            </datalist>
        <hr>
        <span><img src="static/img/icons/boiler.png"><b>Боийлер:</b> </br><input id="boiler" placeholder="Бойлер"></span>
        <hr>
