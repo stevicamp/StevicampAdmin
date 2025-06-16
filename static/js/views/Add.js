@@ -310,17 +310,17 @@ async function caravansHtmlTemplateFields()
        <hr>
        <span><img src="static/img/icons/markise.png"><b>Маркиза:</b> </br><input id="marikise" placeholder="Маркиза"></span>
        <hr>
-       <span><img src="static/img/icons/documents.png"><b>Документи:</b> </br><input id="documents" placeholder="Документи"></span>
+       <span><img src="static/img/icons/documents.png"><b>Документи:</b> </br><input id="documents" placeholder="Документи" value="Да"></span>
        <hr>
        <span><img src="static/img/icons/plate.png"><b>Номер:</b> </br><input id="plate" placeholder="Номер"></span>
        <hr>
-       <span><img src="static/img/icons/location.png"><b>Местоположение:</b> </br><input id="location" placeholder="Местоположение"></span>
+       <span><img src="static/img/icons/location.png"><b>Местоположение:</b></br><input id="location" placeholder="Местоположение" value="България - Обл. Перник"></span>
        <hr class="hr-orange"> 
        <span><img src="static/img/icons/description.png"><b>Описание:</b> </br><textarea id="description" placeholder="Описание"></textarea ></span>
        <hr class="hr-orange"> 
        <span><img src="static/img/icons/id.png"><b>ID:</b><font style="font-size:7px;">Gen</font></span>
        <hr>
-       <span><img src="static/img/icons/keywords.png"></br><input id="keywords" placeholder="Ключови думи"></span>
+       <span><img src="static/img/icons/keywords.png"></br><input id="keywords" placeholder="Ключови думи" value="каравана, каравани, karavana, karavani, caravans, caravan"></span>
        <hr> 
        <button id="saveItemButton">Запази</button>
    </div>
