@@ -352,8 +352,7 @@ async function caravansHtmlTemplate(obj) {
        <span><img src="static/img/icons/bath.png"><b>Баня:</b> ${obj.bath}</span>
        <hr>
        <span><img src="static/img/icons/heater.png"><b>Отопление:</b> ${obj.heating}</span>
-       <hr>
-       <hr>
+       <hr> 
        <span><img src="static/img/icons/hotplates.png"><b>Котлони:</b> ${obj.hotplates}</span>
        <hr>
        <span><img src="static/img/icons/stove.png"><b>Печка:</b> ${obj.stove}</span>
