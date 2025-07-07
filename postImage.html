@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<input id="imagePicker" type="file" accept="image/*;capture=camera" multiple="multiple">
+
+<button id="uploadImgBtn">Upload</button>
+
+ 
+    <script>
+
+        let githubUser ="stevicamp";
+        let githubRepo ="Stevicamp";
+        let githubToken ="here the token";
+        let githubFilePath ="photo1.png";
+        let newContent ="";
+        
+        document.getElementById('uploadImgBtn').addEventListener('click', readImgAsBase64)
+
+// `https://corsproxy.io/?url=https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePath}`,
+// Function to update the JSON file
+
+
+
+ 
+// Get the image as Base64
+async function readImgAsBase64()
+{ 
+let testImg = document.getElementById('imagePicker').files[0] // Get the image from the "input with type="file""
+var reader = new FileReader(); // New Reader
+reader.onload = async function(e) // On reader load
+{
+		// Base64
+    var data=(reader.result).split(',')[1]; // Remove "data:image/png;base64," so it is raw image base64
+    await uploadImgAsync(githubUser, githubRepo, githubFilePath, githubToken, data, ''); // Upload the image to the server
+} 
+  reader.readAsDataURL(testImg); // Read Img as data url - I think that this is used for the reader to work
+}
+
+
+// Upload the image to guthub
+async function uploadImgAsync(githubUser, githubRepo, githubFilePath, githubToken, content, msg) 
+{
+  try 
+   {
+     const contentBase64 = content; // EncodeUri because of non latin character later in db on fetch decodeUri
+  //    const imagePath = imgSrcArray[0];
+  // const bytes = await readFilePromise(imagePath, 'binary')
+  // const buffer = Buffer.from(bytes, 'binary')
+  // const content = buffer.toString('base64')
+
+
+
+  //  var file = inputElement.files[0];
+  // var reader = new FileReader();
+  // reader.onloadend = function() {
+  //   console.log('Encoded Base 64 File String:', reader.result);
+    
+    // loadingMsg(`Запазва се...${msg}`);
+    // newContent = document.getElementById("developerInput").value;
+    // const sha = await getFileSha(githubUser, githubRepo, githubFilePath, githubToken);
+    // const contentBase64 = btoa(JSON.stringify(content, null, 2)); // EncodeUri because of non latin character later in db on fetch decodeUri
+ 
+
+    const body = {
+      message: `${msg}`,
+      content: contentBase64
+    };
+
+    const response = await fetch(
+      `https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePath}`,
+      {
+        method: "PUT",
+        headers: {
+          "Authorization": `token ${githubToken}`,
+          "Accept": "application/vnd.github.v3+json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body) 
+      }
+    );
+
+    // document.getElementById('loadingMsg').remove(); // Remove loading msg
+    if (response.ok) 
+    {
+      const result = await response.json();
+      console.log("File updated! Commit URL:", result.commit.html_url);
+    //   successMsg('Успешно запазено'); 
+    }
+    else
+    {
+      const errorData = await response.json();
+    //   failedMsg('Грешка - ' + errorData.message);
+      throw new Error(`Failed to upload file:  `);
+    }
+
+   
+
+  } catch (error) {
+    console.error("Error updating file:", error);
+  }
+}
+        
+    </script>
+</body>
+</html>

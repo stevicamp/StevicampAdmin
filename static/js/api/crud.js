@@ -85,3 +85,71 @@ async function updateJsonFileAsync(githubUser, githubRepo, githubFilePath, githu
     console.error("Error updating file:", error);
   }
 }
+
+
+
+
+
+// `https://corsproxy.io/?url=https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePath}`,
+// Function to update the JSON file
+async function uploadImgAsync(githubUser, githubRepo, githubFilePath, githubToken, content, msg) 
+{
+  try {
+
+
+  //    const imagePath = imgSrcArray[0];
+  // const bytes = await readFilePromise(imagePath, 'binary')
+  // const buffer = Buffer.from(bytes, 'binary')
+  // const content = buffer.toString('base64')
+
+
+
+  //  var file = inputElement.files[0];
+  // var reader = new FileReader();
+  // reader.onloadend = function() {
+  //   console.log('Encoded Base 64 File String:', reader.result);
+    
+    loadingMsg(`Запазва се...${msg}`);
+    // newContent = document.getElementById("developerInput").value;
+    // const sha = await getFileSha(githubUser, githubRepo, githubFilePath, githubToken);
+    const contentBase64 = btoa(JSON.stringify(content, null, 2)); // EncodeUri because of non latin character later in db on fetch decodeUri
+ 
+
+    const body = {
+      message: `${msg}`,
+      content: contentBase64
+    };
+
+    const response = await fetch(
+      `https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePath}`,
+      {
+        method: "PUT",
+        headers: {
+          "Authorization": `token ${githubToken}`,
+          "Accept": "application/vnd.github.v3+json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body) 
+      }
+    );
+
+    document.getElementById('loadingMsg').remove(); // Remove loading msg
+    if (response.ok) 
+    {
+      const result = await response.json();
+      console.log("File updated! Commit URL:", result.commit.html_url);
+      successMsg('Успешно запазено'); 
+    }
+    else
+    {
+      const errorData = await response.json();
+      failedMsg('Грешка - ' + errorData.message);
+      throw new Error(`Failed to upload file: ${errorData.message}`);
+    }
+
+   
+
+  } catch (error) {
+    console.error("Error updating file:", error);
+  }
+}

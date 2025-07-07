@@ -1646,3 +1646,30 @@ function initTranlate() {
 
     
 }
+
+
+let imgSrcArray = [];
+
+// For The Image picker ......................................................................
+function handleImages()
+{
+  let imgPrevContainer = document.getElementById('previewImgHolder');
+
+  let imgPicker = document.getElementById('imagePicker');
+
+  let imgHtml = '';
+  let imgSrc = '';
+
+//    imgPrevContainer.innerHTML = ""; // Earease if there are old images
+
+    for (let i = 0; i < imgPicker.files.length; i++) 
+    {
+        imgSrc = window.URL.createObjectURL(imgPicker.files[i]);
+        imgSrcArray.push(imgSrc); // Add the generated img url
+        imgHtml += `<img class="slide" src="${imgSrc}">`;
+    }
+    
+        imgPrevContainer.innerHTML += imgHtml; // Add the image as html to the container to display it
+   
+    toggleModalImg(0); // Refresh the image holder
+} 
