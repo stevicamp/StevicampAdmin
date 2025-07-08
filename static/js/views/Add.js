@@ -57,20 +57,15 @@ export async function getHtmlAsync() {
 }
 
 
-
+  
 
 // View Script -------------------------------------------------
 export async function executeViewScriptAsync() {
     Common.setTitle("Добави", "add");
 
 
-        let githubUser ="";
-        let githubRepo ="";
-        let githubToken ="";
-        let githubFilePath ="";
-        let newContent ="";
+        
 
-        let test = "data:image/jpeg;base64,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";
         document.getElementById("loadCredentials").addEventListener("click", loadCredentialsFromLocalStorageToInputs);
         document.getElementById("saveCredentials").addEventListener("click", saveCredentials);
         document.getElementById("clearCredentials").addEventListener("click", clearLocalStorageCredentials);
@@ -81,10 +76,39 @@ export async function executeViewScriptAsync() {
         
         document.getElementById("save").addEventListener("click", constructUpdateAndUpdate); 
         
-        document.getElementById("uploadImg").addEventListener("click", () => {uploadImgAsync(githubUser, githubRepo, 'img.png', githubToken, test, 'Img1');}); // Test
+       
      
 
-        // Update the json file
+      
+ 
+
+        
+// // Github api ......................................................
+// const owner = "stevicamp";
+// const repo = "Stevicamp";
+// const path = "test.json";
+// const token = "3838828a07fe1baadd5934f0902c70deeac9b60f"; // Use a personal access token with 'repo' scope
+
+// New JSON content
+// const newContent = {
+//   title: "New DB",
+//   author: "The name of author",
+//   price: 50
+// };
+ 
+ 
+ 
+
+
+
+
+// Auto Load credentials
+autoLoadCredentials();
+}
+
+
+
+  // Update the json file
         function constructUpdateAndUpdate()
         {
          updateJsonFileAsync(githubUser, githubRepo, githubFilePath, githubToken, document.getElementById("developerInput").value, 'msg');
@@ -148,6 +172,7 @@ export async function executeViewScriptAsync() {
 
         }
         
+        
         // Auto load credentials
         function autoLoadCredentials()
         {
@@ -197,15 +222,29 @@ export async function executeViewScriptAsync() {
           if(valueType == "caravan")
           {
              apFields.innerHTML = await caravansHtmlTemplateFields();
+             document.getElementById("saveItemButton").addEventListener("click", handleItemImages); // For upload
+            //  document.getElementById("imgPicker").addEventListener("onchange", handleImages); // For the modal
           }
           
            
         }
-
-
-
-
  
+
+async function handleItemImages()
+{
+   let images = document.getElementById('imgPicker').files; // Get the images from the "input with type="file""
+   let githubFilePathForImg ="";
+
+   for (let v = 0; v < images.length; v++) 
+    {
+        githubFilePathForImg =`testmap/${[v+1]}.png`;
+         await readImgAsBase64AndUpload(images[v], `${[v+1]} от ${[images.length]}`, githubFilePathForImg);
+          
+        // await readImgAsBase64AndUpload(images[v], `${[v+1]} от ${[images.length]}`, githubFilePathForImg); 
+    }
+}
+ 
+
 // Base HTML For caravan -----------------------------------------------------------------------
 async function caravansHtmlTemplateFields() 
 {
@@ -216,7 +255,7 @@ async function caravansHtmlTemplateFields()
     return `<div class="modalItemContainer" tabindex="0" style="margin-top: 0;">
 
 
-    <input id="imagePicker" type="file" accept="image/*;capture=camera" multiple="multiple" onchange="handleImages()">
+    <input id="imgPicker" type="file" accept="image/*;capture=camera" multiple="multiple" onchange="handleImages()">
    <div class="img-preview-container">
     <div style="width: 100%; height: 100%;" id="previewImgHolder"></div>   
 
@@ -340,32 +379,4 @@ async function caravansHtmlTemplateFields()
 
 
 }
-
- 
-
-        
-// // Github api ......................................................
-// const owner = "stevicamp";
-// const repo = "Stevicamp";
-// const path = "test.json";
-// const token = "3838828a07fe1baadd5934f0902c70deeac9b60f"; // Use a personal access token with 'repo' scope
-
-// New JSON content
-// const newContent = {
-//   title: "New DB",
-//   author: "The name of author",
-//   price: 50
-// };
- 
- 
- 
-
-
-
-
-// Auto Load credentials
-autoLoadCredentials();
-}
-
-
 

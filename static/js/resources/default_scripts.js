@@ -1655,7 +1655,7 @@ function handleImages()
 {
   let imgPrevContainer = document.getElementById('previewImgHolder');
 
-  let imgPicker = document.getElementById('imagePicker');
+  let imgPicker = document.getElementById('imgPicker');
 
   let imgHtml = '';
   let imgSrc = '';
@@ -1673,3 +1673,55 @@ function handleImages()
    
     toggleModalImg(0); // Refresh the image holder
 } 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// For converting the local image to Base64 - and uploding it to the github #######################################################
+// Get the image as Base64
+async function readImgAsBase64AndUpload(file, imgComment, githubFilePath)
+{  
+// let testImg = document.getElementById('imgPicker').files[0] // Get the image from the "input with type="file""
+ 
+    let readerFile = await readFileAsync(file);
+ 
+    // Base64
+    let dataBase64Img = readerFile.split(',')[1]; // Remove "data:image/png;base64," so it is raw image base64
+    await uploadImgAsync(githubUser, githubRepo, githubFilePath, githubToken, dataBase64Img, '', imgComment); // Upload the image to the server
+}
+
+
+// Read Async file...............................................
+async function readFileAsync(file) {
+  return new Promise((resolve, reject) => {
+    let reader = new FileReader();
+
+    reader.onload = () => {
+      resolve(reader.result);
+    };
+
+    reader.onerror = reject;
+
+    reader.readAsDataURL(file);
+  })
+}
+
+
+async function delay(ms) {
+    return new Promise(resolve => {
+        setTimeout(() => { resolve('') }, ms);
+    })
+}
