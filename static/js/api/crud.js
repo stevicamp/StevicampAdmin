@@ -128,17 +128,19 @@ async function uploadImgAsync(githubUser, githubRepo, githubFilePath, githubToke
       const result = await response.json();
       console.log("File updated! Commit URL:", result.commit.html_url);
       successMsg(`Успешно запазенa Снимка ${imgComment}`); 
+      return true;
     }
     else
     {
       const errorData = await response.json();
       failedMsg(`Грешка - Снимка ${imgComment} -` + errorData.message);
-      throw new Error(`Failed to upload image:`);
+      throw new Error(`Failed to upload image:`); 
     }
 
    
 
   } catch (error) {
     console.error("Error uploading image:", error);
+    return false;
   } 
 }

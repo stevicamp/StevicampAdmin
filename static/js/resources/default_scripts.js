@@ -1696,11 +1696,11 @@ async function readImgAsBase64AndUpload(file, imgComment, githubFilePath)
 {  
 // let testImg = document.getElementById('imgPicker').files[0] // Get the image from the "input with type="file""
  
-    let readerFile = await readFileAsync(file);
+    let readerFile = await readFileAsync(file); // Read Img as base 64 from async reader
  
     // Base64
     let dataBase64Img = readerFile.split(',')[1]; // Remove "data:image/png;base64," so it is raw image base64
-    await uploadImgAsync(githubUser, githubRepo, githubFilePath, githubToken, dataBase64Img, '', imgComment); // Upload the image to the server
+    return await uploadImgAsync(githubUser, githubRepo, githubFilePath, githubToken, dataBase64Img, '', imgComment); // Upload the image to the server
 }
 
 

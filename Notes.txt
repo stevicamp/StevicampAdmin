@@ -1,6 +1,6 @@
 Stevicamp
 
-1. DecodeUri on db fetch - in Stevicamp App
+1. db - Fix the db to have not latin char but without uri encoding - maybe onvert the json to base 64 without he uri
 2. Add jsdeliver purg after adding item or update
 https://www.jsdelivr.com/tools/purge
 

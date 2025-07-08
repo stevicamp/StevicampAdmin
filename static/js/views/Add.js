@@ -34,13 +34,13 @@ export async function getHtmlAsync() {
                </button> 
 
               <select name="itemType" id="itemType">
-                 <option value="caravan">--Избери Артикул--</option>
-                 <option value="caravan">1.Каравана</option>
-                 <option value="trailer">2.Ремарке</option>
-                 <option value="car">3.Кола</option>
+                 <option value="">--Избери Артикул--</option>
+                 <option value="caravans">1.Каравана</option>
+                 <option value="trailers">2.Ремарке</option>
+                 <option value="cars">3.Кола</option>
                  <option value="products">4.Продукти</option>
                  <option value="wheels">5.Гуми</option>
-                 <option value="microbus">6.Микробус</option>
+                 <option value="microbuses">6.Микробус</option>
                  <option value="appliances">7.Бяла техника</option>
                  <option value="scooters">8.Скутери</option>
                  <option value="equipment">9.Екипировка</option>
@@ -219,10 +219,11 @@ autoLoadCredentials();
 
           let apFields = document.getElementById("aproppiriateFieldsContainer");
           let valueType =  document.getElementById("itemType").value;
-          if(valueType == "caravan")
+
+          if(valueType == "caravans")
           {
              apFields.innerHTML = await caravansHtmlTemplateFields();
-             document.getElementById("saveItemButton").addEventListener("click", handleItemImages); // For upload
+             document.getElementById("saveItemButton").addEventListener("click", saveItem); // For upload
             //  document.getElementById("imgPicker").addEventListener("onchange", handleImages); // For the modal
           }
           
@@ -230,16 +231,41 @@ autoLoadCredentials();
         }
  
 
-async function handleItemImages()
+async function saveItem()
+{
+   let type = document.getElementById('itemType').value; // For saving it in github in specific folder type - caravans, cars, products etc.
+   let itemName = document.getElementById('title').value; // For Creating Id
+   let itemId = createId(itemName);
+   await handleItemImages(itemId, type);// Upload Images
+
+   // 1. Here get the links for the uploadded images if responese ok
+   // 2. Convert to js delivr url.
+   // 3. Get all inputs from the form and construct json and add the js fidler links
+   // 4. Update the db
+   // 5. Fix the db to have not latin char but without uri encoding - maybe onvert the json to base 64 without he uri
+}
+
+
+
+// Handle local images - read as base 64 and upload ---------------------------------------
+async function handleItemImages(itemId, type)
 {
    let images = document.getElementById('imgPicker').files; // Get the images from the "input with type="file""
    let githubFilePathForImg ="";
 
+   let okResponse = true;
    for (let v = 0; v < images.length; v++) 
     {
-        githubFilePathForImg =`testmap/${[v+1]}.png`;
-         await readImgAsBase64AndUpload(images[v], `${[v+1]} от ${[images.length]}`, githubFilePathForImg);
-          
+        if(okResponse)
+        {
+            githubFilePathForImg =`resources/img/${type}/${itemId}/${itemId}-${[v+1]}.png`; // Ex. resources/img/caravans/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z-1
+            okResponse = await readImgAsBase64AndUpload(images[v], `${[v+1]} от ${[images.length]}`, githubFilePathForImg);
+        }
+        else
+        {
+            // Here code to remove the last added images................
+            // Need to have variables to remember the name and path, than use delete function from CRUF file to delete each image
+        }
         // await readImgAsBase64AndUpload(images[v], `${[v+1]} от ${[images.length]}`, githubFilePathForImg); 
     }
 }
@@ -380,3 +406,16 @@ async function caravansHtmlTemplateFields()
 
 }
 
+
+
+
+ // Create Name with unique Id ================================================================================================
+    function createId(productName) {
+
+        var date = new Date(); // New Date object
+        var idDate = date.toISOString().replace(/:/g, "-"); //Create - new DateTime and replace the ":" with "-"  the "/g" means replace all. Because ":" is not allowed to be in a file name.
+        var idName = productName + 'D' + idDate; 
+        // var idName = productName + 'D' + idDate + "!" + Math.random().toString(36).substring(2, 12); // Combine the data to get file name with ID. The pattern is [TheProduct-NAME AND MODEL-TheDateAndTime - UNIQUE ID]
+
+        return idName; //'The Product Type-Model-DateTime-Id'
+    }
