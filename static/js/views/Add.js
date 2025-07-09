@@ -223,7 +223,7 @@ autoLoadCredentials();
           if(valueType == "caravans")
           {
              apFields.innerHTML = await caravansHtmlTemplateFields();
-             document.getElementById("saveItemButton").addEventListener("click", saveItem); // For upload
+             document.getElementById("saveItemButton").addEventListener("click", (e)=> {saveItem(e)}); // For upload
             //  document.getElementById("imgPicker").addEventListener("onchange", handleImages); // For the modal
           }
           
@@ -231,12 +231,18 @@ autoLoadCredentials();
         }
  
 
-async function saveItem()
+
+
+// Save Item ---------------------------------------------------------------------
+async function saveItem(e)
 {
+   e.preventDefault();
    let type = document.getElementById('itemType').value; // For saving it in github in specific folder type - caravans, cars, products etc.
    let itemName = document.getElementById('title').value; // For Creating Id
    let itemId = createId(itemName);
    await handleItemImages(itemId, type);// Upload Images
+
+   const data = convertFormToJsonById('modalItemDetails');
 
    // 1. Here get the links for the uploadded images if responese ok
    // 2. Convert to js delivr url.
@@ -278,9 +284,8 @@ async function caravansHtmlTemplateFields()
       //  <img class="slide" src='${obj.photos[h]}'></img>
      
    
-    return `<div class="modalItemContainer" tabindex="0" style="margin-top: 0;">
-
-
+    return `  
+     <div class="modalItemContainer" tabindex="0" style="margin-top: 0;">
     <input id="imgPicker" type="file" accept="image/*;capture=camera" multiple="multiple" onchange="handleImages()">
    <div class="img-preview-container">
     <div style="width: 100%; height: 100%;" id="previewImgHolder"></div>   
@@ -297,12 +302,12 @@ async function caravansHtmlTemplateFields()
    <div id="modalItemDetails" class="modalItemDetails" style="max-width: 400px;" tabindex="0">
    
    <h3 class="item-title">
-   <img src="static/img/icons/caravan.png"><u></br><input id="title" placeholder="Заглавие"></u></h3> 
+   <img src="static/img/icons/caravan.png"><u></br><input id="title" name="title" placeholder="Заглавие"></u></h3> 
    
        <hr>
-       <span><img src="static/img/icons/price.png"><b>Цена:</b> </br><input id="price" placeholder="Цена"></span>
+       <span><img src="static/img/icons/price.png"><b>Цена:</b> </br><input id="price" name="price" placeholder="Цена"></span>
        <hr>
-       <span><img src="static/img/icons/brand.png"><b>Марка:</b> </br><input id="brand" type="text" placeholder="Марка" list="caravanBrands"></span>
+       <span><img src="static/img/icons/brand.png"><b>Марка:</b> </br><input id="brand" name="brand" type="text" placeholder="Марка" list="caravanBrands"></span>
             <datalist id="caravanBrands">
                 <option value="Hobby"></option>
                 <option value="Knaus"></option>
@@ -313,11 +318,36 @@ async function caravansHtmlTemplateFields()
                 <option value="Dethleffs"></option>
             </datalist>
        <hr>
-       <span><img src="static/img/icons/model.png"><b>Модел:</b> </br><input id="model" placeholder="Модел"></span>
+       <span><img src="static/img/icons/model.png"><b>Модел:</b> </br><input id="model" name="model" placeholder="Модел"></span>
        <hr>
-       <span><img src="static/img/icons/calendar.png"><b>Година:</b> </br><input id="year" placeholder="Година"></span>
+       <span><img src="static/img/icons/calendar.png"><b>Година:</b> </br><input id="year" name="year" placeholder="Година" list="caravanYear"></span> 
+       <datalist id="caravanYear">
+                <option value="1990 г."></option>
+                <option value="1991 г."></option>
+                <option value="1996 г."></option>
+                <option value="1998 г."></option>
+                <option value="1999 г."></option>
+                <option value="2000 г."></option>
+                <option value="2001 г."></option>
+                <option value="2002 г."></option>
+                <option value="2003 г."></option>
+                <option value="2004 г."></option>
+                <option value="2005 г."></option>
+                <option value="2006 г."></option>
+                <option value="2007 г."></option>
+                <option value="2008 г."></option>
+                <option value="2009 г."></option>
+                <option value="2010 г."></option>
+                <option value="2011 г."></option>
+                <option value="2013 г."></option>
+                <option value="2014 г."></option>
+                <option value="2015 г."></option>
+                <option value="2016 г."></option>
+                <option value="2017 г."></option>
+                <option value="2018 г."></option>
+            </datalist>
        <hr>
-       <span><img src="static/img/icons/ruler.png"><b>Дължина:</b> </br><input id="length" placeholder="Дължинна" list="caravanLength"></span>
+       <span><img src="static/img/icons/ruler.png"><b>Дължина:</b> </br><input id="length" name="length" placeholder="Дължинна" list="caravanLength"></span>
        <datalist id="caravanLength">
                 <option value="380см"></option>
                 <option value="390см"></option>
@@ -334,9 +364,9 @@ async function caravansHtmlTemplateFields()
                 <option value="610см"></option>
             </datalist>
        <hr>
-       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> </br><input id="condition" placeholder="Състояние" value="Използванo"></span>
+       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> </br><input id="condition" name="condition" placeholder="Състояние" value="Използванo"></span>
        <hr>
-       <span><img src="static/img/icons/toilet.png"><b>Тоалетна:</b> </br><input id="toilet" placeholder="Тоалетна" list="caravanToilet"></span>
+       <span><img src="static/img/icons/toilet.png"><b>Тоалетна:</b> </br><input id="toilet" name="toilet" placeholder="Тоалетна" list="caravanToilet"></span>
             <datalist id="caravanToilet">
                 <option value="Да"></option>
                 <option value="Не"></option>
@@ -344,14 +374,15 @@ async function caravansHtmlTemplateFields()
                 <option value="Проточна"></option>
             </datalist>
        <hr>
-       <span><img src="static/img/icons/bath.png"><b>Баня:</b> </br><input id="bath" placeholder="Баня" list="caravanBath"></span>
+       <span><img src="static/img/icons/bath.png"><b>Баня:</b> </br><input id="bath" name="bath" placeholder="Баня" list="caravanBath"></span>
             <datalist id="caravanBath">
                 <option value="Да-душ"></option>
-                <option value="Не"></option>
                 <option value="Да-душ кабина"></option>
+                <option value="Само тоалетна без душ"></option>
+                <option value="Не"></option>
             </datalist>
        <hr>
-       <span><img src="static/img/icons/heater.png"><b>Отопление:</b> </br><input id="heating" placeholder="Отопление" list="caravanHeating"></span>
+       <span><img src="static/img/icons/heater.png"><b>Отопление:</b> </br><input id="heating" name="heating" placeholder="Отопление" list="caravanHeating"></span>
             <datalist id="caravanHeating">
                 <option value="Да"></option>
                 <option value="Не"></option>
@@ -359,15 +390,43 @@ async function caravansHtmlTemplateFields()
                 <option value="Електрическо"></option>
             </datalist>
        <hr>
-       <span><img src="static/img/icons/boiler.png"><b>Боийлер:</b> </br><input id="boiler" placeholder="Бойлер" list="caravanoBiler"></span>
+       <span><img src="static/img/icons/boiler.png"><b>Боийлер:</b> </br><input id="boiler" name="boiler" placeholder="Бойлер" list="caravanoBiler"></span>
        <datalist id="caravanoBiler">
                 <option value="Да"></option>
                 <option value="Не"></option>
                 <option value="Газов"></option>
-                <option value="Електрически 230В"></option>
+                <option value="Електрически 230V"></option>
             </datalist>
        <hr>
-       <span><img src="static/img/icons/snowflake.png"><b>АС/Климатик:</b> </br><input id="ac" placeholder="Климатик" list="caravanAc"></span>
+        <span><img src="static/img/icons/water-inlet.png"><b>Твр. врз. Вода:</b> </br><input id="waterInlet" name="waterInlet" placeholder="Твърда връзка вода" list="caravanWaterInlet"></span>
+       <datalist id="caravanWaterInlet">
+                <option value="Да"></option>
+                <option value="Не"></option> 
+            </datalist>
+       <hr>
+        <span><img src="static/img/icons/water-container.png"><b>Контейнер за вода:</b> </br><input id="waterContainer" name="waterContainer" placeholder="Резервар за вода" list="caravanWaterContainer"></span>
+       <datalist id="caravanWaterContainer">
+                <option value="Да"></option>
+                <option value="Да - 20 литра"></option>
+                <option value="Да - 40 литра"></option>
+                <option value="Да - 60 литра"></option>
+                <option value="Да - 120 литра"></option>
+                <option value="Не"></option> 
+            </datalist>
+       <hr>
+         <span><img src="static/img/icons/electricity.png"><b>Ток:</b> </br><input id="electricity" name="electricity" value="Да - 230V / 12V" placeholder="Ток" list="caravanЕlectricity"></span>
+       <datalist id="caravanЕlectricity">
+                <option value="Да - 230V / 12V"></option>
+                <option value="Не"></option> 
+            </datalist>
+       <hr>
+         <span><img src="static/img/icons/battery.png"><b>Акумулатор:</b> </br><input id="battery" name="battery" placeholder="Акумулатор" list="caravanBattery"></span>
+       <datalist id="caravanBattery">
+                <option value="Да - 12V"></option>
+                <option value="Не"></option> 
+            </datalist>
+       <hr>
+       <span><img src="static/img/icons/snowflake.png"><b>АС/Климатик:</b> </br><input id="ac" name="ac" placeholder="Климатик" list="caravanAc"></span>
        <datalist id="caravanAc">
                 <option value="Да"></option>
                 <option value="Не"></option>
@@ -375,30 +434,73 @@ async function caravansHtmlTemplateFields()
                 <option value="Да - Само Студене"></option>
             </datalist>
        <hr>
-       <span><img src="static/img/icons/bed.png"><b>Спални места:</b> </br><input id="sleepingPlaces" placeholder="Места за спане"></span>
-        <datalist id="caravanAc">
+       <span><img src="static/img/icons/stove.png"><b>Печка:</b> </br><input id="stove" name="stove" placeholder="Печка" list="caravanStove"></span>
+       <datalist id="caravanStove">
                 <option value="Да"></option>
                 <option value="Не"></option>
-                <option value="Да - Топлене / Студене"></option>
-                <option value="Да - Само Студене"></option>
+                <option value="Да - на ток"></option>
+                <option value="Да - на газ"></option>
+                <option value="Да - Микровълнова"></option>
             </datalist>
        <hr>
-       <span><img src="static/img/icons/tent.png"><b>Форселт:</b> </br><input id="fortelt" placeholder="Форселт"></span>
+       <span><img src="static/img/icons/hotplates.png"><b>Котлони:</b> </br><input id="hotplates" name="hotplates" value="Да - газ" placeholder="Котлони" list="caravanHotplates"></span>
+       <datalist id="caravanHotplates">
+                <option value="Да - газ"></option>
+                <option value="Да - ток"></option>
+                <option value="Не"></option>
+            </datalist>
        <hr>
-       <span><img src="static/img/icons/markise.png"><b>Маркиза:</b> </br><input id="marikise" placeholder="Маркиза"></span>
+       <span><img src="static/img/icons/solar-panel.png"><b>Солар:</b> </br><input id="solar" name="solar" placeholder="Солар" list="caravanSolar"></span>
+       <datalist id="caravanSolar">
+                <option value="Да"></option>
+                <option value="Не"></option>
+            </datalist>
        <hr>
-       <span><img src="static/img/icons/documents.png"><b>Документи:</b> </br><input id="documents" placeholder="Документи" value="Да"></span>
+       <span><img src="static/img/icons/bed.png"><b>Спални места:</b> </br><input id="sleepingPlaces" name="sleepingPlaces" placeholder="Места за спане" list="caravanSleepingPlaces"></span>
+        <datalist id="caravanSleepingPlaces">
+                <option value="2 души"></option>
+                <option value="3 души"></option>
+                <option value="4 души"></option>
+                <option value="4 души: Френско леголо х2 места; Сепаре х2 места"></option>
+                <option value="4 души: Сепаре - х2 места; Сепаре х2 места;"></option>
+                <option value="4 души: (2х единични легла) - х2 места; Сепаре х2 места"></option>
+                <option value="5 души"></option>
+                <option value="5 души: Френско леголо х2 места; Сепаре х2 места; Кушетка 1х място"></option>
+                <option value="5 души: (2х единични легла) - х2 места; Сепаре х2 места; Кушетка 1х място"></option>
+                <option value="5 души: Двуетажно легло - х2 места; Сепаре х2 места; Кушетка 1х място"></option>
+                <option value="6 души"></option>
+                <option value="6 души: Двуетажно легло - х2 места; Сепаре х2 места; Кушетка 2х места"></option>
+            </datalist>
        <hr>
-       <span><img src="static/img/icons/plate.png"><b>Номер:</b> </br><input id="plate" placeholder="Номер"></span>
+       <span><img src="static/img/icons/tent.png"><b>Форселт:</b> </br><input id="fortelt" name="fortelt" placeholder="Форселт" list="caravanFortelt"></span>
+           <datalist id="caravanFortelt">
+                <option value="Да"></option>
+                <option value="Не"></option>
+            </datalist>
        <hr>
-       <span><img src="static/img/icons/location.png"><b>Местоположение:</b></br><input id="location" placeholder="Местоположение" value="България - Обл. Перник"></span>
+       <span><img src="static/img/icons/markise.png"><b>Маркиза:</b> </br><input id="markise" name="markise" placeholder="Маркиза" list="caravanMarkise"></span>
+           <datalist id="caravanMarkise">
+                <option value="Да"></option>
+                <option value="Не"></option>
+            </datalist>
+       <hr>
+       <span><img src="static/img/icons/documents.png"><b>Документи:</b> </br><input id="documents" name="documents" placeholder="Документи" value="Да"></span>
+       <hr>
+       <span><img src="static/img/icons/plate.png"><b>Номер:</b> </br><input id="plate" name="plate" placeholder="Номер" list="caravanPlate"></span>
+           <datalist id="caravanPlate">
+                <option value="Да"></option>
+                <option value="Не"></option>
+            </datalist>
+       <hr>
+       <span><img src="static/img/icons/location.png"><b>Местоположение:</b></br><input id="location" name="location" placeholder="Местоположение" value="България - Обл. Перник"></span>
        <hr class="hr-orange"> 
-       <span><img src="static/img/icons/description.png"><b>Описание:</b> </br><textarea id="description" placeholder="Описание"></textarea ></span>
+       <span><img src="static/img/icons/description.png"><b>Описание:</b> </br><textarea id="description" name="description" placeholder="Описание"></textarea ></span>
        <hr class="hr-orange"> 
        <span><img src="static/img/icons/id.png"><b>ID:</b><font style="font-size:7px;">Gen</font></span>
        <hr>
-       <span><img src="static/img/icons/keywords.png"></br><input id="keywords" placeholder="Ключови думи" value="каравана, каравани, karavana, karavani, caravans, caravan"></span>
+       <span><img src="static/img/icons/keywords.png"></br><input id="keywords" name="keywords" placeholder="Ключови думи" value="каравана, каравани, karavana, karavani, caravans, caravan"></span>
        <hr> 
+       
        <button id="saveItemButton">Запази</button>
    </div>
 </div>`;

@@ -359,6 +359,16 @@ async function caravansHtmlTemplate(obj) {
        <hr>
        <span><img src="static/img/icons/boiler.png"><b>Боийлер:</b> ${obj.boiler}</span>
        <hr>
+       <span><img src="static/img/icons/electricity.png"><b>Ток:</b> ${obj.electricity}</span>
+       <hr>
+       <span><img src="static/img/icons/battery.png"><b>Акумулатор:</b> ${obj.battery}</span>
+       <hr>
+       <span><img src="static/img/icons/solar-panel.png"><b>Солар:</b> ${obj.solar}</span>
+       <hr>
+       <span><img src="static/img/icons/water-inlet.png"><b>Тв. врз. вода:</b> ${obj.waterInlet}</span>
+       <hr>
+       <span><img src="static/img/icons/water-container.png"><b>Съд за вода:</b> ${obj.waterContainer}</span>
+       <hr>
        <span><img src="static/img/icons/snowflake.png"><b>АС/Климатик:</b> ${obj.ac}</span>
        <hr>
        <span><img src="static/img/icons/bed.png"><b>Спални места:</b> ${obj.sleepingPlaces}</span>
@@ -1725,3 +1735,33 @@ async function delay(ms) {
         setTimeout(() => { resolve('') }, ms);
     })
 }
+
+
+
+// Get From Data as Json ---------------------------------------------
+function convertFormToJsonById(formId) 
+{
+    let divForm = document.getElementById(formId); // Using div as form
+    // let childElements = divForm.childNodes;
+    let childElements = divForm.getElementsByTagName("*");
+
+    let formData = {}; 
+
+    for (let i = 0; i < childElements.length; i++) 
+        {
+            if(childElements[i].name !=="" && childElements[i].name !== undefined) // If the element of the form that is a Div has a name property atribute attached to id then use it
+            { 
+                let element = childElements[i];
+                formData[element.name] = element.value; 
+            }
+        }
+
+    let jsonData = JSON.stringify(formData);
+     return jsonData;
+}
+
+
+
+
+
+
