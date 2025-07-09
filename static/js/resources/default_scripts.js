@@ -1756,8 +1756,9 @@ function convertFormToJsonById(formId)
             }
         }
 
-    let jsonData = JSON.stringify(formData);
-     return jsonData;
+    // let jsonData = JSON.stringify(formData);
+    //  return jsonData;
+     return formData;
 }
 
 

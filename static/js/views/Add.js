@@ -224,6 +224,7 @@ autoLoadCredentials();
           {
              apFields.innerHTML = await caravansHtmlTemplateFields();
              document.getElementById("saveItemButton").addEventListener("click", (e)=> {saveItem(e)}); // For upload
+             document.getElementById("generateCaravanTitle").addEventListener("click", generateCaravanTitle); // Generate caravan title
             //  document.getElementById("imgPicker").addEventListener("onchange", handleImages); // For the modal
           }
           
@@ -235,14 +236,14 @@ autoLoadCredentials();
 
 // Save Item ---------------------------------------------------------------------
 async function saveItem(e)
-{
-   e.preventDefault();
-   let type = document.getElementById('itemType').value; // For saving it in github in specific folder type - caravans, cars, products etc.
+{ 
+   let type = document.getElementById('itemType').value; // Used - constructin obj and For saving it in github in specific folder type - caravans, cars, products etc.
    let itemName = document.getElementById('title').value; // For Creating Id
    let itemId = createId(itemName);
    await handleItemImages(itemId, type);// Upload Images
 
-   const data = convertFormToJsonById('modalItemDetails');
+   const formData = convertFormToJsonById('modalItemDetails');
+   
 
    // 1. Here get the links for the uploadded images if responese ok
    // 2. Convert to js delivr url.
@@ -277,6 +278,21 @@ async function handleItemImages(itemId, type)
 }
  
 
+
+// Generate Title ================================================================
+function generateCaravanTitle()
+{
+    let brand = document.getElementById('caravanBrand');
+    let model = document.getElementById('caravanModel');
+    let length = document.getElementById('caravanLength');
+    let year = document.getElementById('caravanYear');
+    let genTitle = `${brand.value} ${model.value} ${length.value} - ${year.value}`;
+
+    document.getElementById('caravanTttle').value = genTitle;
+}
+
+
+
 // Base HTML For caravan -----------------------------------------------------------------------
 async function caravansHtmlTemplateFields() 
 {
@@ -301,13 +317,13 @@ async function caravansHtmlTemplateFields()
     
    <div id="modalItemDetails" class="modalItemDetails" style="max-width: 400px;" tabindex="0">
    
-   <h3 class="item-title">
-   <img src="static/img/icons/caravan.png"><u></br><input id="title" name="title" placeholder="Заглавие"></u></h3> 
    
+   
+         <h3 class="item-title"><img src="static/img/icons/caravan.png"><u></br>Категория каравани:</u></h3> 
        <hr>
        <span><img src="static/img/icons/price.png"><b>Цена:</b> </br><input id="price" name="price" placeholder="Цена"></span>
        <hr>
-       <span><img src="static/img/icons/brand.png"><b>Марка:</b> </br><input id="brand" name="brand" type="text" placeholder="Марка" list="caravanBrands"></span>
+       <span><img src="static/img/icons/brand.png"><b>Марка:</b> </br><input id="caravanBrand" name="brand" type="text" placeholder="Марка" list="caravanBrands"></span>
             <datalist id="caravanBrands">
                 <option value="Hobby"></option>
                 <option value="Knaus"></option>
@@ -318,10 +334,10 @@ async function caravansHtmlTemplateFields()
                 <option value="Dethleffs"></option>
             </datalist>
        <hr>
-       <span><img src="static/img/icons/model.png"><b>Модел:</b> </br><input id="model" name="model" placeholder="Модел"></span>
+       <span><img src="static/img/icons/model.png"><b>Модел:</b> </br><input id="caravanModel" name="model" placeholder="Модел"></span>
        <hr>
-       <span><img src="static/img/icons/calendar.png"><b>Година:</b> </br><input id="year" name="year" placeholder="Година" list="caravanYear"></span> 
-       <datalist id="caravanYear">
+       <span><img src="static/img/icons/calendar.png"><b>Година:</b> </br><input id="caravanYear" name="year" placeholder="Година" list="caravanYearList"></span> 
+       <datalist id="caravanYearList">
                 <option value="1990 г."></option>
                 <option value="1991 г."></option>
                 <option value="1996 г."></option>
@@ -347,8 +363,8 @@ async function caravansHtmlTemplateFields()
                 <option value="2018 г."></option>
             </datalist>
        <hr>
-       <span><img src="static/img/icons/ruler.png"><b>Дължина:</b> </br><input id="length" name="length" placeholder="Дължинна" list="caravanLength"></span>
-       <datalist id="caravanLength">
+       <span><img src="static/img/icons/ruler.png"><b>Дължина:</b> </br><input id="caravanLength" name="length" placeholder="Дължинна" list="caravanLengthList"></span>
+       <datalist id="caravanLengthList">
                 <option value="380см"></option>
                 <option value="390см"></option>
                 <option value="450см"></option>
@@ -363,6 +379,7 @@ async function caravansHtmlTemplateFields()
                 <option value="590см"></option>
                 <option value="610см"></option>
             </datalist>
+            
        <hr>
        <span><img src="static/img/icons/gear.png"><b>Състояние:</b> </br><input id="condition" name="condition" placeholder="Състояние" value="Използванo"></span>
        <hr>
@@ -501,13 +518,15 @@ async function caravansHtmlTemplateFields()
        <span><img src="static/img/icons/keywords.png"></br><input id="keywords" name="keywords" placeholder="Ключови думи" value="каравана, каравани, karavana, karavani, caravans, caravan"></span>
        <hr> 
        
+       <h3 class="item-title"><img src="static/img/icons/caravan.png"><u></br><input id="caravanTttle" name="title" placeholder="Заглавие"></u></h3> 
+       <button id="generateCaravanTitle">Генер. заглавие</button>
+
        <button id="saveItemButton">Запази</button>
    </div>
 </div>`;
 
 
 }
-
 
 
 
