@@ -365,6 +365,8 @@ async function caravansHtmlTemplate(obj) {
        <hr>
        <span><img src="static/img/icons/solar-panel.png"><b>Солар:</b> ${obj.solar}</span>
        <hr>
+       <span><img src="static/img/icons/mover.png"><b>Мувер:</b> ${obj.mover}</span>
+       <hr>
        <span><img src="static/img/icons/water-inlet.png"><b>Тв. врз. вода:</b> ${obj.waterInlet}</span>
        <hr>
        <span><img src="static/img/icons/water-container.png"><b>Съд за вода:</b> ${obj.waterContainer}</span>

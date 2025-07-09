@@ -467,6 +467,12 @@ async function caravansHtmlTemplateFields()
                 <option value="Не"></option>
             </datalist>
        <hr>
+       <span><img src="static/img/icons/mover.png"><b>Мувер:</b> </br><input id="mover" name="mover" list="caravanMover"></span>
+       <datalist id="caravanMover">
+                <option value="Да"></option>
+                <option value="Не"></option>
+            </datalist>
+       <hr>
        <span><img src="static/img/icons/solar-panel.png"><b>Солар:</b> </br><input id="solar" name="solar" placeholder="Солар" list="caravanSolar"></span>
        <datalist id="caravanSolar">
                 <option value="Да"></option>
