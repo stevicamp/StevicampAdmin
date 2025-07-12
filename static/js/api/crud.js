@@ -57,7 +57,7 @@ async function updateJsonFileAsync(githubUser, githubRepo, githubFilePathDb, git
     // newContent = document.getElementById("developerInput").value;
     const sha = await getFileSha(githubUser, githubRepo, githubFilePathDb, githubToken);
     // const contentBase64 = btoa(JSON.stringify(encodeURI(content), null, 2)); // EncodeUri because of non latin character later in db on fetch decodeUri
-    const contentBase64 =  btoa(unescapeForBtoa(encodeURIComponent(content))); // EncodeUri because of non latin character later in db on fetch decodeUri
+    const contentBase64 =  btoa(unescape(encodeURIComponent(content))); // EncodeUri because of non latin character later in db on fetch decodeUri
     // const contentBase64 =  btoa(unescape(encodeURIComponent(content))); // EncodeUri because of non latin character later in db on fetch decodeUri
 //  https://stackoverflow.com/questions/23223718/failed-to-execute-btoa-on-window-the-string-to-be-encoded-contains-characte
 // https://stackoverflow.com/questions/27926562/deprecation-of-javascript-function-unescape
