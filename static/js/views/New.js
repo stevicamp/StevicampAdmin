@@ -7,7 +7,7 @@ import * as Common from "./Common.js"
 
 // VIEW HTML ---------------------------------------------------
 export async function getHtmlAsync() {
-    let db = await getDb();
+    let db = await getDbAsync();
 
     // for (let v = 0; v < db.items.length; v++) 
     // {

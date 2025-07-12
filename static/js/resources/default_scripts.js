@@ -1,4 +1,10 @@
-﻿// ############## DATABASE #################################################################################################
+﻿
+
+
+// ############## ENDPOINTS #################################################################################################
+let jsDelivr = 'https://cdn.jsdelivr.net/gh/';
+
+// ############## DATABASE #################################################################################################
 var base_db = null;
 
 var locationInputChanged = false;
@@ -7,10 +13,10 @@ var prevUrl = "";
 
 var popStateUrl = false;
 
-async function getDb() {
+async function getDbAsync() {
     if (base_db == null) {
         // var jsDb = await fetch('https://cdn.jsdelivr.net/gh/stefan27dk/Stevicamp@latest/resources/db/database.json?1', {cache: "reload"})
-        var jsDb = await fetch('http://localhost:8080/resources/db/database.json', { cache: "reload" })
+        var jsDb = await fetch('https://cdn.jsdelivr.net/gh/stevicamp/Stevicamp@latest/resources/db/database.json?1', { cache: "reload" })
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
@@ -202,9 +208,9 @@ document.body.addEventListener('keydown', function (e) {
 
 
 
-function keyPress(e) {
+// function keyPress(e) {
 
-}
+// }
 // document.addEventListener("keypress", checkKeypress(e));
 
 // function checkKeypress(e)
@@ -292,10 +298,22 @@ function phoneViberNumberInfoHtml(phone, viberPhone) {
 }
 
 
+function htmlItemSold(item)
+{
+  if(item.sold == "true")
+  {
+     return `<hr><span><b><font size="6"><i class="red">Продадено</i></font></b></span>`;
+  } 
+  else
+  {
+    return ``;
+  }
+}
+
 
 // Base HTML For caravans -----------------------------------------------------------------------
 async function caravansHtmlTemplate(obj) {
-    let db = await getDb();
+    let db = await getDbAsync();
     let imagesHtml = "";
     let itemLink = window.location.host + '?search=' + obj.id; // Construct the link for the current item
 
@@ -321,7 +339,7 @@ async function caravansHtmlTemplate(obj) {
        <button class="arrow-left prevent-select" onclick="toggleModalImg(-1)">&#10094;</button>
        <button class="arrow-right prevent-select" onclick="toggleModalImg(1)">&#10095;</button> 
        
-        ${modalItemShareButtonsHtml(itemLink, obj.title)}
+        ${modalItemShareButtonsHtml(itemLink, obj.title)} 
    
     </div>
   
@@ -334,6 +352,8 @@ async function caravansHtmlTemplate(obj) {
    <span style="margin: 0 0 0 auto;"><a class="item_share_button" href="javascript: copyToClipboard(copyElementTextById('modalItemDetails'));" title="Натиснете за да Копирате описанието"><img src="static/img/icons/copy.png"></a></span>
        <hr> 
        ${phoneViberNumberInfoHtml(db.phone, db.viberPhone)}
+       
+        ${htmlItemSold(obj)}
        <hr>
        <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price}</span>
        <hr>
@@ -403,7 +423,7 @@ async function caravansHtmlTemplate(obj) {
 
 // Base HTML For cars -----------------------------------------------------------------------
 async function carsHtmlTemplate(obj) {
-    let db = await getDb();
+    let db = await getDbAsync();
     let imagesHtml = "";
     let itemLink = window.location.host + '?search=' + obj.id; // Construct the link for the current item
 
@@ -431,6 +451,7 @@ async function carsHtmlTemplate(obj) {
     <hr> 
         ${phoneViberNumberInfoHtml(db.phone, db.viberPhone)}
 
+        ${htmlItemSold(obj)}
        <hr>
        <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price}</span>
        <hr>
@@ -486,7 +507,7 @@ async function carsHtmlTemplate(obj) {
 
 // Base HTML For microbuses -----------------------------------------------------------------------
 async function microbusHtmlTemplate(obj) {
-    let db = await getDb();
+    let db = await getDbAsync();
     let imagesHtml = "";
     let itemLink = window.location.host + '?search=' + obj.id; // Construct the link for the current item
 
@@ -515,6 +536,7 @@ async function microbusHtmlTemplate(obj) {
       
         ${phoneViberNumberInfoHtml(db.phone, db.viberPhone)}
 
+        ${htmlItemSold(obj)}
        <hr>
        <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price}</span>
        <hr>
@@ -573,7 +595,7 @@ async function microbusHtmlTemplate(obj) {
 
 // Base HTML For scooters -----------------------------------------------------------------------
 async function scootersHtmlTemplate(obj) {
-    let db = await getDb();
+    let db = await getDbAsync();
     let imagesHtml = "";
     let itemLink = window.location.host + '?search=' + obj.id; // Construct the link for the current item
 
@@ -602,6 +624,7 @@ async function scootersHtmlTemplate(obj) {
       
         ${phoneViberNumberInfoHtml(db.phone, db.viberPhone)}
 
+        ${htmlItemSold(obj)}
        <hr>
        <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price}</span>
        <hr>
@@ -635,7 +658,7 @@ async function scootersHtmlTemplate(obj) {
 
 // Base HTML For trailers -----------------------------------------------------------------------
 async function trailersHtmlTemplate(obj) {
-    let db = await getDb();
+    let db = await getDbAsync();
     let imagesHtml = "";
     let itemLink = window.location.host + '?search=' + obj.id; // Construct the link for the current item
 
@@ -663,6 +686,8 @@ async function trailersHtmlTemplate(obj) {
        <hr>
       
         ${phoneViberNumberInfoHtml(db.phone, db.viberPhone)}
+
+        ${htmlItemSold(obj)}
 
        <hr>
        <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price}</span>
@@ -705,7 +730,7 @@ async function trailersHtmlTemplate(obj) {
 
 // Base HTML For Tyres -----------------------------------------------------------------------
 async function wheelsHtmlTemplate(obj) {
-    let db = await getDb();
+    let db = await getDbAsync();
     let imagesHtml = "";
     let itemLink = window.location.host + '?search=' + obj.id; // Construct the link for the current item
 
@@ -734,6 +759,8 @@ async function wheelsHtmlTemplate(obj) {
        <hr>
       
         ${phoneViberNumberInfoHtml(db.phone, db.viberPhone)}
+
+        ${htmlItemSold(obj)}
 
        <hr>
        <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price}</span>
@@ -782,7 +809,7 @@ async function wheelsHtmlTemplate(obj) {
 
 // Base HTML For products -----------------------------------------------------------------------
 async function productsHtmlTemplate(obj) {
-    let db = await getDb();
+    let db = await getDbAsync();
     let imagesHtml = "";
     let itemLink = window.location.host + '?search=' + obj.id; // Construct the link for the current item
 
@@ -811,6 +838,8 @@ async function productsHtmlTemplate(obj) {
        <hr>
       
         ${phoneViberNumberInfoHtml(db.phone, db.viberPhone)}
+
+        ${htmlItemSold(obj)}
 
        <hr>
        <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price}</span>
@@ -844,7 +873,7 @@ async function productsHtmlTemplate(obj) {
 
 // Base HTML For equipment -----------------------------------------------------------------------
 async function equipmentHtmlTemplate(obj) {
-    let db = await getDb();
+    let db = await getDbAsync();
     let imagesHtml = "";
     let itemLink = window.location.host + '?search=' + obj.id; // Construct the link for the current item
 
@@ -875,6 +904,8 @@ async function equipmentHtmlTemplate(obj) {
       
         ${phoneViberNumberInfoHtml(db.phone, db.viberPhone)}
 
+        ${htmlItemSold(obj)}
+
        <hr>
        <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price}</span>
        <hr>
@@ -904,7 +935,7 @@ async function equipmentHtmlTemplate(obj) {
 
 // Base HTML For appliances -----------------------------------------------------------------------
 async function appliancesHtmlTemplate(obj) {
-    let db = await getDb();
+    let db = await getDbAsync();
     let imagesHtml = "";
     let itemLink = window.location.host + '?search=' + obj.id; // Construct the link for the current item
 
@@ -933,6 +964,8 @@ async function appliancesHtmlTemplate(obj) {
        <hr>
       
         ${phoneViberNumberInfoHtml(db.phone, db.viberPhone)}
+
+        ${htmlItemSold(obj)}
 
        <hr>
        <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price}</span>
@@ -967,7 +1000,7 @@ async function appliancesHtmlTemplate(obj) {
 // ### MODAL ### --------------------------------------------------------------------------------------------------------------
 async function showModal(itemId) // Show modal is used so when navigating trough the back forward buttons to only show the modal and not push state differnt paths - other wise it does not work
 {
-    let db = await getDb(); // Get the singleton db
+    let db = await getDbAsync(); // Get the singleton db
     let rawItem = await recursiveSearchObj(db.items, itemId); // Search and get the matched item // Consider seperate search for the modal to search only in id keys for eventually better performance
     let item = Object.values(rawItem)[0][0];
 
@@ -1163,7 +1196,7 @@ async function checkForSearchKeywords() // Check for keywords in the adressbar a
 
 // async function constructItemsListAllTypes() // Item list with 
 // {
-//     db = await getDb(); // The singleton Database - fetch if not already fetched - it is in the other file 
+//     db = await getDbAsync(); // The singleton Database - fetch if not already fetched - it is in the other file 
 
 //     let allDbItems = [];
 //     for (let i = 0; i < Object.keys(db).length; i++) 
@@ -1181,7 +1214,7 @@ async function checkForSearchKeywords() // Check for keywords in the adressbar a
 
 // Get available Db types - cars, caravans, products etc. 
 async function getAvailableDbTypes() {
-    let db = await getDb();
+    let db = await getDbAsync();
     let availableDbTypes = Object.keys(db.items);
 
     return availableDbTypes; // AllDbTypes - cars, caravans, products as strings
@@ -1208,7 +1241,7 @@ async function getAvailableDbTypes() {
 // Get Items - Construct html items
 async function getItems(itemType, itemsList)  // ItemType = car, caravan, products etc.
 {
-    let db = await getDb();
+    let db = await getDbAsync();
 
     // if(!Object.hasOwn(db, `${itemType}`) && itemsList !== undefined) // If there is no such item type in the db and if items list is empty. This may mean no search result in home vire search
     // {
@@ -1279,7 +1312,7 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
 
 // Search - current items - when in ex. caravans View, Cars View, Prodicts View etc. ###########################################################################
 async function searchItems(e) {
-    let db = await getDb(); // Get the singleton db
+    let db = await getDbAsync(); // Get the singleton db
     var searchTxt = e.currentTarget.value; // Get the txt from the search textbox or the url depending on e
 
 
@@ -1704,7 +1737,7 @@ function handleImages()
 
 // For converting the local image to Base64 - and uploding it to the github #######################################################
 // Get the image as Base64
-async function readImgAsBase64AndUpload(file, imgComment, githubFilePath)
+async function readImgAsBase64AndUpload(file, imgComment, githubFilePathDb)
 {  
 // let testImg = document.getElementById('imgPicker').files[0] // Get the image from the "input with type="file""
  
@@ -1712,7 +1745,7 @@ async function readImgAsBase64AndUpload(file, imgComment, githubFilePath)
  
     // Base64
     let dataBase64Img = readerFile.split(',')[1]; // Remove "data:image/png;base64," so it is raw image base64
-    return await uploadImgAsync(githubUser, githubRepo, githubFilePath, githubToken, dataBase64Img, '', imgComment); // Upload the image to the server
+    return await uploadImgAsync(githubUser, githubRepo, githubFilePathDb, githubToken, dataBase64Img, '', imgComment); // Upload the image to the server
 }
 
 

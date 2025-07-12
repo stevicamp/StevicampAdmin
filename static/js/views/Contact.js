@@ -5,7 +5,7 @@ import * as Common from "./Common.js"
 
 // VIEW HTML ---------------------------------------------------
 export async function getHtmlAsync() {
-    let db =  await getDb();
+    let db =  await getDbAsync();
     return  ` </br>
     <font size ="1"><i>Ако преглеждате сайта от телефон, натиснете върху дадения телефон за да звъннете, автоматично.</i></font>
     </br>

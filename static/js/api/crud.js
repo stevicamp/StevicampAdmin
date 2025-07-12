@@ -1,16 +1,16 @@
   var githubUser ="";
   var githubRepo ="";
   var githubToken ="";
-  var githubFilePath ="";
+  var githubFilePathDb =""; // Path for the DB
   var newContent ="";
+  
 
-
-//`https://corsproxy.io/?url=https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePath}`,
+//`https://corsproxy.io/?url=https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePathDb}`,
 // Function to get the file's SHA
-async function getFileSha(githubUser, githubRepo, githubFilePath, githubToken) {
+async function getFileSha(githubUser, githubRepo, githubFilePathDb, githubToken) {
   try {
     const response = await fetch(
-      `https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePath}`,
+      `https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePathDb}`,
       {
         method: "GET",
         headers: {
@@ -38,18 +38,29 @@ async function getFileSha(githubUser, githubRepo, githubFilePath, githubToken) {
 }
 
 
-// `https://corsproxy.io/?url=https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePath}`,
+
+function unescapeForBtoa(str) 
+{ 
+  return str.replace(/%([0-9A-F]{2})/g, (match, p1) => { return String.fromCharCode('0x' + p1);})
+}
+
+
+ 
+
+// `https://corsproxy.io/?url=https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePathDb}`,
 // Function to update the JSON file
-async function updateJsonFileAsync(githubUser, githubRepo, githubFilePath, githubToken, content, msg) 
+async function updateJsonFileAsync(githubUser, githubRepo, githubFilePathDb, githubToken, content, msg) 
 {
   try {
 
     loadingMsg('Запазва се...');
     // newContent = document.getElementById("developerInput").value;
-    const sha = await getFileSha(githubUser, githubRepo, githubFilePath, githubToken);
-    const contentBase64 = btoa(JSON.stringify(encodeURI(content), null, 2)); // EncodeUri because of non latin character later in db on fetch decodeUri
- 
-
+    const sha = await getFileSha(githubUser, githubRepo, githubFilePathDb, githubToken);
+    // const contentBase64 = btoa(JSON.stringify(encodeURI(content), null, 2)); // EncodeUri because of non latin character later in db on fetch decodeUri
+    const contentBase64 =  btoa(unescapeForBtoa(encodeURIComponent(content))); // EncodeUri because of non latin character later in db on fetch decodeUri
+    // const contentBase64 =  btoa(unescape(encodeURIComponent(content))); // EncodeUri because of non latin character later in db on fetch decodeUri
+//  https://stackoverflow.com/questions/23223718/failed-to-execute-btoa-on-window-the-string-to-be-encoded-contains-characte
+// https://stackoverflow.com/questions/27926562/deprecation-of-javascript-function-unescape
     const body = {
       message: `${msg}`,
       content: contentBase64,
@@ -57,7 +68,7 @@ async function updateJsonFileAsync(githubUser, githubRepo, githubFilePath, githu
     };
 
     const response = await fetch(
-      `https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePath}`,
+      `https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePathDb}`,
       {
         method: "PUT",
         headers: {
@@ -94,15 +105,15 @@ async function updateJsonFileAsync(githubUser, githubRepo, githubFilePath, githu
 
 
 
-// `https://corsproxy.io/?url=https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePath}`,
+// `https://corsproxy.io/?url=https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePathDb}`,
 // Function to update the JSON file
-async function uploadImgAsync(githubUser, githubRepo, githubFilePath, githubToken, imgContentBase64, msg, imgComment) 
+async function uploadImgAsync(githubUser, githubRepo, githubFilePathDb, githubToken, imgContentBase64, msg, imgComment) 
 {
    try 
    {
     loadingMsg(`Запазва се снимка ${imgComment}...`);
 
-    // const sha = await getFileSha(githubUser, githubRepo, githubFilePath, githubToken);
+    // const sha = await getFileSha(githubUser, githubRepo, githubFilePathDb, githubToken);
 
     const body = {
       message: `${msg}`,
@@ -110,7 +121,7 @@ async function uploadImgAsync(githubUser, githubRepo, githubFilePath, githubToke
     };
 
     const response = await fetch(
-      `https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePath}`,
+      `https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePathDb}`,
       {
         method: "PUT",
         headers: {

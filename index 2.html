@@ -18,7 +18,7 @@
             <input id="githubUser" type="text" placeholder="Github User - 'stevicamp'" value="stevicamp"/>
             <input id="githubRepo" type="text" placeholder="Github Repository - 'Stevicamp'" value="Stevicamp"/>
             <input id="githubToken" type="password" placeholder="Github acces token"/>
-            <input id="githubFilePath" type="text" placeholder="Github file path - to update - 'test.json'" value="test.json"/>
+            <input id="githubFilePathDb" type="text" placeholder="Github file path - to update - 'test.json'" value="test.json"/>
             
             <button id="saveCredentials">Запази парола / данни</button>
             <button id="loadCredentials">Зареди парола / данни</button>
@@ -37,7 +37,7 @@
         let githubUser ="";
         let githubRepo ="";
         let githubToken ="";
-        let githubFilePath ="";
+        let githubFilePathDb ="";
         let newContent ="";
 
         document.getElementById("loadCredentials").addEventListener("click", loadCredentialsFromLocalStorageToInputs);
@@ -58,13 +58,13 @@
             githubUser = document.getElementById("githubUser").value;
             githubRepo = document.getElementById("githubRepo").value;
             githubToken = document.getElementById("githubToken").value;
-            githubFilePath = document.getElementById("githubFilePath").value;
+            githubFilePathDb = document.getElementById("githubFilePathDb").value;
 
             // Save data to local storage
             localStorage.setItem("githubUser", githubUser);
             localStorage.setItem("githubRepo", githubRepo);
             localStorage.setItem("githubToken", githubToken); 
-            localStorage.setItem("githubFilePath", githubFilePath); 
+            localStorage.setItem("githubFilePathDb", githubFilePathDb); 
         }
 
 
@@ -75,14 +75,14 @@
             githubUser = localStorage.getItem("githubUser");
             githubRepo = localStorage.getItem("githubRepo");
             githubToken = localStorage.getItem("githubToken");
-            githubFilePath = localStorage.getItem("githubFilePath");
+            githubFilePathDb = localStorage.getItem("githubFilePathDb");
 
            
             // Populate inputs
             document.getElementById("githubUser").value = githubUser;
             document.getElementById("githubRepo").value = githubRepo;
             document.getElementById("githubToken").value = githubToken;
-            document.getElementById("githubFilePath").value = githubFilePath; 
+            document.getElementById("githubFilePathDb").value = githubFilePathDb; 
 
             
 
@@ -124,7 +124,7 @@
           localStorage.removeItem("githubUser");
           localStorage.removeItem("githubRepo");
           localStorage.removeItem("githubToken");
-          localStorage.removeItem("githubFilePath");
+          localStorage.removeItem("githubFilePathDb");
         }
 
 
@@ -145,12 +145,12 @@ const path = "test.json";
 
  
 
-//`https://corsproxy.io/?url=https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePath}`,
+//`https://corsproxy.io/?url=https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePathDb}`,
 // Function to get the file's SHA
 async function getFileSha() {
   try {
     const response = await fetch(
-      `https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePath}`,
+      `https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePathDb}`,
       {
         method: "GET",
         headers: {
@@ -178,7 +178,7 @@ async function getFileSha() {
 }
 
 
-// `https://corsproxy.io/?url=https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePath}`,
+// `https://corsproxy.io/?url=https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePathDb}`,
 // Function to update the JSON file
 async function updateJsonFile() {
   try {
@@ -194,7 +194,7 @@ async function updateJsonFile() {
     };
 
     const response = await fetch(
-      `https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePath}`,
+      `https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePathDb}`,
       {
         method: "PUT",
         headers: {

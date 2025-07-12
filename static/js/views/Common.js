@@ -33,14 +33,14 @@ export const setTitle = (title, img) => {
 
 async function executeCommonViewScriptAsync()
 {
-    await getDb();
+    await getDbAsync();
 }
 
 executeCommonViewScriptAsync();
 // export async function getItems(itemType)  // ItemType = car, caravan, products etc.
 // {
 //      // The singleton Database - fetch if not already fetched
-//     let db = await getDb();
+//     let db = await getDbAsync();
 
 //      // Use of string for better performance instead of using .innerHTML += 
 //      var combined_items = ''; // Holder of the items, that are constructed and put in this variable
@@ -77,7 +77,7 @@ executeCommonViewScriptAsync();
 
 // var db = null;
 
-// export async function getDb() {
+// export async function getDbAsync() {
 //     if (db == null) {
 //         var jsDb = await fetch('https://cdn.jsdelivr.net/gh/stefan27dk/Stevicamp@latest/resources/db/database.json?1', {cache: "reload"})
 //             .then(response => {

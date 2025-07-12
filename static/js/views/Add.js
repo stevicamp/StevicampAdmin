@@ -16,10 +16,10 @@ export async function getHtmlAsync() {
             <input id="githubRepo" type="text" placeholder="Github Repository - 'Stevicamp'" value="Stevicamp">
             <span>Github Token:</span>
             <input id="githubToken" type="password" placeholder="Github acces token">
-            <span>File path: <a target="_blank" href="https://github.com/stevicamp/Stevicamp/blob/main/test.json">Отваряне Файла</a></span>
-            <input id="githubFilePath" type="text" placeholder="Github file path - to update - 'test.json'" value="test.json">
+            <span>File path: <a target="_blank" id="githubFilePathDbLink" href="">Отваряне на Файла</a></span>
+            <input id="githubFilePathDbInput" type="text" placeholder="Github file path - to update - 'the DB'" value="">
             
-            <button id="saveCredentials">Запази парола / данни</button>
+            <button id="saveCredentialsBtn">Запази парола / данни</button>
             <button id="loadCredentials">Зареди парола / данни</button>
             <span>Авто. Зареждане на парола</span>
             <input  id="loadCredentialsAutoCheckbox" type="checkbox" title="Автоматично зареждане на парола / данни">
@@ -27,7 +27,8 @@ export async function getHtmlAsync() {
 
             <span>Поле за обновяване на ДБ:</span>
             <textarea id="developerInput" type="text" cols="40" rows="5" placeholder="Json content to update the file with - UPDATES THE WHOLE DB WITH THE PROVIDED TEXT! - Erases all old."></textarea>
-           <button id="save">Запази в ДБ</button>
+            
+           <button id="saveDbBtn">Запази в ДБ</button>
             </div>
                <button id="admin-credentials-toggler"  style="width: 100%;">
                     Покажи данни ▼
@@ -47,9 +48,7 @@ export async function getHtmlAsync() {
                </select>
            
                <div style="width: 100%; height: 88%; box-sizing: border-box; display: flex;" id="aproppiriateFieldsContainer"></div> 
-               </div>
-
-           <button id="uploadImg">Test upload Img</button> 
+               </div> 
             `;
 
          
@@ -67,14 +66,15 @@ export async function executeViewScriptAsync() {
         
 
         document.getElementById("loadCredentials").addEventListener("click", loadCredentialsFromLocalStorageToInputs);
-        document.getElementById("saveCredentials").addEventListener("click", saveCredentials);
+        document.getElementById("saveCredentialsBtn").addEventListener("click", saveCredentials);
         document.getElementById("clearCredentials").addEventListener("click", clearLocalStorageCredentials);
         document.getElementById("admin-credentials-toggler").addEventListener("click", toggleAdminCredentials);
         document.getElementById("loadCredentialsAutoCheckbox").addEventListener("click", toggleAutoLoadCredentials);
         
+        
         document.getElementById("itemType").addEventListener("change", loadAppropriateFields);
         
-        document.getElementById("save").addEventListener("click", constructUpdateAndUpdate); 
+        document.getElementById("saveDbBtn").addEventListener("click", ()=> {constructUpdateAndUpdate(document.getElementById("developerInput").value, githubFilePathDb)}); 
         
        
      
@@ -108,15 +108,22 @@ autoLoadCredentials();
 
 
 
+
+
+
+
+
+
+
   // Update the json file
-        function constructUpdateAndUpdate()
+        async function constructUpdateAndUpdate(jsonData, filePath)
         {
-         updateJsonFileAsync(githubUser, githubRepo, githubFilePath, githubToken, document.getElementById("developerInput").value, 'msg');
+           await updateJsonFileAsync(githubUser, githubRepo, filePath, githubToken, jsonData, 'msg');
         }
      
 
         // Toggle credentials cotnainer ................................................
-        function toggleAdminCredentials()
+        async function toggleAdminCredentials()
         {
             let credentialsContainer = document.getElementById('credentialsContainer');
             let adminCredentialsToggler = document.getElementById('admin-credentials-toggler');
@@ -125,30 +132,43 @@ autoLoadCredentials();
             {
                  credentialsContainer.style.display = 'flex';
                  adminCredentialsToggler.innerHTML = 'Скрий данни ▲';
+                 await populateDeveloperInputAsync();
             }
             else
             {
                  credentialsContainer.style.display = 'none';
-                 adminCredentialsToggler.innerHTML = 'Покажи данни ▼';
+                 adminCredentialsToggler.innerHTML = 'Покажи данни ▼'; 
             }
 
         }
 
 
-        // Set Credentials
+// Populate developer input ==============================================
+ async function populateDeveloperInputAsync()
+  {
+    let db = await getDbAsync();
+    let jsonDb = JSON.stringify(db);
+    let developerInput = document.getElementById("developerInput");
+    developerInput.value = jsonDb;
+  }
+
+
+
+
+        // Set Credentials ...............................................................
         function saveCredentials() 
         {
             // Save data from inputs to local variables
             githubUser = document.getElementById("githubUser").value;
             githubRepo = document.getElementById("githubRepo").value;
             githubToken = document.getElementById("githubToken").value;
-            githubFilePath = document.getElementById("githubFilePath").value;
+            githubFilePathDb = document.getElementById("githubFilePathDbInput").value;
 
             // Save data to local storage
             localStorage.setItem("githubUser", githubUser);
             localStorage.setItem("githubRepo", githubRepo);
             localStorage.setItem("githubToken", githubToken); 
-            localStorage.setItem("githubFilePath", githubFilePath); 
+            localStorage.setItem("githubFilePathDb", githubFilePathDb); 
         }
 
 
@@ -159,17 +179,16 @@ autoLoadCredentials();
             githubUser = localStorage.getItem("githubUser");
             githubRepo = localStorage.getItem("githubRepo");
             githubToken = localStorage.getItem("githubToken");
-            githubFilePath = localStorage.getItem("githubFilePath");
+            githubFilePathDb = localStorage.getItem("githubFilePathDb");
 
-           
             // Populate inputs
             document.getElementById("githubUser").value = githubUser;
             document.getElementById("githubRepo").value = githubRepo;
             document.getElementById("githubToken").value = githubToken;
-            document.getElementById("githubFilePath").value = githubFilePath; 
-
+ 
             
-
+            document.getElementById("githubFilePathDbInput").value = githubFilePathDb; 
+            document.getElementById("githubFilePathDbLink").href = `https://github.com/${githubUser}/${githubRepo}/blob/main/${githubFilePathDb}`; // Link to open
         }
         
         
@@ -210,7 +229,7 @@ autoLoadCredentials();
           localStorage.removeItem("githubUser");
           localStorage.removeItem("githubRepo");
           localStorage.removeItem("githubToken");
-          localStorage.removeItem("githubFilePath");
+          localStorage.removeItem("githubFilePathDb");
         }
 
 
@@ -224,7 +243,7 @@ autoLoadCredentials();
           {
              apFields.innerHTML = await caravansHtmlTemplateFields();
              document.getElementById("saveItemButton").addEventListener("click", (e)=> {saveItem(e)}); // For upload
-             document.getElementById("generateCaravanTitle").addEventListener("click", generateCaravanTitle); // Generate caravan title
+             document.getElementById("generateCaravanTitleBtn").addEventListener("click", generateCaravanTitle); // Generate caravan title
             //  document.getElementById("imgPicker").addEventListener("onchange", handleImages); // For the modal
           }
           
@@ -240,14 +259,29 @@ async function saveItem(e)
    let type = document.getElementById('itemType').value; // Used - constructin obj and For saving it in github in specific folder type - caravans, cars, products etc.
    let itemName = document.getElementById('title').value; // For Creating Id
    let itemId = createId(itemName);
-   await handleItemImages(itemId, type);// Upload Images
-
+   let imagesJsDelivrPathArray = await handleItemImages(itemId, type);// Upload Images and return jsDelivr path for the images
+    
    const formData = convertFormToJsonById('modalItemDetails');
-   
+   formData.photos = imagesJsDelivrPathArray; // Add the photos array to the json object that will be uploaded
+   formData.id = itemId;
+   formData.category = type; // Add the type to the item itself - where the id, title, price etc. is. It is used un the logic to show the modal
+   formData.sold = "false";  
 
-   // 1. Here get the links for the uploadded images if responese ok
-   // 2. Convert to js delivr url.
-   // 3. Get all inputs from the form and construct json and add the js fidler links
+   let db = await getDbAsync();
+
+   db.items[type].push(formData); // Add the item to the local db - later the whole db will be uploaded
+    
+   let jsonDb = JSON.stringify(db);
+   document.getElementById("developerInput").value = jsonDb;  // Populate the textbox that shows the db in developer mode
+   await constructUpdateAndUpdate(jsonDb,githubFilePathDb);
+       
+            
+       
+     
+  
+   // #1. Here get the links for the uploadded images if responese ok
+   // #2. Convert to js delivr url.
+   // #3. Get all inputs from the form and construct json and add the js delivr links
    // 4. Update the db
    // 5. Fix the db to have not latin char but without uri encoding - maybe onvert the json to base 64 without he uri
 }
@@ -259,6 +293,8 @@ async function handleItemImages(itemId, type)
 {
    let images = document.getElementById('imgPicker').files; // Get the images from the "input with type="file""
    let githubFilePathForImg ="";
+   
+   let imagesPathArray = [];
 
    let okResponse = true;
    for (let v = 0; v < images.length; v++) 
@@ -266,6 +302,7 @@ async function handleItemImages(itemId, type)
         if(okResponse)
         {
             githubFilePathForImg =`resources/img/${type}/${itemId}/${itemId}-${[v+1]}.png`; // Ex. resources/img/caravans/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z-1
+            imagesPathArray.push(convertToJsDelivrPath(githubFilePathForImg)); // Add the path to the array that will hold all paths. It is late used to get js delivr paths and then add it to the json object before sending to the server
             okResponse = await readImgAsBase64AndUpload(images[v], `${[v+1]} от ${[images.length]}`, githubFilePathForImg);
         }
         else
@@ -275,8 +312,17 @@ async function handleItemImages(itemId, type)
         }
         // await readImgAsBase64AndUpload(images[v], `${[v+1]} от ${[images.length]}`, githubFilePathForImg); 
     }
+    return imagesPathArray;
 }
  
+
+// Convert to js deliver path ===================================================
+function convertToJsDelivrPath(path)
+{
+  // let jsDelivr = 'https://cdn.jsdelivr.net/gh/stevicamp/Stevicamp@main/index.html';
+  let jsDelivrPath = `${jsDelivr}/${githubUser}/${githubRepo}@latest/${path}`;
+  return jsDelivrPath;
+}
 
 
 // Generate Title ================================================================
@@ -286,9 +332,9 @@ function generateCaravanTitle()
     let model = document.getElementById('caravanModel');
     let length = document.getElementById('caravanLength');
     let year = document.getElementById('caravanYear');
-    let genTitle = `${brand.value} ${model.value} ${length.value} - ${year.value}`;
+    let genTitle = `${brand.value}-${model.value}-${length.value}-${year.value}`;
 
-    document.getElementById('caravanTttle').value = genTitle;
+    document.getElementById('title').value = genTitle;
 }
 
 
@@ -338,30 +384,30 @@ async function caravansHtmlTemplateFields()
        <hr>
        <span><img src="static/img/icons/calendar.png"><b>Година:</b> </br><input id="caravanYear" name="year" placeholder="Година" list="caravanYearList"></span> 
        <datalist id="caravanYearList">
-                <option value="1990 г."></option>
-                <option value="1991 г."></option>
-                <option value="1996 г."></option>
-                <option value="1998 г."></option>
-                <option value="1999 г."></option>
-                <option value="2000 г."></option>
-                <option value="2001 г."></option>
-                <option value="2002 г."></option>
-                <option value="2003 г."></option>
-                <option value="2004 г."></option>
-                <option value="2005 г."></option>
-                <option value="2006 г."></option>
-                <option value="2007 г."></option>
-                <option value="2008 г."></option>
-                <option value="2009 г."></option>
-                <option value="2010 г."></option>
-                <option value="2011 г."></option>
-                <option value="2013 г."></option>
-                <option value="2014 г."></option>
-                <option value="2015 г."></option>
-                <option value="2016 г."></option>
-                <option value="2017 г."></option>
-                <option value="2018 г."></option>
-            </datalist>
+                <option value="1990г."></option>
+                <option value="1991г."></option>
+                <option value="1996г."></option>
+                <option value="1998г."></option>
+                <option value="1999г."></option>
+                <option value="2000г."></option>
+                <option value="2001г."></option>
+                <option value="2002г."></option>
+                <option value="2003г."></option>
+                <option value="2004г."></option>
+                <option value="2005г."></option>
+                <option value="2006г."></option>
+                <option value="2007г."></option>
+                <option value="2008г."></option>
+                <option value="2009г."></option>
+                <option value="2010г."></option>
+                <option value="2011г."></option>
+                <option value="2013г."></option>
+                <option value="2014г."></option>
+                <option value="2015г."></option>
+                <option value="2016г."></option>
+                <option value="2017г."></option>
+                <option value="2018г."></option>
+            </datalist
        <hr>
        <span><img src="static/img/icons/ruler.png"><b>Дължина:</b> </br><input id="caravanLength" name="length" placeholder="Дължинна" list="caravanLengthList"></span>
        <datalist id="caravanLengthList">
@@ -486,10 +532,10 @@ async function caravansHtmlTemplateFields()
                 <option value="4 души"></option>
                 <option value="4 души: Френско леголо х2 места; Сепаре х2 места"></option>
                 <option value="4 души: Сепаре - х2 места; Сепаре х2 места;"></option>
-                <option value="4 души: (2х единични легла) - х2 места; Сепаре х2 места"></option>
+                <option value="4 души: (2 единични легла) - х2 места; Сепаре х2 места"></option>
                 <option value="5 души"></option>
                 <option value="5 души: Френско леголо х2 места; Сепаре х2 места; Кушетка 1х място"></option>
-                <option value="5 души: (2х единични легла) - х2 места; Сепаре х2 места; Кушетка 1х място"></option>
+                <option value="5 души: (2 единични легла) - х2 места; Сепаре х2 места; Кушетка 1х място"></option>
                 <option value="5 души: Двуетажно легло - х2 места; Сепаре х2 места; Кушетка 1х място"></option>
                 <option value="6 души"></option>
                 <option value="6 души: Двуетажно легло - х2 места; Сепаре х2 места; Кушетка 2х места"></option>
@@ -524,8 +570,8 @@ async function caravansHtmlTemplateFields()
        <span><img src="static/img/icons/keywords.png"></br><input id="keywords" name="keywords" placeholder="Ключови думи" value="каравана, каравани, karavana, karavani, caravans, caravan"></span>
        <hr> 
        
-       <h3 class="item-title"><img src="static/img/icons/caravan.png"><u></br><input id="caravanTttle" name="title" placeholder="Заглавие"></u></h3> 
-       <button id="generateCaravanTitle">Генер. заглавие</button>
+       <h3 class="item-title"><img src="static/img/icons/caravan.png"><u></br><input id="title" name="title" placeholder="Заглавие"></u></h3> 
+       <button id="generateCaravanTitleBtn">Генер. заглавие</button>
 
        <button id="saveItemButton">Запази</button>
    </div>
@@ -537,11 +583,10 @@ async function caravansHtmlTemplateFields()
 
 
  // Create Name with unique Id ================================================================================================
-    function createId(productName) {
-
+    function createId(productName) { 
         var date = new Date(); // New Date object
         var idDate = date.toISOString().replace(/:/g, "-"); //Create - new DateTime and replace the ":" with "-"  the "/g" means replace all. Because ":" is not allowed to be in a file name.
-        var idName = productName + 'D' + idDate; 
+        var idName ='id_' + productName + '-D' + idDate; 
         // var idName = productName + 'D' + idDate + "!" + Math.random().toString(36).substring(2, 12); // Combine the data to get file name with ID. The pattern is [TheProduct-NAME AND MODEL-TheDateAndTime - UNIQUE ID]
 
         return idName; //'The Product Type-Model-DateTime-Id'

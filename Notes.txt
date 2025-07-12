@@ -1,5 +1,11 @@
 Stevicamp
 
+
+1. Newes items does not work
+2. Make width 100% on share buttons on item - because it there is no image the buttons are disordered
+3. Default image if image does not excists
+4. To add sold function for the item
+......................................
 1. db - Fix the db to have not latin char but without uri encoding - maybe onvert the json to base 64 without he uri
 2. Add jsdeliver purg after adding item or update
 https://www.jsdelivr.com/tools/purge

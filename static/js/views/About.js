@@ -6,7 +6,7 @@ import * as Common from "./Common.js"
 // VIEW HTML ---------------------------------------------------
 export async function getHtmlAsync() {
 
-    let db =  await getDb(); 
+    let db =  await getDbAsync(); 
     let obj = db.about;
     let shareLink = window.location.href;
 
