@@ -102,7 +102,7 @@ export async function executeViewScriptAsync() {
 
 
 
-// Auto Load credentials
+// Auto Load credentials - only works if in Add view
 autoLoadCredentials();
 }
 
@@ -115,7 +115,7 @@ autoLoadCredentials();
 
 
 
-  // Update the json file
+        // Update the json file - The DB
         async function constructUpdateAndUpdate(jsonData, filePath)
         {
            await updateJsonFileAsync(githubUser, githubRepo, filePath, githubToken, jsonData, 'msg');
@@ -176,10 +176,7 @@ autoLoadCredentials();
         function loadCredentialsFromLocalStorageToInputs() 
         { 
             // Get data from local Storage and populate the local variables
-            githubUser = localStorage.getItem("githubUser");
-            githubRepo = localStorage.getItem("githubRepo");
-            githubToken = localStorage.getItem("githubToken");
-            githubFilePathDb = localStorage.getItem("githubFilePathDb");
+           loadCredentialsFromLocalStorageToGlobalVariables(); // Found in the defaultscripts.js
 
             // Populate inputs
             document.getElementById("githubUser").value = githubUser;

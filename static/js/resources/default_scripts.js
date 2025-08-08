@@ -284,6 +284,7 @@ function modalItemShareButtonsHtml(itemLink, title) {
      <a class="item_share_button" style="background-image: url('static/img/icons/messenger.png');" href="fb-messenger://share/?link=${itemLink}" title="Споделете в Месинджър"></a>
      <a class="item_share_button" style="background-image: url('static/img/icons/email.png');" href="mailto:?subject=${title}&amp;body=${title},${itemLink}" title="Пратете по имейл"></a>
      <a class="item_share_button" style="background-image: url('static/img/icons/sms.png');" href="sms:?&body=${title},${itemLink}" title="Пратете по СМС"></a>
+     <a class="item_share_button" style="background-image: url('static/img/icons/delete.png');" href="javascript:deleteItemByItemLink('${itemLink}');" title="Изтриване!!!"></a>
 
     <span style="float:right; margin-right:2%; margin-top: 10px;" id="imgCount"></span>
     </div>`;
@@ -1466,6 +1467,7 @@ async function searchObject(obj, match) {
                     // resultObjDb[subResult.category] = {...[subResult.category][subResult], ...resultObjDb[subResult.category]}; 
                 }
                 else {
+                    subResult.index = p; // Used to help deletion - finding the object in the db and delete. Only Used in Admin site.
                     let constructedSubResult = { [subResult.category]: [subResult] };
                     resultObjDb = { ...resultObjDb, ...constructedSubResult };    // Merge to the resultObjDb if prop does not excists
                 }
@@ -1800,4 +1802,86 @@ function convertFormToJsonById(formId)
 
 
 
+//:::::::::::::::::::::::::: DELETE :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+async function deleteItemByItemLink(itemLink)
+{
+    // Here add - show modal are you sure you want to delete
+  let db = await getDbAsync(); // Get the db
+  let id = itemLink.split('?search=')[1]; // Get the id from the item link
+  let rawItem = await recursiveSearchObj(db.items, id); // Find the raw item by using the id 
+  let item = Object.values(rawItem)[0][0]; // [0] = ex. "caravans" [0] = the first item in the array - basicaly it is only one because only one item at a time will be deleted
+  db['items'][`${item.category}`].splice(item.index,1); // Remove the item from the local DB // keyword "delete" can be used too - but is a little different 
 
+  // Here loop all images photos and delete each one
+
+    let updatedDbAsJson = JSON.stringify(db);
+    await updateJsonFileAsync(githubUser, githubRepo, githubFilePathDb, githubToken, updatedDbAsJson, `Deleted item by Admin: ${item.name}`); // Update the DB so the deleted item is no longer in the remote db
+    await deleteItemImagesByLinks(item.photos); // Delete the images of the item that has to be deleted
+
+  // #If image delete fails get the item id and update the error file in github for later manual removement of the images
+  // #Make clean up button that searches the db for the specific item if it does not excist searches for the images if they excist delete them
+  // Here update the db - json file with the new local DB without the deleted item 
+
+
+
+  console.log(item);
+  //   delete item; 
+}
+
+
+async function deleteItemImagesByLinks(imgLinkArray)
+{
+    // .split("@latest/")[1]; // Is used to get the raw github link from the js delivr link
+    for (let k = 0; k < imgLinkArray.length; k++) 
+    { 
+      await deleteFileAsync(githubUser, githubRepo, imgLinkArray[k].split("@latest/")[1], githubToken, `Deleted: ${imgLinkArray[k]}`);  
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+// Auto Load Credentials ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        function autoLoadCredentialsGlobal()
+        {
+          // Load auto credentials
+          let autoLoadCredentials = localStorage.getItem("loadCredentialsAuto");
+
+          if(autoLoadCredentials !== undefined && autoLoadCredentials === 'true')
+          {
+            loadCredentialsFromLocalStorageToGlobalVariables(); 
+          } 
+        }
+
+        
+
+
+         // Load Credentials
+        function loadCredentialsFromLocalStorageToGlobalVariables() 
+        { 
+            // Get data from local Storage and populate the "local variables" that are global and are found in the CRUD.js file.
+            githubUser = localStorage.getItem("githubUser");
+            githubRepo = localStorage.getItem("githubRepo");
+            githubToken = localStorage.getItem("githubToken");
+            githubFilePathDb = localStorage.getItem("githubFilePathDb"); 
+            console.log(githubToken);
+        }
+        
+
+
+
+
+
+
+
+
+// Execute on script Load ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+autoLoadCredentialsGlobal(); // Auto execute when efaultscript.js is loaded
