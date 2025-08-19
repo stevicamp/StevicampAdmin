@@ -1296,6 +1296,8 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
          </a>
        
          <span class="price">${itemsList[`${itemType}`][i].price}</span>
+         
+
          <div class="item_buttons_wrapper"> 
              <a class="item_share_button" style="background-image: url('static/img/icons/copy.png');" href="javascript:copyToClipboard('${itemLink}');"></a>
              <a class="item_share_button" style="background-image: url('static/img/icons/viber.png');"
@@ -1305,6 +1307,9 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
              <a class="item_share_button" style="background-image: url('static/img/icons/messenger.png');"
                  href="fb-messenger://share/?link=${itemLink}"></a>
          </div>
+        
+         <a class="item_share_button" style="background-image: url('static/img/icons/delete.png'); margin-top: 20px;" href="javascript:deleteItemByItemLink('${itemLink}');" title="Изтриване!!!"></a>
+
                       </div>`);
 
         }
