@@ -79,7 +79,7 @@ executeCommonViewScriptAsync();
 
 // export async function getDbAsync() {
 //     if (db == null) {
-//         var jsDb = await fetch('https://cdn.jsdelivr.net/gh/stefan27dk/Stevicamp@latest/resources/db/database.json?1', {cache: "reload"})
+//         var jsDb = await fetch('https://cdn.jsdelivr.net/gh/stefan27dk/Stevicamp/resources/db/database.json?1', {cache: "reload"})
 //             .then(response => {
 //                 if (!response.ok) {
 //                     throw new Error(`HTTP error! Status: ${response.status}`);

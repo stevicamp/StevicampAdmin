@@ -1,8 +1,8 @@
 ﻿
 
 
-// ############## ENDPOINTS #################################################################################################
-let jsDelivr = 'https://cdn.jsdelivr.net/gh/';
+// // ############## ENDPOINTS #################################################################################################
+// let jsDelivr = 'https://cdn.jsdelivr.net/gh/';
 
 // ############## DATABASE #################################################################################################
 var base_db = null;
@@ -15,8 +15,10 @@ var popStateUrl = false;
 
 async function getDbAsync() {
     if (base_db == null) {
-        // var jsDb = await fetch('https://cdn.jsdelivr.net/gh/stefan27dk/Stevicamp@latest/resources/db/database.json?1', {cache: "reload"})
-        var jsDb = await fetch('https://cdn.jsdelivr.net/gh/stevicamp/Stevicamp@main/resources/db/database.json?1', { cache: "reload" })
+        // var jsDb = await fetch('https://cdn.jsdelivr.net/gh/stefan27dk/Stevicamp/resources/db/database.json?1', {cache: "reload"})
+        // var jsDb = await fetch('https://cdn.jsdelivr.net/gh/stevicamp/Stevicamp/resources/db/database.json?1', { cache: "reload" })
+        // var jsDb = await fetch('https://raw.githubusercontent.com/stevicamp/Stevicamp/33894efc327a4fe0c3543e46c854a65b413edf74/resources/db/database.json?2', { cache: "reload" })
+        var jsDb = await fetch('https://raw.githubusercontent.com/stevicamp/Stevicamp/refs/heads/main/resources/db/database.json?5', { cache: "reload", Pragma: 'no-cache', Expires: '-1','Cache-Control': 'no-cache', })
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
@@ -28,6 +30,8 @@ async function getDbAsync() {
             });
 
         base_db = jsDb;
+       
+        console.log(jsDb);
         return jsDb;
     }
     else {
@@ -1815,7 +1819,7 @@ async function deleteItemByItemLink(itemLink)
   // Here loop all images photos and delete each one
 
     let updatedDbAsJson = JSON.stringify(db);
-    await updateJsonFileAsync(githubUser, githubRepo, githubFilePathDb, githubToken, updatedDbAsJson, `Deleted item by Admin: ${item.name}`); // Update the DB so the deleted item is no longer in the remote db
+    await updateJsonFileAsync(githubUser, githubRepo, githubFilePathDb, githubToken, updatedDbAsJson, `Deleted item by Admin: ${item.title}`); // Update the DB so the deleted item is no longer in the remote db
     await deleteItemImagesByLinks(item.photos); // Delete the images of the item that has to be deleted
 
   // #If image delete fails get the item id and update the error file in github for later manual removement of the images
@@ -1831,10 +1835,10 @@ async function deleteItemByItemLink(itemLink)
 
 async function deleteItemImagesByLinks(imgLinkArray)
 {
-    // .split("@latest/")[1]; // Is used to get the raw github link from the js delivr link
+    // .split("/")[1]; // Is used to get the raw github link from the js delivr link
     for (let k = 0; k < imgLinkArray.length; k++) 
     { 
-      await deleteFileAsync(githubUser, githubRepo, imgLinkArray[k].split("@latest/")[1], githubToken, `Deleted: ${imgLinkArray[k]}`);  
+      await deleteFileAsync(githubUser, githubRepo, imgLinkArray[k].split(`${cdn}${githubUser}/${githubRepo}/`)[1], githubToken, `Deleted: ${imgLinkArray[k]}`);  
     }
 }
 

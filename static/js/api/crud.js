@@ -3,7 +3,7 @@
   var githubToken;
   var githubFilePathDb; // Path for the DB
   var newContent ="";
-  
+  var cdn = "https://cdn.jsdelivr.net/gh"; // The cdn
 
 //`https://corsproxy.io/?url=https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePathDb}`,
 // Function to get the file's SHA
@@ -51,6 +51,8 @@ function unescapeForBtoa(str)
 // Function to update the JSON file
 async function updateJsonFileAsync(githubUser, githubRepo, githubFilePathDb, githubToken, content, msg) 
 {
+  console.log('In CRUD.................');
+  console.log(content);
   try {
 
     loadingMsg('Запазва се...');
@@ -61,6 +63,7 @@ async function updateJsonFileAsync(githubUser, githubRepo, githubFilePathDb, git
     // const contentBase64 =  btoa(unescape(encodeURIComponent(content))); // EncodeUri because of non latin character later in db on fetch decodeUri
 //  https://stackoverflow.com/questions/23223718/failed-to-execute-btoa-on-window-the-string-to-be-encoded-contains-characte
 // https://stackoverflow.com/questions/27926562/deprecation-of-javascript-function-unescape
+ 
     const body = {
       message: `${msg}`,
       content: contentBase64,

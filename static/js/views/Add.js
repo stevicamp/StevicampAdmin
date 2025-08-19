@@ -317,7 +317,7 @@ async function handleItemImages(itemId, type)
 function convertToJsDelivrPath(path)
 {
   // let jsDelivr = 'https://cdn.jsdelivr.net/gh/stevicamp/Stevicamp@main/index.html';
-  let jsDelivrPath = `${jsDelivr}/${githubUser}/${githubRepo}@latest/${path}`;
+  let jsDelivrPath = `${cdn}/${githubUser}/${githubRepo}/${path}`;
   return jsDelivrPath;
 }
 
