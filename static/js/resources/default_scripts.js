@@ -18,7 +18,16 @@ async function getDbAsync() {
         // var jsDb = await fetch('https://cdn.jsdelivr.net/gh/stefan27dk/Stevicamp/resources/db/database.json?1', {cache: "reload"})
         // var jsDb = await fetch('https://cdn.jsdelivr.net/gh/stevicamp/Stevicamp/resources/db/database.json?1', { cache: "reload" })
         // var jsDb = await fetch('https://raw.githubusercontent.com/stevicamp/Stevicamp/33894efc327a4fe0c3543e46c854a65b413edf74/resources/db/database.json?2', { cache: "reload" })
-        var jsDb = await fetch('https://raw.githubusercontent.com/stevicamp/Stevicamp/refs/heads/main/resources/db/database.json?5', { cache: "reload", Pragma: 'no-cache', Expires: '-1','Cache-Control': 'no-cache', })
+        // var jsDb = await fetch('https://raw.githubusercontent.com/stevicamp/Stevicamp/refs/heads/main/resources/db/database.json',
+        
+        // https://corsproxy.io/?url=https://example.com
+        // var jsDb = await fetch('https://corsproxy.io/?url=https://raw.githubusercontent.com/stevicamp/Stevicamp/refs/heads/main/resources/db/database.json', 
+        //     {
+        //         method: "GET", 
+        //         headers: {"cache": "reload", "Pragma": "no-cache", "Expires": '-1',"Cache-Control": "no-store, no-cache, max-age=0"}
+        //     })
+
+        var jsDb = await fetch('https://raw.githubusercontent.com/stevicamp/Stevicamp/refs/heads/main/resources/db/database.json')
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
@@ -1804,6 +1813,8 @@ function convertFormToJsonById(formId)
 
     // let jsonData = JSON.stringify(formData);
     //  return jsonData;
+    console.log('form................................');
+    console.log(formData);
      return formData;
 }
 
