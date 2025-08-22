@@ -3,7 +3,7 @@
   var githubToken;
   var githubFilePathDb; // Path for the DB
   var newContent ="";
-  var cdn = "https://cdn.jsdelivr.net/gh"; // The cdn
+  var cdn = "https://cdn.jsdelivr.net/gh/"; // The cdn
 
 //`https://corsproxy.io/?url=https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePathDb}`,
 // Function to get the file's SHA

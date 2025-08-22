@@ -1854,7 +1854,8 @@ async function deleteItemImagesByLinks(imgLinkArray)
     // .split("/")[1]; // Is used to get the raw github link from the js delivr link
     for (let k = 0; k < imgLinkArray.length; k++) 
     { 
-      await deleteFileAsync(githubUser, githubRepo, imgLinkArray[k].split(`${cdn}${githubUser}/${githubRepo}/`)[1], githubToken, `Deleted: ${imgLinkArray[k]}`);  
+      let currentImgLink = imgLinkArray[k].split(`${cdn}${githubUser}/${githubRepo}/`)[1];
+      await deleteFileAsync(githubUser, githubRepo, currentImgLink, githubToken, `Deleted: ${imgLinkArray[k]}`);  
     }
 }
 
