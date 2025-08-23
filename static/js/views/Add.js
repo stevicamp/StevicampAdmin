@@ -74,7 +74,7 @@ export async function executeViewScriptAsync() {
         
         document.getElementById("itemType").addEventListener("change", loadAppropriateFields);
         
-        document.getElementById("saveDbBtn").addEventListener("click", ()=> {constructUpdateAndUpdate(document.getElementById("developerInput").value, githubFilePathDb)}); 
+        document.getElementById("saveDbBtn").addEventListener("click", ()=> {constructUpdateAndUpdate(document.getElementById("developerInput").value, githubFilePathDb, 'Admin - Manual Update in APP')}); 
         
        
      
@@ -116,9 +116,9 @@ autoLoadCredentials();
 
 
         // Update the json file - The DB
-        async function constructUpdateAndUpdate(jsonData, filePath)
+        async function constructUpdateAndUpdate(jsonData, filePath, msg)
         {
-           await updateJsonFileAsync(githubUser, githubRepo, filePath, githubToken, jsonData, 'msg');
+           await updateJsonFileAsync(githubUser, githubRepo, filePath, githubToken, jsonData, msg);
         }
      
 
@@ -270,7 +270,7 @@ async function saveItem(e)
     
    let jsonDb = JSON.stringify(db);
    document.getElementById("developerInput").value = jsonDb;  // Populate the textbox that shows the db in developer mode
-   await constructUpdateAndUpdate(jsonDb,githubFilePathDb);
+   await constructUpdateAndUpdate(jsonDb,githubFilePathDb, `Admin - Added new item in APP: ${formData.id}`);
        
             
        

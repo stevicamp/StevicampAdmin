@@ -1835,7 +1835,7 @@ async function deleteItemByItemLink(itemLink)
   // Here loop all images photos and delete each one
 
     let updatedDbAsJson = JSON.stringify(db);
-    await updateJsonFileAsync(githubUser, githubRepo, githubFilePathDb, githubToken, updatedDbAsJson, `Deleted item by Admin: ${item.title}`); // Update the DB so the deleted item is no longer in the remote db
+    await updateJsonFileAsync(githubUser, githubRepo, githubFilePathDb, githubToken, updatedDbAsJson, `Admin - Deleted item in APP: ${item.id}`); // Update the DB so the deleted item is no longer in the remote db
     await deleteItemImagesByLinks(item.photos); // Delete the images of the item that has to be deleted
 
   // #If image delete fails get the item id and update the error file in github for later manual removement of the images
@@ -1854,7 +1854,7 @@ async function deleteItemImagesByLinks(imgLinkArray)
     // .split("/")[1]; // Is used to get the raw github link from the js delivr link
     for (let k = 0; k < imgLinkArray.length; k++) 
     { 
-      let currentImgLink = imgLinkArray[k].split(`${cdn}${githubUser}/${githubRepo}/`)[1];
+      let currentImgLink = imgLinkArray[k].split(`${cdn}/${githubUser}/${githubRepo}/`)[1];
       await deleteFileAsync(githubUser, githubRepo, currentImgLink, githubToken, `Deleted: ${imgLinkArray[k]}`);  
     }
 }
