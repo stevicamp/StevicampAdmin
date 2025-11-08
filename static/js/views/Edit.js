@@ -6,7 +6,7 @@ import * as Common from "./Common.js"
 // VIEW HTML ---------------------------------------------------
 export async function getHtmlAsync() 
 {
-    return  `<div style="width: 100%; height: 88%; box-sizing: border-box; display: flex;" id="aproppiriateFieldsContainer"></div> 
+    return  `<div style="width: 100%; height: 88%; box-sizing: border-box; display: flex;" id="aproppiriateFieldsContainer"></div>
     <input id="editItemIdInput" type="text"></input>`;
 }
 
@@ -34,7 +34,7 @@ export async function executeViewScriptAsync()
     // }
 
     let db = await getDbAsync();
-    let editItemId = window.location.href.split('/Edit?')[1];
+    let editItemId = decodeURI(window.location.href.split('/Edit?')[1]); // Decode uri so that it works with cyrilic titles if there are. Otherwise the id is encoded and it can not be found by the search func.
     let rawitem = await recursiveSearchObj(db.items, editItemId); // Search and get the matched item - searching by the unique id - must get one item if it excists
     let item = Object.values(rawitem)[0][0]; // The result is ex. caravans[{category:"caravans", price:"1353"}] Get the itemTp / category
     await loadAppropriateFields(item.category); // every item in the db has a category prop  
