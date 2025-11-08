@@ -1195,9 +1195,9 @@ async function checkForSearchKeywords() // Check for keywords in the adressbar a
     // If search keywords in the path
     if (search !== "") {
 
-        if (search.match("id_")) // If id_ than open modal
+        if (search.match("id_")) // If id_ then open modal
         {
-            const itemId = search.split('?search=')[1]; // If it includes id_ than after the search is the id including id_ it is åart of every id 
+            const itemId = search.split('?search=')[1]; // If it includes id_ than after the search is the id including id_ it is part of every id 
             await showModal(itemId);
         }
 
@@ -1318,7 +1318,8 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
          </div>
         
          <a class="item_share_button" style="background-image: url('static/img/icons/delete.png'); margin-top: 20px;" href="javascript:deleteItemByItemLink('${itemLink}');" title="Изтриване!!!"></a>
-
+         <a class="item_share_button" style="background-image: url('static/img/icons/edit.png'); margin-top: 20px;" href='/Edit?${itemsList[`${itemType}`][i].id}' data-link title="Редактиране"></a>
+ 
                       </div>`);
 
         }
@@ -1327,6 +1328,7 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
     return combined_items;
 }
 
+        //  <a class="item_share_button" style="background-image: url('static/img/icons/edit.png'); margin-top: 20px;" href="javascript:editItemByItemLink('${itemLink}');" title="Редактиране"></a>
 
 
 // Search - current items - when in ex. caravans View, Cars View, Prodicts View etc. ###########################################################################
@@ -1822,13 +1824,292 @@ function convertFormToJsonById(formId)
 
 
 
+
+
+
+// Base HTML For caravan -----------------------------------------------------------------------
+async function caravansHtmlTemplateFields() 
+{
+   
+      //  <img class="slide" src='${obj.photos[h]}'></img>
+     
+   
+    return `  
+     <div class="modalItemContainer" tabindex="0" style="margin-top: 0;">
+    <input id="imgPicker" type="file" accept="image/*;capture=camera" multiple="multiple" onchange="handleImages()">
+   <div class="img-preview-container">
+    <div style="width: 100%; height: 100%;" id="previewImgHolder"></div>   
+
+     
+
+    <button class="arrow-left prevent-select" onclick="toggleModalImg(-1)">&#10094;</button>
+   
+       <button class="arrow-right prevent-select" onclick="toggleModalImg(1)">&#10095;</button> 
+        
+    </div>
+   
+    
+   <div id="modalItemDetails" class="modalItemDetails" style="max-width: 400px;" tabindex="0">
+   
+   
+   
+         <h3 class="item-title"><img src="static/img/icons/caravan.png"><u></br>Категория каравани:</u></h3> 
+       <hr>
+       <span><img src="static/img/icons/price.png"><b>Цена:</b> </br><input id="price" name="price" placeholder="Цена"></span>
+       <hr>
+       <span><img src="static/img/icons/brand.png"><b>Марка:</b> </br><input id="caravanBrand" name="brand" type="text" placeholder="Марка" list="caravanBrands"></span>
+            <datalist id="caravanBrands">
+                <option value="Hobby"></option>
+                <option value="Knaus"></option>
+                <option value="Adria"></option>
+                <option value="LMC"></option>
+                <option value="Tabbert"></option>
+                <option value="Fendt"></option>
+                <option value="Dethleffs"></option>
+            </datalist>
+       <hr>
+       <span><img src="static/img/icons/model.png"><b>Модел:</b> </br><input id="caravanModel" name="model" placeholder="Модел"></span>
+       <hr>
+       <span><img src="static/img/icons/calendar.png"><b>Година:</b> </br><input id="caravanYear" name="year" placeholder="Година" list="caravanYearList"></span> 
+       <datalist id="caravanYearList">
+                <option value="1990г."></option>
+                <option value="1991г."></option>
+                <option value="1996г."></option>
+                <option value="1998г."></option>
+                <option value="1999г."></option>
+                <option value="2000г."></option>
+                <option value="2001г."></option>
+                <option value="2002г."></option>
+                <option value="2003г."></option>
+                <option value="2004г."></option>
+                <option value="2005г."></option>
+                <option value="2006г."></option>
+                <option value="2007г."></option>
+                <option value="2008г."></option>
+                <option value="2009г."></option>
+                <option value="2010г."></option>
+                <option value="2011г."></option>
+                <option value="2013г."></option>
+                <option value="2014г."></option>
+                <option value="2015г."></option>
+                <option value="2016г."></option>
+                <option value="2017г."></option>
+                <option value="2018г."></option>
+            </datalist
+       <hr>
+       <span><img src="static/img/icons/ruler.png"><b>Дължина:</b> </br><input id="caravanLength" name="length" placeholder="Дължинна" list="caravanLengthList"></span>
+       <datalist id="caravanLengthList">
+                <option value="380см"></option>
+                <option value="390см"></option>
+                <option value="450см"></option>
+                <option value="460см"></option>
+                <option value="495см"></option>
+                <option value="500см"></option>
+                <option value="502см"></option>
+                <option value="520см"></option>
+                <option value="530см"></option>
+                <option value="540см"></option>
+                <option value="560см"></option>
+                <option value="590см"></option>
+                <option value="610см"></option>
+            </datalist>
+            
+       <hr>
+       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> </br><input id="condition" name="condition" placeholder="Състояние" value="Използванo"></span>
+       <hr>
+       <span><img src="static/img/icons/toilet.png"><b>Тоалетна:</b> </br><input id="toilet" name="toilet" placeholder="Тоалетна" list="caravanToilet"></span>
+            <datalist id="caravanToilet">
+                <option value="Да"></option>
+                <option value="Не"></option>
+                <option value="Химическа"></option>
+                <option value="Проточна"></option>
+            </datalist>
+       <hr>
+       <span><img src="static/img/icons/bath.png"><b>Баня:</b> </br><input id="bath" name="bath" placeholder="Баня" list="caravanBath"></span>
+            <datalist id="caravanBath">
+                <option value="Да-душ"></option>
+                <option value="Да-душ кабина"></option>
+                <option value="Само тоалетна без душ"></option>
+                <option value="Не"></option>
+            </datalist>
+       <hr>
+       <span><img src="static/img/icons/heater.png"><b>Отопление:</b> </br><input id="heating" name="heating" placeholder="Отопление" list="caravanHeating"></span>
+            <datalist id="caravanHeating">
+                <option value="Да"></option>
+                <option value="Не"></option>
+                <option value="Газово"></option>
+                <option value="Електрическо"></option>
+            </datalist>
+       <hr>
+       <span><img src="static/img/icons/boiler.png"><b>Боийлер:</b> </br><input id="boiler" name="boiler" placeholder="Бойлер" list="caravanoBiler"></span>
+       <datalist id="caravanoBiler">
+                <option value="Да"></option>
+                <option value="Не"></option>
+                <option value="Газов"></option>
+                <option value="Електрически 230V"></option>
+            </datalist>
+       <hr>
+        <span><img src="static/img/icons/water-inlet.png"><b>Твр. врз. Вода:</b> </br><input id="waterInlet" name="waterInlet" placeholder="Твърда връзка вода" list="caravanWaterInlet"></span>
+       <datalist id="caravanWaterInlet">
+                <option value="Да"></option>
+                <option value="Не"></option> 
+            </datalist>
+       <hr>
+        <span><img src="static/img/icons/water-container.png"><b>Контейнер за вода:</b> </br><input id="waterContainer" name="waterContainer" placeholder="Резервар за вода" list="caravanWaterContainer"></span>
+       <datalist id="caravanWaterContainer">
+                <option value="Да"></option>
+                <option value="Да - 20 литра"></option>
+                <option value="Да - 40 литра"></option>
+                <option value="Да - 60 литра"></option>
+                <option value="Да - 120 литра"></option>
+                <option value="Не"></option> 
+            </datalist>
+       <hr>
+         <span><img src="static/img/icons/electricity.png"><b>Ток:</b> </br><input id="electricity" name="electricity" value="Да - 230V / 12V" placeholder="Ток" list="caravanЕlectricity"></span>
+       <datalist id="caravanЕlectricity">
+                <option value="Да - 230V / 12V"></option>
+                <option value="Не"></option> 
+            </datalist>
+       <hr>
+         <span><img src="static/img/icons/battery.png"><b>Акумулатор:</b> </br><input id="battery" name="battery" placeholder="Акумулатор" list="caravanBattery"></span>
+       <datalist id="caravanBattery">
+                <option value="Да - 12V"></option>
+                <option value="Не"></option> 
+            </datalist>
+       <hr>
+       <span><img src="static/img/icons/snowflake.png"><b>АС/Климатик:</b> </br><input id="ac" name="ac" placeholder="Климатик" list="caravanAc"></span>
+       <datalist id="caravanAc">
+                <option value="Да"></option>
+                <option value="Не"></option>
+                <option value="Да - Топлене / Студене"></option>
+                <option value="Да - Само Студене"></option>
+            </datalist>
+       <hr>
+       <span><img src="static/img/icons/stove.png"><b>Печка:</b> </br><input id="stove" name="stove" placeholder="Печка" list="caravanStove"></span>
+       <datalist id="caravanStove">
+                <option value="Да"></option>
+                <option value="Не"></option>
+                <option value="Да - на ток"></option>
+                <option value="Да - на газ"></option>
+                <option value="Да - Микровълнова"></option>
+            </datalist>
+       <hr>
+       <span><img src="static/img/icons/hotplates.png"><b>Котлони:</b> </br><input id="hotplates" name="hotplates" value="Да - газ" placeholder="Котлони" list="caravanHotplates"></span>
+       <datalist id="caravanHotplates">
+                <option value="Да - газ"></option>
+                <option value="Да - ток"></option>
+                <option value="Не"></option>
+            </datalist>
+       <hr>
+       <span><img src="static/img/icons/mover.png"><b>Мувер:</b> </br><input id="mover" name="mover" placeholder="Мувер" list="caravanMover"></span>
+       <datalist id="caravanMover">
+                <option value="Да"></option>
+                <option value="Не"></option>
+            </datalist>
+       <hr>
+       <span><img src="static/img/icons/solar-panel.png"><b>Солар:</b> </br><input id="solar" name="solar" placeholder="Солар" list="caravanSolar"></span>
+       <datalist id="caravanSolar">
+                <option value="Да"></option>
+                <option value="Не"></option>
+            </datalist>
+       <hr>
+       <span><img src="static/img/icons/bed.png"><b>Спални места:</b> </br><input id="sleepingPlaces" name="sleepingPlaces" placeholder="Места за спане" list="caravanSleepingPlaces"></span>
+        <datalist id="caravanSleepingPlaces">
+                <option value="2 души"></option>
+                <option value="3 души"></option>
+                <option value="4 души"></option>
+                <option value="4 души: Френско леголо х2 места; Сепаре х2 места"></option>
+                <option value="4 души: Сепаре - х2 места; Сепаре х2 места;"></option>
+                <option value="4 души: (2 единични легла) - х2 места; Сепаре х2 места"></option>
+                <option value="5 души"></option>
+                <option value="5 души: Френско леголо х2 места; Сепаре х2 места; Кушетка 1х място"></option>
+                <option value="5 души: (2 единични легла) - х2 места; Сепаре х2 места; Кушетка 1х място"></option>
+                <option value="5 души: Двуетажно легло - х2 места; Сепаре х2 места; Кушетка 1х място"></option>
+                <option value="6 души"></option>
+                <option value="6 души: Двуетажно легло - х2 места; Сепаре х2 места; Кушетка 2х места"></option>
+            </datalist>
+       <hr>
+       <span><img src="static/img/icons/tent.png"><b>Форселт:</b> </br><input id="fortelt" name="fortelt" placeholder="Форселт" list="caravanFortelt"></span>
+           <datalist id="caravanFortelt">
+                <option value="Да"></option>
+                <option value="Не"></option>
+            </datalist>
+       <hr>
+       <span><img src="static/img/icons/markise.png"><b>Маркиза:</b> </br><input id="markise" name="markise" placeholder="Маркиза" list="caravanMarkise"></span>
+           <datalist id="caravanMarkise">
+                <option value="Да"></option>
+                <option value="Не"></option>
+            </datalist>
+       <hr>
+       <span><img src="static/img/icons/documents.png"><b>Документи:</b> </br><input id="documents" name="documents" placeholder="Документи" value="Да"></span>
+       <hr>
+       <span><img src="static/img/icons/plate.png"><b>Номер:</b> </br><input id="plate" name="plate" placeholder="Номер" list="caravanPlate"></span>
+           <datalist id="caravanPlate">
+                <option value="Да"></option>
+                <option value="Не"></option>
+            </datalist>
+       <hr>
+       <span><img src="static/img/icons/location.png"><b>Местоположение:</b></br><input id="location" name="location" placeholder="Местоположение" value="България - Обл. Перник"></span>
+       <hr class="hr-orange"> 
+       <span><img src="static/img/icons/description.png"><b>Описание:</b> </br><textarea id="description" name="description" placeholder="Описание"></textarea ></span>
+       <hr class="hr-orange"> 
+       <span><img src="static/img/icons/id.png"><b>ID:</b><font style="font-size:7px;">Gen</font></span>
+       <hr>
+       <span><img src="static/img/icons/keywords.png"></br><input id="keywords" name="keywords" placeholder="Ключови думи" value="каравана, каравани, karavana, karavani, caravans, caravan"></span>
+       <hr> 
+       
+       <h3 class="item-title"><img src="static/img/icons/caravan.png"><u></br><input id="title" name="title" placeholder="Заглавие"></u></h3> 
+       <button id="generateCaravanTitleBtn">Генер. заглавие</button>
+
+       <button id="saveItemButton">Запази</button>
+   </div>
+</div>`;
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+//:::::::::::::::::::::::::: EDIT :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+async function editItemByItemLink(itemLink)
+{
+    let itemId = itemLink.split('?search=')[1];
+    // window.location.href = `/Edit?${itemId}`;
+    // window.history.pushState("data-link", "",  `/Edit?${itemId}`); 
+    // location.href =`/Edit?${itemId}`;
+    // await loadAppropriateFields();
+     
+    // console.log(editItemByItemLink.caller.name);
+    // event.target.href = `/Edit?${itemId}`;
+    // router();
+      var a = document.createElement('div');  
+      a.innerHTML += `<a href="/Edit?${itemId}" data-link></a>`;
+    //   console.log(a.innerHTML);
+      console.log(itemId);
+      a.childNodes[0].click();
+    //   a.href = `/Edit?${itemId}`;
+    //   a.click();
+
+}
+
+
+
 //:::::::::::::::::::::::::: DELETE :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
 async function deleteItemByItemLink(itemLink)
 {
     // Here add - show modal are you sure you want to delete
   let db = await getDbAsync(); // Get the db
-  let id = itemLink.split('?search=')[1]; // Get the id from the item link
-  let rawItem = await recursiveSearchObj(db.items, id); // Find the raw item by using the id 
+  let itemId = itemLink.split('?search=')[1]; // Get the item id from the item link
+  let rawItem = await recursiveSearchObj(db.items, itemId); // Find the raw item by using the id 
   let item = Object.values(rawItem)[0][0]; // [0] = ex. "caravans" [0] = the first item in the array - basicaly it is only one because only one item at a time will be deleted
   db['items'][`${item.category}`].splice(item.index,1); // Remove the item from the local DB // keyword "delete" can be used too - but is a little different 
 
