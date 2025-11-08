@@ -2053,7 +2053,7 @@ async function caravansHtmlTemplateFields()
        <hr class="hr-orange"> 
        <span><img src="static/img/icons/description.png"><b>Описание:</b> </br><textarea id="description" name="description" placeholder="Описание"></textarea ></span>
        <hr class="hr-orange"> 
-       <span><img src="static/img/icons/id.png"><b>ID:</b><font style="font-size:7px;">Gen</font></span>
+       <span><img src="static/img/icons/id.png"><b>ID:</b><input style="font-size:7px;" name="id"></input></span>
        <hr>
        <span><img src="static/img/icons/keywords.png"></br><input id="keywords" name="keywords" placeholder="Ключови думи" value="каравана, каравани, karavana, karavani, caravans, caravan"></span>
        <hr> 
@@ -2073,6 +2073,42 @@ async function caravansHtmlTemplateFields()
 
 
 
+//:::::::::::::::::::::::::: USED FOR ADD & EDIT :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+  async function loadAppropriateFields(itemTypePass)
+        {
+
+          let apFields = document.getElementById("aproppiriateFieldsContainer");
+          let itemType = itemTypePass;
+
+          if(itemType == null)
+          {
+             itemType = document.getElementById("itemType").value;
+          }
+           
+
+          if(itemType == "caravans")
+          {
+             apFields.innerHTML = await caravansHtmlTemplateFields();
+             document.getElementById("saveItemButton").addEventListener("click", (e)=> {saveItem(e)}); // For upload
+             document.getElementById("generateCaravanTitleBtn").addEventListener("click", generateCaravanTitle); // Generate caravan title
+            //  document.getElementById("imgPicker").addEventListener("onchange", handleImages); // For the modal
+          }
+          
+           
+        }
+ 
+// Generate Title ================================================================
+function generateCaravanTitle()
+{
+    let brand = document.getElementById('caravanBrand');
+    let model = document.getElementById('caravanModel');
+    let length = document.getElementById('caravanLength');
+    let year = document.getElementById('caravanYear');
+    let genTitle = `${brand.value}-${model.value}-${length.value}-${year.value}`;
+
+    document.getElementById('title').value = genTitle;
+}
+
 
 
 
@@ -2080,26 +2116,26 @@ async function caravansHtmlTemplateFields()
 
 
 //:::::::::::::::::::::::::: EDIT :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
-async function editItemByItemLink(itemLink)
-{
-    let itemId = itemLink.split('?search=')[1];
-    // window.location.href = `/Edit?${itemId}`;
-    // window.history.pushState("data-link", "",  `/Edit?${itemId}`); 
-    // location.href =`/Edit?${itemId}`;
-    // await loadAppropriateFields();
+// async function editItemByItemLink(itemLink)
+// {
+//     let itemId = itemLink.split('?search=')[1];
+//     // window.location.href = `/Edit?${itemId}`;
+//     // window.history.pushState("data-link", "",  `/Edit?${itemId}`); 
+//     // location.href =`/Edit?${itemId}`;
+//     // await loadAppropriateFields();
      
-    // console.log(editItemByItemLink.caller.name);
-    // event.target.href = `/Edit?${itemId}`;
-    // router();
-      var a = document.createElement('div');  
-      a.innerHTML += `<a href="/Edit?${itemId}" data-link></a>`;
-    //   console.log(a.innerHTML);
-      console.log(itemId);
-      a.childNodes[0].click();
-    //   a.href = `/Edit?${itemId}`;
-    //   a.click();
+//     // console.log(editItemByItemLink.caller.name);
+//     // event.target.href = `/Edit?${itemId}`;
+//     // router();
+//       var a = document.createElement('div');  
+//       a.innerHTML += `<a href="/Edit?${itemId}" data-link></a>`;
+//     //   console.log(a.innerHTML);
+//       console.log(itemId);
+//       a.childNodes[0].click();
+//     //   a.href = `/Edit?${itemId}`;
+//     //   a.click();
 
-}
+// }
 
 
 

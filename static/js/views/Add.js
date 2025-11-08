@@ -72,7 +72,7 @@ export async function executeViewScriptAsync() {
         document.getElementById("loadCredentialsAutoCheckbox").addEventListener("click", toggleAutoLoadCredentials);
         
         
-        document.getElementById("itemType").addEventListener("change", loadAppropriateFields);
+        document.getElementById("itemType").addEventListener("change", ()=> loadAppropriateFields(null));
         
         document.getElementById("saveDbBtn").addEventListener("click", ()=> {constructUpdateAndUpdate(document.getElementById("developerInput").value, githubFilePathDb, 'Admin - Manual Update in APP')}); 
         
@@ -230,22 +230,22 @@ autoLoadCredentials();
         }
 
 
-        async function loadAppropriateFields()
-        {
+        // async function loadAppropriateFields()
+        // {
 
-          let apFields = document.getElementById("aproppiriateFieldsContainer");
-          let valueType =  document.getElementById("itemType").value;
+        //   let apFields = document.getElementById("aproppiriateFieldsContainer");
+        //   let valueType =  document.getElementById("itemType").value;
 
-          if(valueType == "caravans")
-          {
-             apFields.innerHTML = await caravansHtmlTemplateFields();
-             document.getElementById("saveItemButton").addEventListener("click", (e)=> {saveItem(e)}); // For upload
-             document.getElementById("generateCaravanTitleBtn").addEventListener("click", generateCaravanTitle); // Generate caravan title
-            //  document.getElementById("imgPicker").addEventListener("onchange", handleImages); // For the modal
-          }
+        //   if(valueType == "caravans")
+        //   {
+        //      apFields.innerHTML = await caravansHtmlTemplateFields();
+        //      document.getElementById("saveItemButton").addEventListener("click", (e)=> {saveItem(e)}); // For upload
+        //      document.getElementById("generateCaravanTitleBtn").addEventListener("click", generateCaravanTitle); // Generate caravan title
+        //     //  document.getElementById("imgPicker").addEventListener("onchange", handleImages); // For the modal
+        //   }
           
            
-        }
+        // }
  
 
 
@@ -328,17 +328,17 @@ function convertToJsDelivrPath(path)
 }
 
 
-// Generate Title ================================================================
-function generateCaravanTitle()
-{
-    let brand = document.getElementById('caravanBrand');
-    let model = document.getElementById('caravanModel');
-    let length = document.getElementById('caravanLength');
-    let year = document.getElementById('caravanYear');
-    let genTitle = `${brand.value}-${model.value}-${length.value}-${year.value}`;
+// // Generate Title ================================================================
+// function generateCaravanTitle()
+// {
+//     let brand = document.getElementById('caravanBrand');
+//     let model = document.getElementById('caravanModel');
+//     let length = document.getElementById('caravanLength');
+//     let year = document.getElementById('caravanYear');
+//     let genTitle = `${brand.value}-${model.value}-${length.value}-${year.value}`;
 
-    document.getElementById('title').value = genTitle;
-}
+//     document.getElementById('title').value = genTitle;
+// }
 
 
 
