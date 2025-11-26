@@ -27,7 +27,7 @@ async function getDbAsync() {
         //         headers: {"cache": "reload", "Pragma": "no-cache", "Expires": '-1',"Cache-Control": "no-store, no-cache, max-age=0"}
         //     })
 
-        var jsDb = await fetch('https://raw.githubusercontent.com/stevicamp/Stevicamp/refs/heads/main/resources/db/database.json')
+        var jsDb = await fetch('https://raw.githubusercontent.com/stevicamp/Stevicamp/refs/heads/main/resources/db/database.json',{cache: "no-store"})
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
@@ -1801,7 +1801,7 @@ function convertFormToJsonById(formId)
     let divForm = document.getElementById(formId); // Using div as form
     // let childElements = divForm.childNodes;
     let childElements = divForm.getElementsByTagName("*");
-
+    //  let childElements = document.getElementById('parentContainer').children;
     let formData = {}; 
 
     for (let i = 0; i < childElements.length; i++) 
@@ -1854,6 +1854,7 @@ async function caravansHtmlTemplateFields()
    
    
          <h3 class="item-title"><img src="static/img/icons/caravan.png"><u></br>Категория каравани:</u></h3> 
+       
        <hr>
        <span><img src="static/img/icons/price.png"><b>Цена:</b> </br><input id="price" name="price" placeholder="Цена"></span>
        <hr>
@@ -2053,13 +2054,17 @@ async function caravansHtmlTemplateFields()
        <hr class="hr-orange"> 
        <span><img src="static/img/icons/description.png"><b>Описание:</b> </br><textarea id="description" name="description" placeholder="Описание"></textarea ></span>
        <hr class="hr-orange"> 
-       <span><img src="static/img/icons/id.png"><b>ID:</b><input style="font-size:7px;" name="id"></input></span>
+       <span><img src="static/img/icons/id.png"><b>ID:</b><input style="font-size:7px;" name="id"></span>
        <hr>
        <span><img src="static/img/icons/keywords.png"></br><input id="keywords" name="keywords" placeholder="Ключови думи" value="каравана, каравани, karavana, karavani, caravans, caravan"></span>
        <hr> 
        
        <h3 class="item-title"><img src="static/img/icons/caravan.png"><u></br><input id="title" name="title" placeholder="Заглавие"></u></h3> 
        <button id="generateCaravanTitleBtn">Генер. заглавие</button>
+
+       <hr>
+         <span>Категория:</span><input id="categoryInput" name="category" readonly> 
+         <span>Дата:</span><input id="dateInput" name="date" readonly> 
 
        <button id="saveItemButton">Запази</button>
    </div>
@@ -2111,6 +2116,204 @@ function generateCaravanTitle()
 
 
 
+
+// Update the json file - The DB
+        async function constructUpdateAndUpdate(jsonData, filePath, msg)
+        {
+           await updateJsonFileAsync(githubUser, githubRepo, filePath, githubToken, jsonData, msg);
+        }
+
+// Function for Saving Add Action logic ----------------------------------------------------------------
+async function AddSave()
+{
+   let type = document.getElementById('itemType').value; // Used - constructin obj and For saving it in github in specific folder type - caravans, cars, products etc.
+   let itemName = document.getElementById('title').value; // For Creating Id
+   const formData = convertFormToJsonById('modalItemDetails'); // Converting the div html to json - the input ---> to json
+   let itemId = null;
+
+   
+     itemId = formData.id = createId(itemName); // Creating the id
+   
+   
+   let imagesJsDelivrPathArray = await handleItemImages(itemId, type);// Upload Images and return jsDelivr path for the images
+    
+   formData.photos = imagesJsDelivrPathArray; // Add the photos array to the json object that will be uploaded
+   formData.id = itemId;
+   formData.category = type; // Add the type to the item itself - where the id, title, price etc. is. It is used un the logic to show the modal
+   formData.sold = "false";  
+
+   let db = await getDbAsync();
+
+   db.items[type].push(formData); // Add the item to the local db - later the whole db will be uploaded
+    
+   let jsonDb = JSON.stringify(db);
+   document.getElementById("developerInput").value = jsonDb;  // Populate the textbox that shows the db in developer mode
+   await constructUpdateAndUpdate(jsonDb,githubFilePathDb, `Admin - Added new item in APP: ${formData.id}`);   
+
+   // Check
+   console.log("Form Data:"+formData);
+   console.log("Json DB:" +jsonDb);
+}
+
+
+// Function for Saving Edit Action logic ----------------------------------------------------------------
+async function EditSave()
+{
+   let type = document.getElementById('categoryInput').value; // Used - constructin obj and For saving it in github in specific folder type - caravans, cars, products etc.// This field is input and is populated from the db on load the item in edit view
+   const formData = convertFormToJsonById('modalItemDetails'); // Converting the div html to json - the input ---> to json
+   let itemId = formData.id; // Pre populated from the db into the Id input - formData.id wich is read only
+   
+   let imagesJsDelivrPathArray = await handleItemImages(itemId, type);// Upload Images and return jsDelivr path for the images
+    
+ //formData.photos = imagesJsDelivrPathArray; // Add the photos array to the json object that will be uploaded
+    // ###### Here bellow on before hand if imaged are removed the  the img link will be removed from formData.photo as well as other action for deleding hte specific image    
+
+    
+//    formData.category = type; // Add the type to the item itself - where the id, title, price etc. is. It is used un the logic to show the modal
+//    formData.sold = "false";  
+
+    // ###### Here bellow on before hand if imaged are removed the  the img link will be removed from formData.photo as well as other action for deleding hte specific image    
+    let db = await getDbAsync(); // The Db
+    let rawitem = await recursiveSearchObj(db.items, itemId); // Search and get the matched item - searching by the unique id - must get one item if it excists
+    let item = Object.values(rawitem)[0][0]; // The result is ex. caravans[{category:"caravans", price:"1353"}] Get the itemType / category
+    formData.photos = [...item.photos, ...imagesJsDelivrPathArray]; // Add the photos array to the json object that will be uploaded (... if edit mode retain the old photos and add the new to the old - merge the arrays)
+   
+    // Not tested forgot await
+    await deleteLocalItemById(itemId); // Remove the old item that is unedited from the local db - if it is not removed there will be two. The item could be assigned instead of deleting, but...this is used for now
+   
+    db.items[type].push(formData); // Add the item to the local db - later the whole db will be uploaded
+    
+   let jsonDb = JSON.stringify(db);
+//    document.getElementById("developerInput").value = jsonDb;  // Populate the textbox that shows the db in developer mode
+   await constructUpdateAndUpdate(jsonDb,githubFilePathDb, `Admin - Edited item in APP: ${formData.id}`);   
+}
+
+
+
+// Save Item - ADD & EDIT ---------------------------------------------------------------------
+async function saveItem(e)
+{ 
+
+  let currentUrlPath = window.location.pathname; // The current path - ex. Edit or Add
+    
+   if(currentUrlPath == "/Add") 
+   {
+      await AddSave(); // Add save logic
+   }
+   else if(currentUrlPath == "/Edit")
+   {
+    // Edit is not working properly - instead of editing it copies the item edits it and add it to the db, but the old item is still in the db
+     await EditSave();   
+   }
+  
+
+
+//    let itemName = document.getElementById('title').value; // For Creating Id
+//    const formData = convertFormToJsonById('modalItemDetails'); // Convert the html fields to json
+//    let itemId = formData.id;
+
+//    if(itemId == null || itemId == "" || itemId == undefined) // If ID is null, empty or undefined, create ID. Because this is used also in the edit view. THe code is reused both for add and edit. When you add there is no ID, but when you edit there is id
+//    {
+//      itemId = formData.id = createId(itemName); 
+//    }
+   
+//    let imagesJsDelivrPathArray = await handleItemImages(itemId, type);// Upload Images and return jsDelivr path for the images
+    
+//    formData.photos = [...formData.photos, ...imagesJsDelivrPathArray]; // Add the photos array to the json object that will be uploaded (... if edit mode retain the old photos and add the new to the old - merge the arrays)
+//    formData.id = itemId;
+//    formData.category = type; // Add the type to the item itself - where the id, title, price etc. is. It is used in the logic to show the modal
+//    formData.sold = "false";  
+
+//    let db = await getDbAsync();
+
+//    db.items[type].push(formData); // Add the item to the local db - later the whole db will be uploaded
+    
+//    let jsonDb = JSON.stringify(db);
+//    document.getElementById("developerInput").value = jsonDb;  // Populate the textbox that shows the db in developer mode
+
+   
+   
+
+//    await constructUpdateAndUpdate(jsonDb,githubFilePathDb, `${performingActionType} ${formData.id}`);
+       
+            
+       
+     
+  
+   // #1. Here get the links for the uploadded images if responese ok
+   // #2. Convert to js delivr url.
+   // #3. Get all inputs from the form and construct json and add the js delivr links
+   // 4. Update the db
+   // 5. Fix the db to have not latin char but without uri encoding - maybe onvert the json to base 64 without he uri
+}
+
+
+
+
+// Handle local images - read as base 64 and upload ---------------------------------------
+async function handleItemImages(itemId, type)
+{
+   let images = document.getElementById('imgPicker').files; // Get the images from the "input with type="file""
+   let githubFilePathForImg ="";
+   
+   let imagesPathArray = [];
+
+   let okResponse = true;
+   for (let v = 0; v < images.length; v++) 
+    {
+        if(okResponse)
+        {
+            githubFilePathForImg =`resources/img/${type}/${itemId}/${itemId}-${[v+1]}.png`; // Ex. resources/img/caravans/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z-1
+            imagesPathArray.push(convertToJsDelivrPath(githubFilePathForImg)); // Add the path to the array that will hold all paths. It is late used to get js delivr paths and then add it to the json object before sending to the server
+            okResponse = await readImgAsBase64AndUpload(images[v], `${[v+1]} от ${[images.length]}`, githubFilePathForImg);
+        }
+        else
+        {
+            // Here code to remove the last added images................
+            // Need to have variables to remember the name and path, then use delete function from CRUF file to delete each image
+        }
+        // await readImgAsBase64AndUpload(images[v], `${[v+1]} от ${[images.length]}`, githubFilePathForImg); 
+    }
+    return imagesPathArray;
+}
+ 
+
+// Convert to js deliver path ===================================================
+function convertToJsDelivrPath(path)
+{
+  // let jsDelivr = 'https://cdn.jsdelivr.net/gh/stevicamp/Stevicamp@main/index.html';
+  let jsDelivrPath = `${cdn}/${githubUser}/${githubRepo}/${path}`;
+  return jsDelivrPath;
+}
+
+
+// // Generate Title ================================================================
+// function generateCaravanTitle()
+// {
+//     let brand = document.getElementById('caravanBrand');
+//     let model = document.getElementById('caravanModel');
+//     let length = document.getElementById('caravanLength');
+//     let year = document.getElementById('caravanYear');
+//     let genTitle = `${brand.value}-${model.value}-${length.value}-${year.value}`;
+
+//     document.getElementById('title').value = genTitle;
+// }
+
+
+
+
+
+
+
+ // Create Name with unique Id ================================================================================================
+    function createId(productName) { 
+        var date = new Date(); // New Date object
+        var idDate = date.toISOString().replace(/:/g, "-"); //Create - new DateTime and replace the ":" with "-"  the "/g" means replace all. Because ":" is not allowed to be in a file name.
+        var idName ='id_' + productName + '-D' + idDate; 
+        // var idName = productName + 'D' + idDate + "!" + Math.random().toString(36).substring(2, 12); // Combine the data to get file name with ID. The pattern is [TheProduct-NAME AND MODEL-TheDateAndTime - UNIQUE ID]
+
+        return idName; //'The Product Type-Model-DateTime-Id'
+    }
 
 
 
@@ -2164,6 +2367,26 @@ async function deleteItemByItemLink(itemLink)
   console.log(item);
   //   delete item; 
 }
+
+
+
+
+
+
+async function deleteLocalItemById(itemId)
+{
+    // Here add - show modal are you sure you want to delete
+  let db = await getDbAsync(); // Get the db 
+  let rawItem = await recursiveSearchObj(db.items, itemId); // Find the raw item by using the id 
+  let item = Object.values(rawItem)[0][0]; // [0] = ex. "caravans" [0] = the first item in the array - basicaly it is only one because only one item at a time will be deleted
+  db['items'][`${item.category}`].splice(item.index,1); // Remove the item from the local DB // keyword "delete" can be used too - but is a little different 
+
+  
+  console.log("Deleted item - deleteLocalItemById:"+item);
+  //   delete item; 
+}
+
+
 
 
 async function deleteItemImagesByLinks(imgLinkArray)

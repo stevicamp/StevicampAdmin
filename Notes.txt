@@ -1,6 +1,11 @@
 Stevicamp
 
 
+----------------
+1. On adding images if the window is closed nd then again opened the old imges are lost, but they are viewed in the image view 
+2. Add timmer after delete count 5 min. the db will be renewed after max 5 min.
+3. When item added or deleted, or edited post request timestamp to a specific file and before adding, deleting, editing check if the timestamp in the file is older then 5 min if it is then add the file otherwise wait to fetch then add the file since the github db file is updated only every 5 min.
+-----------------------------
 1. Newes items does not work
 2. Make width 100% on share buttons on item - because it there is no image the buttons are disordered
 3. Default image if image does not excists
