@@ -5,7 +5,7 @@
 // let jsDelivr = 'https://cdn.jsdelivr.net/gh/';
 
 // ############## DATABASE #################################################################################################
-var base_db = null;
+// var base_db = null; // Db moved to CRUD file
 
 var locationInputChanged = false;
 
@@ -13,40 +13,65 @@ var prevUrl = "";
 
 var popStateUrl = false;
 
-async function getDbAsync() {
-    if (base_db == null) {
-        // var jsDb = await fetch('https://cdn.jsdelivr.net/gh/stefan27dk/Stevicamp/resources/db/database.json?1', {cache: "reload"})
-        // var jsDb = await fetch('https://cdn.jsdelivr.net/gh/stevicamp/Stevicamp/resources/db/database.json?1', { cache: "reload" })
-        // var jsDb = await fetch('https://raw.githubusercontent.com/stevicamp/Stevicamp/33894efc327a4fe0c3543e46c854a65b413edf74/resources/db/database.json?2', { cache: "reload" })
-        // var jsDb = await fetch('https://raw.githubusercontent.com/stevicamp/Stevicamp/refs/heads/main/resources/db/database.json',
-        
-        // https://corsproxy.io/?url=https://example.com
-        // var jsDb = await fetch('https://corsproxy.io/?url=https://raw.githubusercontent.com/stevicamp/Stevicamp/refs/heads/main/resources/db/database.json', 
-        //     {
-        //         method: "GET", 
-        //         headers: {"cache": "reload", "Pragma": "no-cache", "Expires": '-1',"Cache-Control": "no-store, no-cache, max-age=0"}
-        //     })
 
-        var jsDb = await fetch('https://raw.githubusercontent.com/stevicamp/Stevicamp/refs/heads/main/resources/db/database.json',{cache: "no-store"})
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json(); // Probably here it parses the json to js object, so we dont need to use JSON.parse();
-            })
-            .catch(error => {
-                console.error('Fetch error:', error);
-            });
 
-        base_db = jsDb;
-       
-        console.log(jsDb);
-        return jsDb;
+// function b64DecodeUnicode(str) {
+//     // Going backwards: from bytestream, to percent-encoding, to original string.
+//     return decodeURIComponent(atob(str).split('').map(function(c) {
+//         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+//     }).join(''));
+// }
+
+
+
+function decodeBase64Unicode(base64) {
+    const text = atob(base64);
+    const length = text.length;
+    const bytes = new Uint8Array(length);
+    for (let i = 0; i < length; i++) {
+        bytes[i] = text.charCodeAt(i);
     }
-    else {
-        return base_db;
-    }
+    const decoder = new TextDecoder(); // default is utf-8
+    return decoder.decode(bytes);
 }
+
+
+
+// async function getDbAsync() {
+//     if (base_db == null) {
+//         // var jsDb = await fetch('https://cdn.jsdelivr.net/gh/stefan27dk/Stevicamp/resources/db/database.json?1', {cache: "reload"})
+//         // var jsDb = await fetch('https://cdn.jsdelivr.net/gh/stevicamp/Stevicamp/resources/db/database.json?1', { cache: "reload" })
+//         // var jsDb = await fetch('https://raw.githubusercontent.com/stevicamp/Stevicamp/33894efc327a4fe0c3543e46c854a65b413edf74/resources/db/database.json?2', { cache: "reload" })
+//         // var jsDb = await fetch('https://raw.githubusercontent.com/stevicamp/Stevicamp/refs/heads/main/resources/db/database.json',
+        
+//         // https://corsproxy.io/?url=https://example.com
+//         // var jsDb = await fetch('https://corsproxy.io/?url=https://raw.githubusercontent.com/stevicamp/Stevicamp/refs/heads/main/resources/db/database.json', 
+//         //     {
+//         //         method: "GET", 
+//         //         headers: {"cache": "reload", "Pragma": "no-cache", "Expires": '-1',"Cache-Control": "no-store, no-cache, max-age=0"}
+//         //     })
+
+//         // var jsDb = await fetch('https://raw.githubusercontent.com/stevicamp/Stevicamp/refs/heads/main/resources/db/database.json',{cache: "no-store"})
+//         var jsDb = await fetch('https://raw.githubusercontent.com/stevicamp/Stevicamp/refs/heads/main/resources/db/database.json',{cache: "no-store"})
+//             .then(response => {
+//                 if (!response.ok) {
+//                     throw new Error(`HTTP error! Status: ${response.status}`);
+//                 }
+//                 return response.json(); // Probably here it parses the json to js object, so we dont need to use JSON.parse();
+//             })
+//             .catch(error => {
+//                 console.error('Fetch error:', error);
+//             });
+
+//         base_db = jsDb;
+       
+//         console.log(jsDb);
+//         return jsDb;
+//     }
+//     else {
+//         return base_db;
+//     }
+// }
 
 
 

@@ -5,6 +5,86 @@
   var newContent ="";
   var cdn = "https://cdn.jsdelivr.net/gh"; // The cdn
 
+  var base_db = null; // DB - Singleton db
+
+
+// Database fetch ----------------------------------------------------------------------
+// async function getDbAsync() {
+//     if (base_db == null) {
+        
+//        const sha = await getFileSha(githubUser, githubRepo, githubFilePathDb, githubToken);
+// console.log('DB SHA: '+sha); 
+// console.log('DB Path: '+githubFilePathDb);
+// console.log('DB User: '+githubUser);
+
+//         var jsDb = await fetch(`https://raw.githubusercontent.com/${githubUser}/${githubRepo}/${sha}/${githubFilePathDb}`,{cache: "no-store"})
+//             .then(response => {
+//                 if (!response.ok) {
+//                     throw new Error(`HTTP error! Status: ${response.status}`);
+//                 }
+//                 return response.json(); // Probably here it parses the json to js object, so we dont need to use JSON.parse();
+//             })
+//             .catch(error => {
+//                 console.error('Fetch error:', error);
+//             });
+
+//         base_db = jsDb;
+       
+//         console.log(jsDb);
+//         return jsDb;
+//     }
+//     else {
+//         return base_db;
+//     }
+// }
+
+
+
+async function getDbAsync() {
+ 
+  if (base_db == null) 
+  {
+    console.log(`https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePathDb}`);
+  try {
+    const response = await fetch(
+      `https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePathDb}`,{cache: "no-store"},
+      {
+        method: "GET",
+        headers: {
+          "Authorization": `token ${githubToken}`,
+          "Accept": "application/vnd.github.v3+json",
+          "Content-Type": "application/json"
+        }
+      }
+    );
+    if (!response.ok) 
+    {
+      if (response.status === 404) return null; // File doesn't exist
+      throw new Error(`Failed to fetch DB: ${response.statusText}`);
+    }
+      const responseObj = await response.json();
+      // console.log('The respponse'+response);
+      const contentObj =  JSON.parse(decodeBase64Unicode(responseObj.content)); // 1. decode the base64 responce 2.Convert Json to js object
+      base_db = contentObj;
+      console.log(contentObj);
+      return contentObj;
+    } 
+     catch (error) 
+    {
+       console.error("Error fetching DB:", error); 
+    }
+
+  }
+  else {
+        return base_db;
+    }
+}
+
+
+
+
+
+
 //`https://corsproxy.io/?url=https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePathDb}`,
 // Function to get the file's SHA
 async function getFileSha(githubUser, githubRepo, githubFilePathDb, githubToken) {
@@ -27,6 +107,12 @@ async function getFileSha(githubUser, githubRepo, githubFilePathDb, githubToken)
     }
 
       const data = await response.json();
+
+      // const contentBase64 =  atob(unescape(decodeURIComponent(data.content)));
+      // const contentBase64 =  decodeBase64Unicode(data.content);
+      // console.log(contentBase64);
+      // console.log(`https://raw.githubusercontent.com/${githubUser}/${githubRepo}/${data.sha}/${githubFilePathDb}`);
+      
       return data.sha;
     } 
 
@@ -221,3 +307,42 @@ async function uploadImgAsync(githubUser, githubRepo, githubFilePathDb, githubTo
 
 
 
+// ------------------------------- OLD ---------------------------------------------------------
+
+
+// // Database fetch ----------------------------------------------------------------------
+// async function getDbAsync() {
+//     if (base_db == null) {
+//         // var jsDb = await fetch('https://cdn.jsdelivr.net/gh/stefan27dk/Stevicamp/resources/db/database.json?1', {cache: "reload"})
+//         // var jsDb = await fetch('https://cdn.jsdelivr.net/gh/stevicamp/Stevicamp/resources/db/database.json?1', { cache: "reload" })
+//         // var jsDb = await fetch('https://raw.githubusercontent.com/stevicamp/Stevicamp/33894efc327a4fe0c3543e46c854a65b413edf74/resources/db/database.json?2', { cache: "reload" })
+//         // var jsDb = await fetch('https://raw.githubusercontent.com/stevicamp/Stevicamp/refs/heads/main/resources/db/database.json',
+        
+//         // https://corsproxy.io/?url=https://example.com
+//         // var jsDb = await fetch('https://corsproxy.io/?url=https://raw.githubusercontent.com/stevicamp/Stevicamp/refs/heads/main/resources/db/database.json', 
+//         //     {
+//         //         method: "GET", 
+//         //         headers: {"cache": "reload", "Pragma": "no-cache", "Expires": '-1',"Cache-Control": "no-store, no-cache, max-age=0"}
+//         //     })
+
+//         // var jsDb = await fetch('https://raw.githubusercontent.com/stevicamp/Stevicamp/refs/heads/main/resources/db/database.json',{cache: "no-store"})
+//         var jsDb = await fetch('https://raw.githubusercontent.com/stevicamp/Stevicamp/refs/heads/main/resources/db/database.json',{cache: "no-store"})
+//             .then(response => {
+//                 if (!response.ok) {
+//                     throw new Error(`HTTP error! Status: ${response.status}`);
+//                 }
+//                 return response.json(); // Probably here it parses the json to js object, so we dont need to use JSON.parse();
+//             })
+//             .catch(error => {
+//                 console.error('Fetch error:', error);
+//             });
+
+//         base_db = jsDb;
+       
+//         console.log(jsDb);
+//         return jsDb;
+//     }
+//     else {
+//         return base_db;
+//     }
+// }
