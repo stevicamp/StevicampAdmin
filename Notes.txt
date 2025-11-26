@@ -1,6 +1,9 @@
 Stevicamp
 
+1. Check timestamp and First request get raw
+2. If timestamp file in github has date lower then 5 min get the db by using the api link else use the raw
 
+3. Add wait 5 seconds after item add, edit, remo etc. so to feth the correct db from the api link. It takes about 5 seconds for girhub to update the db file after post, so on refresh it gets the old db and on refresh again it gets the new after the 5 seconds probably for the raw is 5 minutes
 ----------------
 1. On adding images if the window is closed nd then again opened the old imges are lost, but they are viewed in the image view 
 2. Add timmer after delete count 5 min. the db will be renewed after max 5 min.

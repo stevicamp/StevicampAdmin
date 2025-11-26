@@ -1874,7 +1874,7 @@ async function caravansHtmlTemplateFields()
     </div>
    
     
-   <div id="modalItemDetails" class="modalItemDetails" style="max-width: 400px;" tabindex="0">
+   <div id="modalItemDetailsEdit" class="modalItemDetails" style="max-width: 400px;" tabindex="0">
    
    
    
@@ -2185,7 +2185,7 @@ async function AddSave()
 async function EditSave()
 {
    let type = document.getElementById('categoryInput').value; // Used - constructin obj and For saving it in github in specific folder type - caravans, cars, products etc.// This field is input and is populated from the db on load the item in edit view
-   const formData = convertFormToJsonById('modalItemDetails'); // Converting the div html to json - the input ---> to json
+   const formData = convertFormToJsonById('modalItemDetailsEdit'); // Converting the div html to json - the input ---> to json
    let itemId = formData.id; // Pre populated from the db into the Id input - formData.id wich is read only
    
    let imagesJsDelivrPathArray = await handleItemImages(itemId, type);// Upload Images and return jsDelivr path for the images
