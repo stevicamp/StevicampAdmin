@@ -33,7 +33,7 @@ export const setTitle = (title, img) => {
 
 async function executeCommonViewScriptAsync()
 {
-    await getDbAsync();
+    // await getDbAsync();
 }
 
 executeCommonViewScriptAsync();
