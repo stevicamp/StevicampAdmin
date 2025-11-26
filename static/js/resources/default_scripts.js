@@ -2153,7 +2153,7 @@ async function AddSave()
 {
    let type = document.getElementById('itemType').value; // Used - constructin obj and For saving it in github in specific folder type - caravans, cars, products etc.
    let itemName = document.getElementById('title').value; // For Creating Id
-   const formData = convertFormToJsonById('modalItemDetails'); // Converting the div html to json - the input ---> to json
+   const formData = convertFormToJsonById('modalItemDetailsEdit'); // Converting the div html to json - the input ---> to json
    let itemId = null;
 
    
