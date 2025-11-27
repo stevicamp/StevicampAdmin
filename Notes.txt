@@ -1,12 +1,35 @@
 Stevicamp
 
+
+IMAGES edit - Add view should be also edited it has a sheared html code
+1. Next thing to do is to - on edit get the images js delivr links in to an array
+2. Load that array in the view image box
+3. Add delete image button
+4. On pressing the delete button for the specific image remove from the array the specific image
+5. On opening the dialog to add new image --> add the image or the images to the array (they are none js delivr local links)
+6. On deleting the specific image if not js delivr link, just remove from the array
+7. On save upload the none js delivr links (the images) and get js delivr links
+8. Construct the item.photos - array and save the object as 1P2bOwwDIEBrd3UY5SLoUmOXiMSaxX9kOKsgBmkKDDXLLiDMiGBK
+
+
+
+
+....................
 1. Upload image to hithub, get the js delivr link, then delete the image from github (But it remins in the github history)
 1.2 Get the repo localy then delete all in github, then oush the loical data - to save space
 2. Make specific file that will hold the latest version of the db as a stringify
 3. In the client - fetch the db version from the specifik file
-4. Then having the specifik version of the db use js delivr to get the specific fb version
+4. Then having the specifik version of the db use js delivr to get the specific db version file from js delivr
 5. Every time item is added, removed, edited --> create specifik version and save it to the specific file that holds the db version
 
+
+6. Eventualy using the release tag of github to go around the cashing system of jsdelivr. Get every time the relese tag before fetching - (60 request per hour)
+
+7.1 (Fetch from the raw github link the db version, then fetch every time from github raw link till getiing 403 error.) - but delay is 5 min.
+7. Meanwhile cashe the versions localy.
+Increment the loal version by one till getting error not found then serve the latest before the getting of not found. If somehow there is no saved local version then serve the @main from js delivr - max 12 hours will be the delay of getting the actual datta before the cdn casshe is renwed
+
+8.
 --------------
 1. Check timestamp and First request get raw
 2. If timestamp file in github has date lower then 5 min get the db by using the api link else use the raw
