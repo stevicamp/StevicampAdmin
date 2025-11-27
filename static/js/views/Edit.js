@@ -17,6 +17,7 @@ export async function executeViewScriptAsync()
 {
     Common.setTitle("Редактирай", "edit");
     
+    closeItemModalOnPopState(); // If modal is opened close it so it it does not apear over the edit view
 
     let db = await getDbAsync(); // The Db
     let editItemId = decodeURI(window.location.href.split('/Edit?')[1]); // Decode uri so that it works with cyrilic titles if there are. Otherwise the id is encoded and it can not be found by the search func.
