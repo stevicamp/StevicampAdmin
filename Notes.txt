@@ -1,9 +1,20 @@
 Stevicamp
 
+1. Upload image to hithub, get the js delivr link, then delete the image from github (But it remins in the github history)
+1.2 Get the repo localy then delete all in github, then oush the loical data - to save space
+2. Make specific file that will hold the latest version of the db as a stringify
+3. In the client - fetch the db version from the specifik file
+4. Then having the specifik version of the db use js delivr to get the specific fb version
+5. Every time item is added, removed, edited --> create specifik version and save it to the specific file that holds the db version
+
+--------------
 1. Check timestamp and First request get raw
 2. If timestamp file in github has date lower then 5 min get the db by using the api link else use the raw
 
 3. Add wait 5 seconds after item add, edit, remo etc. so to feth the correct db from the api link. It takes about 5 seconds for girhub to update the db file after post, so on refresh it gets the old db and on refresh again it gets the new after the 5 seconds probably for the raw is 5 minutes
+4. Some of the point here are no longer valid
+5. In the public app not this here not the admin, add so that the client fetches the raw file link, if it gets status 403 at some point load jsdelivr and add a cookie to wait 30 min or 1 hour depending on when will the client be able to load the raw file again due to the github limits.
+
 ----------------
 1. On adding images if the window is closed nd then again opened the old imges are lost, but they are viewed in the image view 
 2. Add timmer after delete count 5 min. the db will be renewed after max 5 min.
