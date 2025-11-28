@@ -14,7 +14,7 @@ var prevUrl = "";
 var popStateUrl = false;
 
 
-
+var editItemImgArr = [];
 // function b64DecodeUnicode(str) {
 //     // Going backwards: from bytestream, to percent-encoding, to original string.
 //     return decodeURIComponent(atob(str).split('').map(function(c) {
@@ -1760,9 +1760,9 @@ function handleImages() {
     toggleModalImg(0); // Refresh the image holder
 }
 
- 
 
- 
+
+
 
 
 
@@ -1847,7 +1847,7 @@ async function caravansHtmlTemplateFields() {
 
     return `  
      <div class="modalItemContainer" tabindex="0" style="margin-top: 0;">
-    <input id="imgPicker" type="file" accept="image/*;capture=camera" multiple="multiple" onchange="handleImages()">
+    <input id="imgPicker" type="file" accept="image/*;capture=camera" multiple="multiple" onchange="imgPickerHandler()">
    <div class="img-preview-container">
     <div style="width: 100%; height: 100%;" id="previewImgHolder"></div>   
 
@@ -2274,6 +2274,28 @@ async function handleItemImages(itemId, type) {
     return imagesPathArray;
 }
 
+
+
+
+function imgPickerHandler() {
+
+    let currentUrlPath = window.location.pathname; // The current path - ex. Edit or Add
+
+    if (currentUrlPath == "/Add") {
+
+    }
+    else if (currentUrlPath == "/Edit") {
+        
+        let imgPicker = document.getElementById('imgPicker');
+ 
+        for (let i = 0; i < imgPicker.files.length; i++) {
+            editItemImgArr.push(window.URL.createObjectURL(imgPicker.files[i])); // Image local src push to array
+        }
+    }
+
+     handleImages(); // Add & show the images in the imgView container
+
+}
 
 // Convert to js deliver path ===================================================
 function convertToJsDelivrPath(path) {
