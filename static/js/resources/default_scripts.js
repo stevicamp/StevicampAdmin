@@ -43,7 +43,7 @@ function decodeBase64Unicode(base64) {
 //         // var jsDb = await fetch('https://cdn.jsdelivr.net/gh/stevicamp/Stevicamp/resources/db/database.json?1', { cache: "reload" })
 //         // var jsDb = await fetch('https://raw.githubusercontent.com/stevicamp/Stevicamp/33894efc327a4fe0c3543e46c854a65b413edf74/resources/db/database.json?2', { cache: "reload" })
 //         // var jsDb = await fetch('https://raw.githubusercontent.com/stevicamp/Stevicamp/refs/heads/main/resources/db/database.json',
-        
+
 //         // https://corsproxy.io/?url=https://example.com
 //         // var jsDb = await fetch('https://corsproxy.io/?url=https://raw.githubusercontent.com/stevicamp/Stevicamp/refs/heads/main/resources/db/database.json', 
 //         //     {
@@ -64,7 +64,7 @@ function decodeBase64Unicode(base64) {
 //             });
 
 //         base_db = jsDb;
-       
+
 //         console.log(jsDb);
 //         return jsDb;
 //     }
@@ -205,7 +205,7 @@ window.addEventListener('popstate', closeItemModalOnPopState);
 
 
 // Translate -----------------------------------------------------------
-document.getElementById('translate').addEventListener("click", initTranlate); 
+document.getElementById('translate').addEventListener("click", initTranlate);
 
 
 // Listen for keypress ..............................................................................
@@ -338,16 +338,13 @@ function phoneViberNumberInfoHtml(phone, viberPhone) {
 }
 
 
-function htmlItemSold(item)
-{
-  if(item.sold == "true")
-  {
-     return `<hr><span><b><font size="6"><i class="red">Продадено</i></font></b></span>`;
-  } 
-  else
-  {
-    return ``;
-  }
+function htmlItemSold(item) {
+    if (item.sold == "true") {
+        return `<hr><span><b><font size="6"><i class="red">Продадено</i></font></b></span>`;
+    }
+    else {
+        return ``;
+    }
 }
 
 
@@ -1034,7 +1031,7 @@ async function appliancesHtmlTemplate(obj) {
 </div>`;
 }
 
- 
+
 
 
 // ### MODAL ### --------------------------------------------------------------------------------------------------------------
@@ -1105,13 +1102,14 @@ async function closeItemModal(e) {
     // history.go(-1);
     modalImgIndex = 0; // Reset the image tab index on modal close
     document.getElementById("app").style.overflowY = "auto"; // Reset the overflow for the app, so it can be scrolled
-    
+
     removeElementsByClassName('slide'); // Remove image elements of specific item on close modal
 }
 
 
 function closeItemModalOnPopState() // Close the modal on prev forward button
 {
+    // modalImgIndex = 0; // Reset the index for the images preview container
     popStateUrl = true;
     prevUrl = window.location.href; // For the modal to get the prev url
 
@@ -1179,7 +1177,7 @@ document.getElementById('modalWindow').addEventListener('touchend', e => {
 var modalImgIndex = 0; // Hold track of the current img index - showed image
 
 function toggleModalImg(n) {
-    
+
     let images = document.getElementsByClassName("slide"); // Get the images
 
     if (images.length !== 1) {
@@ -1206,8 +1204,7 @@ function toggleModalImg(n) {
 }
 
 // Used to remove image elements so the about slide can work - otherwise it interfers - this is used on close modal
-function removeElementsByClassName(className)
-{
+function removeElementsByClassName(className) {
     const elements = document.getElementsByClassName(className);
     while (elements.length > 0) elements[0].remove();
 }
@@ -1314,7 +1311,7 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
     for (let g = 0; g < Object.keys(itemsList).length; g++) {
         itemType = Object.keys(itemsList)[g];
 
-        
+
         // // Object.keys(db)[0];
         // // Object.keys(obj).length
 
@@ -1354,7 +1351,7 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
     return combined_items;
 }
 
-        //  <a class="item_share_button" style="background-image: url('static/img/icons/edit.png'); margin-top: 20px;" href="javascript:editItemByItemLink('${itemLink}');" title="Редактиране"></a>
+//  <a class="item_share_button" style="background-image: url('static/img/icons/edit.png'); margin-top: 20px;" href="javascript:editItemByItemLink('${itemLink}');" title="Редактиране"></a>
 
 
 // Search - current items - when in ex. caravans View, Cars View, Prodicts View etc. ###########################################################################
@@ -1614,8 +1611,7 @@ async function searchArray(arr, match) {
 
 
 // Check day difference ------------------------------------------------------------------------------------------
-function checkDiffDays(date1, date2) 
-{ 
+function checkDiffDays(date1, date2) {
     const oneDayInMilliseconds = 24 * 3600 * 1000; // One day in miliseconds
 
     const diffInMilliseconds = new Date(date1).getTime() - new Date(date2).getTime(); // Difference in miliseconds between the two dates
@@ -1674,106 +1670,99 @@ function checkDiffDays(date1, date2)
 
 // Google tranlate ------------------------------------------------------ 
 function googleTranslateElementInit() {
-    new google.translate.TranslateElement({pageLanguage: 'bg'}, 'google_translate_element');
-  }
-
-
-let tranlating = false;
-function initTranlate() {
-
-    if (tranlating == false) {
-         
-        // Start translating -----------------------------------------------------------------------------------------
-        // Load dynamic script - google tranlate script load dynamic
-            var translateScript = document.createElement("script");
-            translateScript.type = "text/javascript";
-            translateScript.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-            translateScript.id ='googleTranslateScript';
-            translateScript.onload = function(){
-                // alert("Script is ready!"); 
-            //     var trnalateDropdown = document.getElementById(":0.targetLanguage"); // Get the dropdown
-            // document.getElementById('translate').innerHTML+=`${trnalateDropdown}`;
-                
-            };
-            document.body.appendChild(translateScript); // Append the script
-            tranlating = true; 
- 
-            // Change Translate button icon and txt
-            let tranlateImg = document.getElementById('translateStatusImg');
-            tranlateImg.src = 'static/img/icons/translating.png';// Change tranlate icon on the <a>
-
-            let tranlateLinkButton = document.getElementById('translate'); 
-            tranlateLinkButton.innerHTML = `${tranlateImg.outerHTML}</br>Reset`; 
-            tranlateLinkButton.style.color = "red"; 
-    }
-    else // Stop Translate
-    {
-    //   document.getElementById('translateStatusImg').src = 'static/img/icons/translate.png'; // Change the img to blue not tranlating
-
-      let translateScript = document.getElementById('googleTranslateScript'); // Get the script
-      translateScript.remove(); 
-      document.getElementById('google_translate_element').innerHTML ="";
-
-
-      var trnalateIframe = document.getElementById(":1.container"); // Get the google tranlate iframe - that is hidden with css in the top of the window
-      if(trnalateIframe !== null)
-      {
-          trnalateIframe.contentWindow.document.getElementById(':1.restore').click(); // Get the restore to original language button and simulate click
-      }
-      document.getElementById(":0.targetLanguage").innerHTML ="";
-      
-
-      // Resete tranlate button img and text
-      let tranlateImg = document.getElementById('translateStatusImg');
-      tranlateImg.src = 'static/img/icons/translate.png';// Change tranlate icon on the <a>
-
-      let tranlateLinkButton = document.getElementById('translate');
-      tranlateLinkButton.innerHTML = `${tranlateImg.outerHTML}</br>Translate`; 
-      tranlateLinkButton.style.color = '';
-
-
-      tranlating = false; // Change the status
-    }
-
-    
-
-    
+    new google.translate.TranslateElement({ pageLanguage: 'bg' }, 'google_translate_element');
 }
 
 
-let imgSrcArray = [];
+let translating = false;
+function initTranlate() {
 
-// For The Image picker ......................................................................
-function handleImages()
-{
-  let imgPrevContainer = document.getElementById('previewImgHolder');
+    if (translating == false) {
 
-  let imgPicker = document.getElementById('imgPicker');
+        // Start translating -----------------------------------------------------------------------------------------
+        // Load dynamic script - google tranlate script load dynamic
+        var translateScript = document.createElement("script");
+        translateScript.type = "text/javascript";
+        translateScript.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+        translateScript.id = 'googleTranslateScript';
+        translateScript.onload = function () {
+            // alert("Script is ready!"); 
+            //     var trnalateDropdown = document.getElementById(":0.targetLanguage"); // Get the dropdown
+            // document.getElementById('translate').innerHTML+=`${trnalateDropdown}`;
 
-  let imgHtml = '';
-  let imgSrc = '';
+        };
+        document.body.appendChild(translateScript); // Append the script
+        translating = true;
 
-//    imgPrevContainer.innerHTML = ""; // Earease if there are old images
+        // Change Translate button icon and txt
+        let tranlateImg = document.getElementById('translateStatusImg');
+        tranlateImg.src = 'static/img/icons/translating.png';// Change tranlate icon on the <a>
 
-    for (let i = 0; i < imgPicker.files.length; i++) 
+        let tranlateLinkButton = document.getElementById('translate');
+        tranlateLinkButton.innerHTML = `${tranlateImg.outerHTML}</br>Reset`;
+        tranlateLinkButton.style.color = "red";
+    }
+    else // Stop Translate
     {
+        //   document.getElementById('translateStatusImg').src = 'static/img/icons/translate.png'; // Change the img to blue not translating
+
+        let translateScript = document.getElementById('googleTranslateScript'); // Get the script
+        translateScript.remove();
+        document.getElementById('google_translate_element').innerHTML = "";
+
+
+        var trnalateIframe = document.getElementById(":1.container"); // Get the google tranlate iframe - that is hidden with css in the top of the window
+        if (trnalateIframe !== null) {
+            trnalateIframe.contentWindow.document.getElementById(':1.restore').click(); // Get the restore to original language button and simulate click
+        }
+        document.getElementById(":0.targetLanguage").innerHTML = "";
+
+
+        // Resete tranlate button img and text
+        let tranlateImg = document.getElementById('translateStatusImg');
+        tranlateImg.src = 'static/img/icons/translate.png';// Change tranlate icon on the <a>
+
+        let tranlateLinkButton = document.getElementById('translate');
+        tranlateLinkButton.innerHTML = `${tranlateImg.outerHTML}</br>Translate`;
+        tranlateLinkButton.style.color = '';
+
+
+        translating = false; // Change the status
+    }
+
+
+
+
+}
+
+
+// let imgSrcArray = []; 
+// For The Image picker ......................................................................
+function handleImages() {
+
+    let imgPrevContainer = document.getElementById('previewImgHolder');
+
+    let imgPicker = document.getElementById('imgPicker');
+
+    let imgHtml = '';
+    let imgSrc = '';
+
+    //    imgPrevContainer.innerHTML = ""; // Earease if there are old images
+
+    for (let i = 0; i < imgPicker.files.length; i++) {
         imgSrc = window.URL.createObjectURL(imgPicker.files[i]);
-        imgSrcArray.push(imgSrc); // Add the generated img url
+        // imgSrcArray.push(imgSrc); // Add the generated img url
         imgHtml += `<img class="slide" src="${imgSrc}">`;
     }
-    
-        imgPrevContainer.innerHTML += imgHtml; // Add the image as html to the container to display it
-   
+
+    imgPrevContainer.innerHTML += imgHtml; // Add the image as html to the container to display it
+
     toggleModalImg(0); // Refresh the image holder
-} 
+}
 
+ 
 
-
-
-
-
-
-
+ 
 
 
 
@@ -1785,12 +1774,11 @@ function handleImages()
 
 // For converting the local image to Base64 - and uploding it to the github #######################################################
 // Get the image as Base64
-async function readImgAsBase64AndUpload(file, imgComment, githubFilePathDb)
-{  
-// let testImg = document.getElementById('imgPicker').files[0] // Get the image from the "input with type="file""
- 
+async function readImgAsBase64AndUpload(file, imgComment, githubFilePathDb) {
+    // let testImg = document.getElementById('imgPicker').files[0] // Get the image from the "input with type="file""
+
     let readerFile = await readFileAsync(file); // Read Img as base 64 from async reader
- 
+
     // Base64
     let dataBase64Img = readerFile.split(',')[1]; // Remove "data:image/png;base64," so it is raw image base64
     return await uploadImgAsync(githubUser, githubRepo, githubFilePathDb, githubToken, dataBase64Img, '', imgComment); // Upload the image to the server
@@ -1799,17 +1787,17 @@ async function readImgAsBase64AndUpload(file, imgComment, githubFilePathDb)
 
 // Read Async file...............................................
 async function readFileAsync(file) {
-  return new Promise((resolve, reject) => {
-    let reader = new FileReader();
+    return new Promise((resolve, reject) => {
+        let reader = new FileReader();
 
-    reader.onload = () => {
-      resolve(reader.result);
-    };
+        reader.onload = () => {
+            resolve(reader.result);
+        };
 
-    reader.onerror = reject;
+        reader.onerror = reject;
 
-    reader.readAsDataURL(file);
-  })
+        reader.readAsDataURL(file);
+    })
 }
 
 
@@ -1822,28 +1810,26 @@ async function delay(ms) {
 
 
 // Get From Data as Json ---------------------------------------------
-function convertFormToJsonById(formId) 
-{
+function convertFormToJsonById(formId) {
     let divForm = document.getElementById(formId); // Using div as form
     // let childElements = divForm.childNodes;
     let childElements = divForm.getElementsByTagName("*");
     //  let childElements = document.getElementById('parentContainer').children;
-    let formData = {}; 
+    let formData = {};
 
-    for (let i = 0; i < childElements.length; i++) 
+    for (let i = 0; i < childElements.length; i++) {
+        if (childElements[i].name !== "" && childElements[i].name !== undefined) // If the element of the form that is a Div has a name property atribute attached to id then use it
         {
-            if(childElements[i].name !=="" && childElements[i].name !== undefined) // If the element of the form that is a Div has a name property atribute attached to id then use it
-            { 
-                let element = childElements[i];
-                formData[element.name] = element.value; 
-            }
+            let element = childElements[i];
+            formData[element.name] = element.value;
         }
+    }
 
     // let jsonData = JSON.stringify(formData);
     //  return jsonData;
     console.log('form................................');
     console.log(formData);
-     return formData;
+    return formData;
 }
 
 
@@ -1854,12 +1840,11 @@ function convertFormToJsonById(formId)
 
 
 // Base HTML For caravan -----------------------------------------------------------------------
-async function caravansHtmlTemplateFields() 
-{
-   
-      //  <img class="slide" src='${obj.photos[h]}'></img>
-     
-   
+async function caravansHtmlTemplateFields() {
+
+    //  <img class="slide" src='${obj.photos[h]}'></img>
+
+
     return `  
      <div class="modalItemContainer" tabindex="0" style="margin-top: 0;">
     <input id="imgPicker" type="file" accept="image/*;capture=camera" multiple="multiple" onchange="handleImages()">
@@ -2105,32 +2090,28 @@ async function caravansHtmlTemplateFields()
 
 
 //:::::::::::::::::::::::::: USED FOR ADD & EDIT :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
-  async function loadAppropriateFields(itemTypePass)
-        {
+async function loadAppropriateFields(itemTypePass) {
 
-          let apFields = document.getElementById("aproppiriateFieldsContainer");
-          let itemType = itemTypePass;
+    let apFields = document.getElementById("aproppiriateFieldsContainer");
+    let itemType = itemTypePass;
 
-          if(itemType == null)
-          {
-             itemType = document.getElementById("itemType").value;
-          }
-           
+    if (itemType == null) {
+        itemType = document.getElementById("itemType").value;
+    }
 
-          if(itemType == "caravans")
-          {
-             apFields.innerHTML = await caravansHtmlTemplateFields();
-             document.getElementById("saveItemButton").addEventListener("click", (e)=> {saveItem(e)}); // For upload
-             document.getElementById("generateCaravanTitleBtn").addEventListener("click", generateCaravanTitle); // Generate caravan title
-            //  document.getElementById("imgPicker").addEventListener("onchange", handleImages); // For the modal
-          }
-          
-           
-        }
- 
+
+    if (itemType == "caravans") {
+        apFields.innerHTML = await caravansHtmlTemplateFields();
+        document.getElementById("saveItemButton").addEventListener("click", (e) => { saveItem(e) }); // For upload
+        document.getElementById("generateCaravanTitleBtn").addEventListener("click", generateCaravanTitle); // Generate caravan title
+        //  document.getElementById("imgPicker").addEventListener("onchange", handleImages); // For the modal
+    }
+
+
+}
+
 // Generate Title ================================================================
-function generateCaravanTitle()
-{
+function generateCaravanTitle() {
     let brand = document.getElementById('caravanBrand');
     let model = document.getElementById('caravanModel');
     let length = document.getElementById('caravanLength');
@@ -2144,157 +2125,147 @@ function generateCaravanTitle()
 
 
 // Update the json file - The DB
-        async function constructUpdateAndUpdate(jsonData, filePath, msg)
-        {
-           await updateJsonFileAsync(githubUser, githubRepo, filePath, githubToken, jsonData, msg);
-        }
+async function constructUpdateAndUpdate(jsonData, filePath, msg) {
+    await updateJsonFileAsync(githubUser, githubRepo, filePath, githubToken, jsonData, msg);
+}
 
 // Function for Saving Add Action logic ----------------------------------------------------------------
-async function AddSave()
-{
-   let type = document.getElementById('itemType').value; // Used - constructin obj and For saving it in github in specific folder type - caravans, cars, products etc.
-   let itemName = document.getElementById('title').value; // For Creating Id
-   const formData = convertFormToJsonById('modalItemDetailsEdit'); // Converting the div html to json - the input ---> to json
-   let itemId = null;
+async function AddSave() {
+    let type = document.getElementById('itemType').value; // Used - constructin obj and For saving it in github in specific folder type - caravans, cars, products etc.
+    let itemName = document.getElementById('title').value; // For Creating Id
+    const formData = convertFormToJsonById('modalItemDetailsEdit'); // Converting the div html to json - the input ---> to json
+    let itemId = null;
 
-   
-     itemId = formData.id = createId(itemName); // Creating the id
-   
-   
-   let imagesJsDelivrPathArray = await handleItemImages(itemId, type);// Upload Images and return jsDelivr path for the images
-    
-   formData.photos = imagesJsDelivrPathArray; // Add the photos array to the json object that will be uploaded
-   formData.id = itemId;
-   formData.category = type; // Add the type to the item itself - where the id, title, price etc. is. It is used un the logic to show the modal
-   formData.sold = "false";  
 
-   let db = await getDbAsync();
+    itemId = formData.id = createId(itemName); // Creating the id
 
-   db.items[type].push(formData); // Add the item to the local db - later the whole db will be uploaded
-    
-   let jsonDb = JSON.stringify(db);
-   document.getElementById("developerInput").value = jsonDb;  // Populate the textbox that shows the db in developer mode
-   await constructUpdateAndUpdate(jsonDb,githubFilePathDb, `Admin - Added new item in APP: ${formData.id}`);   
 
-   // Check
-   console.log("Form Data:"+formData);
-   console.log("Json DB:" +jsonDb);
+    let imagesJsDelivrPathArray = await handleItemImages(itemId, type);// Upload Images and return jsDelivr path for the images
+
+    formData.photos = imagesJsDelivrPathArray; // Add the photos array to the json object that will be uploaded
+    formData.id = itemId;
+    formData.category = type; // Add the type to the item itself - where the id, title, price etc. is. It is used un the logic to show the modal
+    formData.sold = "false";
+
+    let db = await getDbAsync();
+
+    db.items[type].push(formData); // Add the item to the local db - later the whole db will be uploaded
+
+    let jsonDb = JSON.stringify(db);
+    document.getElementById("developerInput").value = jsonDb;  // Populate the textbox that shows the db in developer mode
+    await constructUpdateAndUpdate(jsonDb, githubFilePathDb, `Admin - Added new item in APP: ${formData.id}`);
+
+    // Check
+    console.log("Form Data:" + formData);
+    console.log("Json DB:" + jsonDb);
 }
 
 
 // Function for Saving Edit Action logic ----------------------------------------------------------------
-async function EditSave()
-{
-   let type = document.getElementById('categoryInput').value; // Used - constructin obj and For saving it in github in specific folder type - caravans, cars, products etc.// This field is input and is populated from the db on load the item in edit view
-   const formData = convertFormToJsonById('modalItemDetailsEdit'); // Converting the div html to json - the input ---> to json
-   let itemId = formData.id; // Pre populated from the db into the Id input - formData.id wich is read only
-   
-   let imagesJsDelivrPathArray = await handleItemImages(itemId, type);// Upload Images and return jsDelivr path for the images
-    
- //formData.photos = imagesJsDelivrPathArray; // Add the photos array to the json object that will be uploaded
+async function EditSave() {
+    let type = document.getElementById('categoryInput').value; // Used - constructin obj and For saving it in github in specific folder type - caravans, cars, products etc.// This field is input and is populated from the db on load the item in edit view
+    const formData = convertFormToJsonById('modalItemDetailsEdit'); // Converting the div html to json - the input ---> to json
+    let itemId = formData.id; // Pre populated from the db into the Id input - formData.id wich is read only
+
+    let imagesJsDelivrPathArray = await handleItemImages(itemId, type);// Upload Images and return jsDelivr path for the images
+
+    //formData.photos = imagesJsDelivrPathArray; // Add the photos array to the json object that will be uploaded
     // ###### Here bellow on before hand if imaged are removed the  the img link will be removed from formData.photo as well as other action for deleding hte specific image    
 
-    
-//    formData.category = type; // Add the type to the item itself - where the id, title, price etc. is. It is used un the logic to show the modal
-//    formData.sold = "false";  
+
+    //    formData.category = type; // Add the type to the item itself - where the id, title, price etc. is. It is used un the logic to show the modal
+    //    formData.sold = "false";  
 
     // ###### Here bellow on before hand if imaged are removed the  the img link will be removed from formData.photo as well as other action for deleding hte specific image    
     let db = await getDbAsync(); // The Db
     let rawitem = await recursiveSearchObj(db.items, itemId); // Search and get the matched item - searching by the unique id - must get one item if it excists
     let item = Object.values(rawitem)[0][0]; // The result is ex. caravans[{category:"caravans", price:"1353"}] Get the itemType / category
     formData.photos = [...item.photos, ...imagesJsDelivrPathArray]; // Add the photos array to the json object that will be uploaded (... if edit mode retain the old photos and add the new to the old - merge the arrays)
-   
+
     // Not tested forgot await
     await deleteLocalItemById(itemId); // Remove the old item that is unedited from the local db - if it is not removed there will be two. The item could be assigned instead of deleting, but...this is used for now
-   
+
     db.items[type].push(formData); // Add the item to the local db - later the whole db will be uploaded
-    
-   let jsonDb = JSON.stringify(db);
-//    document.getElementById("developerInput").value = jsonDb;  // Populate the textbox that shows the db in developer mode
-   await constructUpdateAndUpdate(jsonDb,githubFilePathDb, `Admin - Edited item in APP: ${formData.id}`);   
+
+    let jsonDb = JSON.stringify(db);
+    //    document.getElementById("developerInput").value = jsonDb;  // Populate the textbox that shows the db in developer mode
+    await constructUpdateAndUpdate(jsonDb, githubFilePathDb, `Admin - Edited item in APP: ${formData.id}`);
 }
 
 
 
 // Save Item - ADD & EDIT ---------------------------------------------------------------------
-async function saveItem(e)
-{ 
+async function saveItem(e) {
 
-  let currentUrlPath = window.location.pathname; // The current path - ex. Edit or Add
-    
-   if(currentUrlPath == "/Add") 
-   {
-      await AddSave(); // Add save logic
-   }
-   else if(currentUrlPath == "/Edit")
-   {
-    // Edit is not working properly - instead of editing it copies the item edits it and add it to the db, but the old item is still in the db
-     await EditSave();   
-   }
-  
+    let currentUrlPath = window.location.pathname; // The current path - ex. Edit or Add
+
+    if (currentUrlPath == "/Add") {
+        await AddSave(); // Add save logic
+    }
+    else if (currentUrlPath == "/Edit") {
+        // Edit is not working properly - instead of editing it copies the item edits it and add it to the db, but the old item is still in the db
+        await EditSave();
+    }
 
 
-//    let itemName = document.getElementById('title').value; // For Creating Id
-//    const formData = convertFormToJsonById('modalItemDetails'); // Convert the html fields to json
-//    let itemId = formData.id;
 
-//    if(itemId == null || itemId == "" || itemId == undefined) // If ID is null, empty or undefined, create ID. Because this is used also in the edit view. THe code is reused both for add and edit. When you add there is no ID, but when you edit there is id
-//    {
-//      itemId = formData.id = createId(itemName); 
-//    }
-   
-//    let imagesJsDelivrPathArray = await handleItemImages(itemId, type);// Upload Images and return jsDelivr path for the images
-    
-//    formData.photos = [...formData.photos, ...imagesJsDelivrPathArray]; // Add the photos array to the json object that will be uploaded (... if edit mode retain the old photos and add the new to the old - merge the arrays)
-//    formData.id = itemId;
-//    formData.category = type; // Add the type to the item itself - where the id, title, price etc. is. It is used in the logic to show the modal
-//    formData.sold = "false";  
+    //    let itemName = document.getElementById('title').value; // For Creating Id
+    //    const formData = convertFormToJsonById('modalItemDetails'); // Convert the html fields to json
+    //    let itemId = formData.id;
 
-//    let db = await getDbAsync();
+    //    if(itemId == null || itemId == "" || itemId == undefined) // If ID is null, empty or undefined, create ID. Because this is used also in the edit view. THe code is reused both for add and edit. When you add there is no ID, but when you edit there is id
+    //    {
+    //      itemId = formData.id = createId(itemName); 
+    //    }
 
-//    db.items[type].push(formData); // Add the item to the local db - later the whole db will be uploaded
-    
-//    let jsonDb = JSON.stringify(db);
-//    document.getElementById("developerInput").value = jsonDb;  // Populate the textbox that shows the db in developer mode
+    //    let imagesJsDelivrPathArray = await handleItemImages(itemId, type);// Upload Images and return jsDelivr path for the images
 
-   
-   
+    //    formData.photos = [...formData.photos, ...imagesJsDelivrPathArray]; // Add the photos array to the json object that will be uploaded (... if edit mode retain the old photos and add the new to the old - merge the arrays)
+    //    formData.id = itemId;
+    //    formData.category = type; // Add the type to the item itself - where the id, title, price etc. is. It is used in the logic to show the modal
+    //    formData.sold = "false";  
 
-//    await constructUpdateAndUpdate(jsonDb,githubFilePathDb, `${performingActionType} ${formData.id}`);
-       
-            
-       
-     
-  
-   // #1. Here get the links for the uploadded images if responese ok
-   // #2. Convert to js delivr url.
-   // #3. Get all inputs from the form and construct json and add the js delivr links
-   // 4. Update the db
-   // 5. Fix the db to have not latin char but without uri encoding - maybe onvert the json to base 64 without he uri
+    //    let db = await getDbAsync();
+
+    //    db.items[type].push(formData); // Add the item to the local db - later the whole db will be uploaded
+
+    //    let jsonDb = JSON.stringify(db);
+    //    document.getElementById("developerInput").value = jsonDb;  // Populate the textbox that shows the db in developer mode
+
+
+
+
+    //    await constructUpdateAndUpdate(jsonDb,githubFilePathDb, `${performingActionType} ${formData.id}`);
+
+
+
+
+
+    // #1. Here get the links for the uploadded images if responese ok
+    // #2. Convert to js delivr url.
+    // #3. Get all inputs from the form and construct json and add the js delivr links
+    // 4. Update the db
+    // 5. Fix the db to have not latin char but without uri encoding - maybe onvert the json to base 64 without he uri
 }
 
 
 
 
 // Handle local images - read as base 64 and upload ---------------------------------------
-async function handleItemImages(itemId, type)
-{
-   let images = document.getElementById('imgPicker').files; // Get the images from the "input with type="file""
-   let githubFilePathForImg ="";
-   
-   let imagesPathArray = [];
+async function handleItemImages(itemId, type) {
+    let images = document.getElementById('imgPicker').files; // Get the images from the "input with type="file""
+    let githubFilePathForImg = "";
 
-   let okResponse = true;
-   for (let v = 0; v < images.length; v++) 
-    {
-        if(okResponse)
-        {
-            githubFilePathForImg =`resources/img/${type}/${itemId}/${itemId}-${[v+1]}.png`; // Ex. resources/img/caravans/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z-1
+    let imagesPathArray = [];
+
+    let okResponse = true;
+    for (let v = 0; v < images.length; v++) {
+        if (okResponse) {
+            githubFilePathForImg = `resources/img/${type}/${itemId}/${itemId}-${[v + 1]}.png`; // Ex. resources/img/caravans/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z-1
             imagesPathArray.push(convertToJsDelivrPath(githubFilePathForImg)); // Add the path to the array that will hold all paths. It is late used to get js delivr paths and then add it to the json object before sending to the server
-            okResponse = await readImgAsBase64AndUpload(images[v], `${[v+1]} от ${[images.length]}`, githubFilePathForImg);
+            okResponse = await readImgAsBase64AndUpload(images[v], `${[v + 1]} от ${[images.length]}`, githubFilePathForImg);
         }
-        else
-        {
+        else {
             // Here code to remove the last added images................
             // Need to have variables to remember the name and path, then use delete function from CRUF file to delete each image
         }
@@ -2302,14 +2273,13 @@ async function handleItemImages(itemId, type)
     }
     return imagesPathArray;
 }
- 
+
 
 // Convert to js deliver path ===================================================
-function convertToJsDelivrPath(path)
-{
-  // let jsDelivr = 'https://cdn.jsdelivr.net/gh/stevicamp/Stevicamp@main/index.html';
-  let jsDelivrPath = `${cdn}/${githubUser}/${githubRepo}/${path}`;
-  return jsDelivrPath;
+function convertToJsDelivrPath(path) {
+    // let jsDelivr = 'https://cdn.jsdelivr.net/gh/stevicamp/Stevicamp@main/index.html';
+    let jsDelivrPath = `${cdn}/${githubUser}/${githubRepo}/${path}`;
+    return jsDelivrPath;
 }
 
 
@@ -2331,15 +2301,15 @@ function convertToJsDelivrPath(path)
 
 
 
- // Create Name with unique Id ================================================================================================
-    function createId(productName) { 
-        var date = new Date(); // New Date object
-        var idDate = date.toISOString().replace(/:/g, "-"); //Create - new DateTime and replace the ":" with "-"  the "/g" means replace all. Because ":" is not allowed to be in a file name.
-        var idName ='id_' + productName + '-D' + idDate; 
-        // var idName = productName + 'D' + idDate + "!" + Math.random().toString(36).substring(2, 12); // Combine the data to get file name with ID. The pattern is [TheProduct-NAME AND MODEL-TheDateAndTime - UNIQUE ID]
+// Create Name with unique Id ================================================================================================
+function createId(productName) {
+    var date = new Date(); // New Date object
+    var idDate = date.toISOString().replace(/:/g, "-"); //Create - new DateTime and replace the ":" with "-"  the "/g" means replace all. Because ":" is not allowed to be in a file name.
+    var idName = 'id_' + productName + '-D' + idDate;
+    // var idName = productName + 'D' + idDate + "!" + Math.random().toString(36).substring(2, 12); // Combine the data to get file name with ID. The pattern is [TheProduct-NAME AND MODEL-TheDateAndTime - UNIQUE ID]
 
-        return idName; //'The Product Type-Model-DateTime-Id'
-    }
+    return idName; //'The Product Type-Model-DateTime-Id'
+}
 
 
 
@@ -2352,7 +2322,7 @@ function convertToJsDelivrPath(path)
 //     // window.history.pushState("data-link", "",  `/Edit?${itemId}`); 
 //     // location.href =`/Edit?${itemId}`;
 //     // await loadAppropriateFields();
-     
+
 //     // console.log(editItemByItemLink.caller.name);
 //     // event.target.href = `/Edit?${itemId}`;
 //     // router();
@@ -2369,29 +2339,28 @@ function convertToJsDelivrPath(path)
 
 
 //:::::::::::::::::::::::::: DELETE :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
-async function deleteItemByItemLink(itemLink)
-{
+async function deleteItemByItemLink(itemLink) {
     // Here add - show modal are you sure you want to delete
-  let db = await getDbAsync(); // Get the db
-  let itemId = itemLink.split('?search=')[1]; // Get the item id from the item link
-  let rawItem = await recursiveSearchObj(db.items, itemId); // Find the raw item by using the id 
-  let item = Object.values(rawItem)[0][0]; // [0] = ex. "caravans" [0] = the first item in the array - basicaly it is only one because only one item at a time will be deleted
-  db['items'][`${item.category}`].splice(item.index,1); // Remove the item from the local DB // keyword "delete" can be used too - but is a little different 
+    let db = await getDbAsync(); // Get the db
+    let itemId = itemLink.split('?search=')[1]; // Get the item id from the item link
+    let rawItem = await recursiveSearchObj(db.items, itemId); // Find the raw item by using the id 
+    let item = Object.values(rawItem)[0][0]; // [0] = ex. "caravans" [0] = the first item in the array - basicaly it is only one because only one item at a time will be deleted
+    db['items'][`${item.category}`].splice(item.index, 1); // Remove the item from the local DB // keyword "delete" can be used too - but is a little different 
 
-  // Here loop all images photos and delete each one
+    // Here loop all images photos and delete each one
 
     let updatedDbAsJson = JSON.stringify(db);
     await updateJsonFileAsync(githubUser, githubRepo, githubFilePathDb, githubToken, updatedDbAsJson, `Admin - Deleted item in APP: ${item.id}`); // Update the DB so the deleted item is no longer in the remote db
     await deleteItemImagesByLinks(item.photos); // Delete the images of the item that has to be deleted
 
-  // #If image delete fails get the item id and update the error file in github for later manual removement of the images
-  // #Make clean up button that searches the db for the specific item if it does not excist searches for the images if they excist delete them
-  // Here update the db - json file with the new local DB without the deleted item 
+    // #If image delete fails get the item id and update the error file in github for later manual removement of the images
+    // #Make clean up button that searches the db for the specific item if it does not excist searches for the images if they excist delete them
+    // Here update the db - json file with the new local DB without the deleted item 
 
 
 
-  console.log(item);
-  //   delete item; 
+    console.log(item);
+    //   delete item; 
 }
 
 
@@ -2399,29 +2368,26 @@ async function deleteItemByItemLink(itemLink)
 
 
 
-async function deleteLocalItemById(itemId)
-{
+async function deleteLocalItemById(itemId) {
     // Here add - show modal are you sure you want to delete
-  let db = await getDbAsync(); // Get the db 
-  let rawItem = await recursiveSearchObj(db.items, itemId); // Find the raw item by using the id 
-  let item = Object.values(rawItem)[0][0]; // [0] = ex. "caravans" [0] = the first item in the array - basicaly it is only one because only one item at a time will be deleted
-  db['items'][`${item.category}`].splice(item.index,1); // Remove the item from the local DB // keyword "delete" can be used too - but is a little different 
+    let db = await getDbAsync(); // Get the db 
+    let rawItem = await recursiveSearchObj(db.items, itemId); // Find the raw item by using the id 
+    let item = Object.values(rawItem)[0][0]; // [0] = ex. "caravans" [0] = the first item in the array - basicaly it is only one because only one item at a time will be deleted
+    db['items'][`${item.category}`].splice(item.index, 1); // Remove the item from the local DB // keyword "delete" can be used too - but is a little different 
 
-  
-  console.log("Deleted item - deleteLocalItemById:"+item);
-  //   delete item; 
+
+    console.log("Deleted item - deleteLocalItemById:" + item);
+    //   delete item; 
 }
 
 
 
 
-async function deleteItemImagesByLinks(imgLinkArray)
-{
+async function deleteItemImagesByLinks(imgLinkArray) {
     // .split("/")[1]; // Is used to get the raw github link from the js delivr link
-    for (let k = 0; k < imgLinkArray.length; k++) 
-    { 
-      let currentImgLink = imgLinkArray[k].split(`${cdn}/${githubUser}/${githubRepo}/`)[1];
-      await deleteFileAsync(githubUser, githubRepo, currentImgLink, githubToken, `Deleted: ${imgLinkArray[k]}`);  
+    for (let k = 0; k < imgLinkArray.length; k++) {
+        let currentImgLink = imgLinkArray[k].split(`${cdn}/${githubUser}/${githubRepo}/`)[1];
+        await deleteFileAsync(githubUser, githubRepo, currentImgLink, githubToken, `Deleted: ${imgLinkArray[k]}`);
     }
 }
 
@@ -2437,31 +2403,28 @@ async function deleteItemImagesByLinks(imgLinkArray)
 
 // Auto Load Credentials ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-        function autoLoadCredentialsGlobal()
-        {
-          // Load auto credentials
-          let autoLoadCredentials = localStorage.getItem("loadCredentialsAuto");
+function autoLoadCredentialsGlobal() {
+    // Load auto credentials
+    let autoLoadCredentials = localStorage.getItem("loadCredentialsAuto");
 
-          if(autoLoadCredentials !== undefined && autoLoadCredentials === 'true')
-          {
-            loadCredentialsFromLocalStorageToGlobalVariables(); 
-          } 
-        }
-
-        
+    if (autoLoadCredentials !== undefined && autoLoadCredentials === 'true') {
+        loadCredentialsFromLocalStorageToGlobalVariables();
+    }
+}
 
 
-         // Load Credentials
-        function loadCredentialsFromLocalStorageToGlobalVariables() 
-        { 
-            // Get data from local Storage and populate the "local variables" that are global and are found in the CRUD.js file.
-            githubUser = localStorage.getItem("githubUser");
-            githubRepo = localStorage.getItem("githubRepo");
-            githubToken = localStorage.getItem("githubToken");
-            githubFilePathDb = localStorage.getItem("githubFilePathDb"); 
-            console.log(githubToken);
-        }
-        
+
+
+// Load Credentials
+function loadCredentialsFromLocalStorageToGlobalVariables() {
+    // Get data from local Storage and populate the "local variables" that are global and are found in the CRUD.js file.
+    githubUser = localStorage.getItem("githubUser");
+    githubRepo = localStorage.getItem("githubRepo");
+    githubToken = localStorage.getItem("githubToken");
+    githubFilePathDb = localStorage.getItem("githubFilePathDb");
+    console.log(githubToken);
+}
+
 
 
 
