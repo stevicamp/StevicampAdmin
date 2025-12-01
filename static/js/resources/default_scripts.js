@@ -14,7 +14,7 @@ var prevUrl = "";
 var popStateUrl = false;
 
 
-var editItemImgArr = [];
+var editItemImgArr = []; // Used to hold the links of add and edit view // Also used to display the images in the view image container
 // function b64DecodeUnicode(str) {
 //     // Going backwards: from bytestream, to percent-encoding, to original string.
 //     return decodeURIComponent(atob(str).split('').map(function(c) {
@@ -1180,6 +1180,8 @@ function toggleModalImg(n) {
 
     let images = document.getElementsByClassName("slide"); // Get the images
 
+if(images.length !== 0) // If there are no images in the image container / the slide then do not execute the code since there is no image and error comes up
+{
     if (images.length !== 1) {
         images[modalImgIndex].style.display = "none"; // Hide the image
 
@@ -1201,6 +1203,11 @@ function toggleModalImg(n) {
     }
 
     document.getElementById("imgCount").innerHTML = `${modalImgIndex + 1}/${images.length}`; // Change the image count value that is shown over the image the span
+}
+    if(images.length == 0) // Used for the image count indicator for the user where the user can se how many images there ar in total and the current viewing image // If there are 0 images then sho 0/0
+    {
+      document.getElementById("imgCount").innerHTML = '0/0'; // Show 0/0 when no image
+    }
 }
 
 // Used to remove image elements so the about slide can work - otherwise it interfers - this is used on close modal
@@ -1736,7 +1743,7 @@ function initTranlate() {
 }
 
 
-// let imgSrcArray = []; 
+let imgSrcArray = [];
 // For The Image picker ......................................................................
 function handleImages() {
 
@@ -1759,7 +1766,6 @@ function handleImages() {
 
     toggleModalImg(0); // Refresh the image holder
 }
-
 
 
 
@@ -1855,8 +1861,10 @@ async function caravansHtmlTemplateFields() {
 
     <button class="arrow-left prevent-select" onclick="toggleModalImg(-1)">&#10094;</button>
    
-       <button class="arrow-right prevent-select" onclick="toggleModalImg(1)">&#10095;</button> 
-        
+    <button class="arrow-right prevent-select" onclick="toggleModalImg(1)">&#10095;</button> 
+    
+    <a class="item_share_button" style="margin: auto; background-image: url('static/img/icons/delete.png');" href="javascript:deleteCurrentImg();" title="Изтриване на снимката!!!"></a>
+  <span style="float:right; margin-right:2%; margin-top: 10px;" id="imgCount"></span>
     </div>
    
     
@@ -2282,20 +2290,81 @@ function imgPickerHandler() {
     let currentUrlPath = window.location.pathname; // The current path - ex. Edit or Add
 
     if (currentUrlPath == "/Add") {
-
+       
     }
     else if (currentUrlPath == "/Edit") {
-        
-        let imgPicker = document.getElementById('imgPicker');
- 
-        for (let i = 0; i < imgPicker.files.length; i++) {
-            editItemImgArr.push(window.URL.createObjectURL(imgPicker.files[i])); // Image local src push to array
-        }
+        imgPickerImagesToLocalArrEdit(); // The img picker images to the local array
     }
 
      handleImages(); // Add & show the images in the imgView container
-
 }
+
+
+
+
+
+
+// The images from the picker to the local array
+function imgPickerImagesToLocalArrEdit() {
+    let imgPicker = document.getElementById('imgPicker');
+
+    for (let i = 0; i < imgPicker.files.length; i++) {
+        editItemImgArr.push(window.URL.createObjectURL(imgPicker.files[i])); // Image local src push to array
+    }
+}
+
+
+
+
+
+// Add the images from the db in the view image container
+function handleImagesEditView(assignHtml) 
+{ 
+    
+    let imgPrevContainer = document.getElementById('previewImgHolder');
+
+    let imgHtml = '';  
+    for (let i = 0; i < editItemImgArr.length; i++) {
+       
+        imgHtml += `<img class="slide" src="${editItemImgArr[i]}">`;
+    }
+
+    modalImgIndex = 0; // Reset the index for the images preview container, the slide with the image. Otherwise something happens and does not show the image, goes out of the array // It is also reseted in the main.js on every view change
+
+    if(assignHtml != undefined && assignHtml == true)
+    {
+      imgPrevContainer.innerHTML = imgHtml; // Assign the images html to the container to display it // Used when img is deleted from the local array in order for the view image container to update properly
+    }
+    else
+    {
+      imgPrevContainer.innerHTML += imgHtml; // Add the images as html to the container to display it
+    }
+    toggleModalImg(0); // Refresh the image holder
+} 
+
+
+
+
+// Delete current imgage Add & Edit view ----------------------------------------------------------------------------------
+function deleteCurrentImg() {
+    // //   alert(editItemImgArr);
+    // //   alert(modalImgIndex); 
+    console.log('Before Arr:' + editItemImgArr);
+    editItemImgArr.splice(modalImgIndex, 1);
+    console.log('After Arr:' + editItemImgArr);
+    console.log('Index after:' + modalImgIndex);
+    
+    // editItemImgArr.splice(modalImgIndex, 1); // Remove the current image - based on the current index in the view from the local array holding the img links
+    handleImagesEditView(true); // Use the local array to populate the img view container
+    toggleModalImg(-1);
+    // handleImages(); // Add & show the images in the imgView container
+    
+}
+
+
+ 
+
+
 
 // Convert to js deliver path ===================================================
 function convertToJsDelivrPath(path) {

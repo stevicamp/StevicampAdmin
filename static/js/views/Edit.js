@@ -58,24 +58,8 @@ async function EditLogic() {
         }
     }
 
-    handleImagesEditView(item);
+    editItemImgArr = item.photos; // The images from the db (the links) to the local array
+    handleImagesEditView();
 }
 
 
-
-function handleImagesEditView(item) 
-{ 
-    editItemImgArr = item.photos;
-    let imgPrevContainer = document.getElementById('previewImgHolder');
-
-    let imgHtml = '';  
-    for (let i = 0; i < editItemImgArr.length; i++) {
-       
-        imgHtml += `<img class="slide" src="${editItemImgArr[i]}">`;
-    }
-
-    modalImgIndex = 0; // Reset the index for the images preview container, the slide with the image. Otherwise something happens and does not show the image, goes out of the array // It is also reseted in the main.js on every view change
-    imgPrevContainer.innerHTML += imgHtml; // Add the image as html to the container to display it
-
-    toggleModalImg(0); // Refresh the image holder
-} 
