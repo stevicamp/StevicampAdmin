@@ -25,8 +25,8 @@ export async function getHtmlAsync() {
    <div class="img-preview-container">
        ${imagesHtml}
 
-       <button class="arrow-left prevent-select" onclick="toggleModalImg(-1)">&#10094;</button>
-       <button class="arrow-right prevent-select" onclick="toggleModalImg(1)">&#10095;</button> 
+       <button class="arrow-left prevent-select" onclick="toggleSlideImg(-1)">&#10094;</button>
+       <button class="arrow-right prevent-select" onclick="toggleSlideImg(1)">&#10095;</button> 
        
        ${modalItemShareButtonsHtml(shareLink, obj.title)}
     </div>
@@ -178,7 +178,7 @@ function onElementReady(className, param, callBack) {
 // View Script -------------------------------------------------
 export async function executeViewScriptAsync() {
     Common.setTitle("За нас - Стевикамп", "info");
-    onElementReady('slide', 0, toggleModalImg);
+    onElementReady('slide', 0, toggleSlideImg);
 }
 
 

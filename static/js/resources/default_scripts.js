@@ -215,12 +215,12 @@ document.body.addEventListener('keydown', function (e) {
     let modal = document.getElementById("modalWindow");
     if (e.key === "ArrowLeft" && modal.style.display == "flex") // Change image prev
     {
-        toggleModalImg(-1); // Change img 
+        toggleSlideImg(-1); // Change img 
         document.activeElement.blur();
     }
     else if (e.key === "ArrowRight" && modal.style.display == "flex") // Change image next
     {
-        toggleModalImg(1); // Change img
+        toggleSlideImg(1); // Change img
         document.activeElement.blur();
     }
     else if (e.key === "ArrowUp" && modal.style.display == "flex") // Scroll up item details with arrow up
@@ -373,8 +373,8 @@ async function caravansHtmlTemplate(obj) {
    <div class="img-preview-container">
        ${imagesHtml}
 
-       <button class="arrow-left prevent-select" onclick="toggleModalImg(-1)">&#10094;</button>
-       <button class="arrow-right prevent-select" onclick="toggleModalImg(1)">&#10095;</button> 
+       <button class="arrow-left prevent-select" onclick="toggleSlideImg(-1)">&#10094;</button>
+       <button class="arrow-right prevent-select" onclick="toggleSlideImg(1)">&#10095;</button> 
        
         ${modalItemShareButtonsHtml(itemLink, obj.title)} 
    
@@ -474,8 +474,8 @@ async function carsHtmlTemplate(obj) {
    <div class="img-preview-container">
        ${imagesHtml}
 
-       <button class="arrow-left prevent-select" onclick="toggleModalImg(-1)">&#10094;</button>
-       <button class="arrow-right prevent-select" onclick="toggleModalImg(1)">&#10095;</button> 
+       <button class="arrow-left prevent-select" onclick="toggleSlideImg(-1)">&#10094;</button>
+       <button class="arrow-right prevent-select" onclick="toggleSlideImg(1)">&#10095;</button> 
        
        ${modalItemShareButtonsHtml(itemLink, obj.title)}
     </div>
@@ -558,8 +558,8 @@ async function microbusHtmlTemplate(obj) {
    <div class="img-preview-container">
        ${imagesHtml}
 
-       <button class="arrow-left prevent-select" onclick="toggleModalImg(-1)">&#10094;</button>
-       <button class="arrow-right prevent-select" onclick="toggleModalImg(1)">&#10095;</button> 
+       <button class="arrow-left prevent-select" onclick="toggleSlideImg(-1)">&#10094;</button>
+       <button class="arrow-right prevent-select" onclick="toggleSlideImg(1)">&#10095;</button> 
        
        ${modalItemShareButtonsHtml(itemLink, obj.title)}
     </div>
@@ -646,8 +646,8 @@ async function scootersHtmlTemplate(obj) {
    <div class="img-preview-container">
        ${imagesHtml}
 
-       <button class="arrow-left prevent-select" onclick="toggleModalImg(-1)">&#10094;</button>
-       <button class="arrow-right prevent-select" onclick="toggleModalImg(1)">&#10095;</button> 
+       <button class="arrow-left prevent-select" onclick="toggleSlideImg(-1)">&#10094;</button>
+       <button class="arrow-right prevent-select" onclick="toggleSlideImg(1)">&#10095;</button> 
        
        ${modalItemShareButtonsHtml(itemLink, obj.title)}
     </div>
@@ -709,8 +709,8 @@ async function trailersHtmlTemplate(obj) {
    <div class="img-preview-container">
        ${imagesHtml}
 
-       <button class="arrow-left prevent-select" onclick="toggleModalImg(-1)">&#10094;</button>
-       <button class="arrow-right prevent-select" onclick="toggleModalImg(1)">&#10095;</button> 
+       <button class="arrow-left prevent-select" onclick="toggleSlideImg(-1)">&#10094;</button>
+       <button class="arrow-right prevent-select" onclick="toggleSlideImg(1)">&#10095;</button> 
        
        ${modalItemShareButtonsHtml(itemLink, obj.title)}
     </div>
@@ -781,8 +781,8 @@ async function wheelsHtmlTemplate(obj) {
    <div class="img-preview-container">
        ${imagesHtml}
 
-       <button class="arrow-left prevent-select" onclick="toggleModalImg(-1)">&#10094;</button>
-       <button class="arrow-right prevent-select" onclick="toggleModalImg(1)">&#10095;</button> 
+       <button class="arrow-left prevent-select" onclick="toggleSlideImg(-1)">&#10094;</button>
+       <button class="arrow-right prevent-select" onclick="toggleSlideImg(1)">&#10095;</button> 
        
        ${modalItemShareButtonsHtml(itemLink, obj.title)}
     </div>
@@ -860,8 +860,8 @@ async function productsHtmlTemplate(obj) {
    <div class="img-preview-container">
        ${imagesHtml}
 
-       <button class="arrow-left prevent-select" onclick="toggleModalImg(-1)">&#10094;</button>
-       <button class="arrow-right prevent-select" onclick="toggleModalImg(1)">&#10095;</button> 
+       <button class="arrow-left prevent-select" onclick="toggleSlideImg(-1)">&#10094;</button>
+       <button class="arrow-right prevent-select" onclick="toggleSlideImg(1)">&#10095;</button> 
        
        ${modalItemShareButtonsHtml(itemLink, obj.title)}
     </div>
@@ -924,8 +924,8 @@ async function equipmentHtmlTemplate(obj) {
    <div class="img-preview-container">
        ${imagesHtml}
 
-       <button class="arrow-left prevent-select" onclick="toggleModalImg(-1)">&#10094;</button>
-       <button class="arrow-right prevent-select" onclick="toggleModalImg(1)">&#10095;</button> 
+       <button class="arrow-left prevent-select" onclick="toggleSlideImg(-1)">&#10094;</button>
+       <button class="arrow-right prevent-select" onclick="toggleSlideImg(1)">&#10095;</button> 
        
        ${modalItemShareButtonsHtml(itemLink, obj.title)}
     </div>
@@ -986,8 +986,8 @@ async function appliancesHtmlTemplate(obj) {
    <div class="img-preview-container">
        ${imagesHtml}
 
-       <button class="arrow-left prevent-select" onclick="toggleModalImg(-1)">&#10094;</button>
-       <button class="arrow-right prevent-select" onclick="toggleModalImg(1)">&#10095;</button> 
+       <button class="arrow-left prevent-select" onclick="toggleSlideImg(-1)">&#10094;</button>
+       <button class="arrow-right prevent-select" onclick="toggleSlideImg(1)">&#10095;</button> 
        
        ${modalItemShareButtonsHtml(itemLink, obj.title)}
     </div>
@@ -1079,7 +1079,7 @@ async function showModal(itemId) // Show modal is used so when navigating trough
     modal.style.display = 'flex'; // Show modal 
     // modal.tabIndex = 1;
     // modal.focus();
-    toggleModalImg(0);
+    toggleSlideImg(0);
 
     document.getElementById("app").style.overflow = "hidden"; // hide the overflow for the app container so it is not triggered while the modal is open
 
@@ -1100,7 +1100,7 @@ async function closeItemModal(e) {
     // window.history.replaceState({} , '', `${prevUrl}` );
     // prevUrl ="";
     // history.go(-1);
-    modalImgIndex = 0; // Reset the image tab index on modal close
+    slideImgIndex = 0; // Reset the image tab index on modal close
     document.getElementById("app").style.overflowY = "auto"; // Reset the overflow for the app, so it can be scrolled
 
     removeElementsByClassName('slide'); // Remove image elements of specific item on close modal
@@ -1109,7 +1109,7 @@ async function closeItemModal(e) {
 
 function closeItemModalOnPopState() // Close the modal on prev forward button
 {
-    // modalImgIndex = 0; // Reset the index for the images preview container
+    // slideImgIndex = 0; // Reset the index for the images preview container
     popStateUrl = true;
     prevUrl = window.location.href; // For the modal to get the prev url
 
@@ -1128,11 +1128,11 @@ let touchendX = 0
 function checkDirection() {
     // Left .....................
     if (touchendX < touchstartX && (touchstartX - touchendX) > 50) {
-        toggleModalImg(-1);
+        toggleSlideImg(-1);
     }
     else if (touchendX > touchstartX && (touchendX - touchstartX) > 50) // Right ..................
     {
-        toggleModalImg(1);
+        toggleSlideImg(1);
     }
 
 }
@@ -1174,41 +1174,96 @@ document.getElementById('modalWindow').addEventListener('touchend', e => {
 
 
 // Changing images in modal ------------------------------------------------------------------------
-var modalImgIndex = 0; // Hold track of the current img index - showed image
+var slideImgIndex = 0; // Hold track of the current img index - showed image
 
-function toggleModalImg(n) {
+function toggleSlideImg(n) 
+{
 
     let images = document.getElementsByClassName("slide"); // Get the images
 
 if(images.length !== 0) // If there are no images in the image container / the slide then do not execute the code since there is no image and error comes up
 {
-    if (images.length !== 1) {
-        images[modalImgIndex].style.display = "none"; // Hide the image
-
-        if (images.length - 1 == modalImgIndex && n !== -1)  // If Last image and is not back button
+    if (images.length !== 1) 
         {
-            modalImgIndex = -1;
-        }
-        else if (modalImgIndex == 0 && n == -1)// If Back button and reached the first image go to the last
+        
+            if(images[slideImgIndex].style.display !== undefined) // If deleting image the image is deleted and can not be hidden
+            {
+                images[slideImgIndex].style.display = "none"; // Hide the image
+            }
+
+        if (images.length - 1 == slideImgIndex && n !== -1)  // If Last image and is not back button
         {
-            modalImgIndex = images.length;
+            slideImgIndex = -1;
+        }
+        else if (slideImgIndex == 0 && n == -1)// If Back button and reached the first image go to the last
+        {
+            slideImgIndex = images.length;
         }
 
-        images[modalImgIndex + n].style.display = "block"; // Show img n can be -1
-        modalImgIndex += n; // n can be -1
-        // alert(images.length + "-" + modalImgIndex);
+        images[slideImgIndex + n].style.display = "block"; // Show img n can be -1
+        slideImgIndex += n; // n can be -1
+        // alert(images.length + "-" + slideImgIndex);
     }
     else {
         images[0].style.display = "block"; // Show first image wich is also the last because there is only 1
     }
 
-    document.getElementById("imgCount").innerHTML = `${modalImgIndex + 1}/${images.length}`; // Change the image count value that is shown over the image the span
+    // document.getElementById("imgCount").innerHTML = `${slideImgIndex + 1}/${images.length}`; // Change the image count value that is shown over the image the span
 }
-    if(images.length == 0) // Used for the image count indicator for the user where the user can se how many images there ar in total and the current viewing image // If there are 0 images then sho 0/0
+    // if(images.length == 0) // Used for the image count indicator for the user where the user can see how many images there ar in total and the current viewing image // If there are 0 images then sho 0/0
+    // {
+    //   document.getElementById("imgCount").innerHTML = '0/0'; // Show 0/0 when no image
+    // }
+    updateViewImageIndexIndication();
+}
+
+function updateViewImageIndexIndication()
+{
+    let images = document.getElementsByClassName("slide"); // Get the images
+    if(images.length !== 0) // Used for the image count indicator for the user where the user can see how many images there ar in total and the current viewing image // If there are 0 images then sho 0/0
+    {
+    document.getElementById("imgCount").innerHTML = `${slideImgIndex + 1}/${images.length}`; // Change the image count value that is shown over the image the span 
+    }
+    else
     {
       document.getElementById("imgCount").innerHTML = '0/0'; // Show 0/0 when no image
     }
 }
+
+// Navigate to the specific image in the slide
+function imgSlideNavigation(index) // Not working to navigate to specific image - only on initial load & after delete
+{
+    let images = document.getElementsByClassName("slide"); // Get the images from the slide the generated html images in the slide
+    // slideImgIndex = index;
+    if (images.length !== 0)
+    { 
+        if(images.length > index)
+        { 
+            // images[index-1].style.display = "none"; // Hide the image
+            images[index].style.display = "block"; // Show img n can be -1
+            // slideImgIndex = slideImgIndex-1;
+        }
+        // else if(images.length == index && images.length !== 0)
+        // {
+        //     images[index-1].style.display = "block"; // Show img n can be -1
+        // }
+        // else if(images.length == index)
+        // {
+        //     images[index-1].style.display = "block"; // Show img n can be -1
+        // }
+        // else
+        // {
+        //     images[index-1].style.display = "block"; // Show img n can be -1
+        // }
+
+        // slideImgIndex = slideImgIndex-1;
+    }
+    
+   console.log('index:'+index);
+   console.log('slideImgIndex'+slideImgIndex);
+}
+
+
 
 // Used to remove image elements so the about slide can work - otherwise it interfers - this is used on close modal
 function removeElementsByClassName(className) {
@@ -1764,7 +1819,7 @@ function handleImages() {
 
     imgPrevContainer.innerHTML += imgHtml; // Add the image as html to the container to display it
 
-    toggleModalImg(0); // Refresh the image holder
+    toggleSlideImg(0); // Refresh the image holder
 }
 
 
@@ -1859,9 +1914,9 @@ async function caravansHtmlTemplateFields() {
 
      
 
-    <button class="arrow-left prevent-select" onclick="toggleModalImg(-1)">&#10094;</button>
+    <button class="arrow-left prevent-select" onclick="toggleSlideImg(-1)">&#10094;</button>
    
-    <button class="arrow-right prevent-select" onclick="toggleModalImg(1)">&#10095;</button> 
+    <button class="arrow-right prevent-select" onclick="toggleSlideImg(1)">&#10095;</button> 
     
     <a class="item_share_button" style="margin: auto; background-image: url('static/img/icons/delete.png');" href="javascript:deleteCurrentImg();" title="Изтриване на снимката!!!"></a>
   <span style="float:right; margin-right:2%; margin-top: 10px;" id="imgCount"></span>
@@ -2318,7 +2373,7 @@ function imgPickerImagesToLocalArrEdit() {
 
 
 // Add the images from the db in the view image container
-function handleImagesEditView(assignHtml) 
+function handleImagesEditView(assignHtml,n) 
 { 
     
     let imgPrevContainer = document.getElementById('previewImgHolder');
@@ -2329,7 +2384,7 @@ function handleImagesEditView(assignHtml)
         imgHtml += `<img class="slide" src="${editItemImgArr[i]}">`;
     }
 
-    modalImgIndex = 0; // Reset the index for the images preview container, the slide with the image. Otherwise something happens and does not show the image, goes out of the array // It is also reseted in the main.js on every view change
+    // slideImgIndex = 0; // Reset the index for the images preview container, the slide with the image. Otherwise something happens and does not show the image, goes out of the array // It is also reseted in the main.js on every view change
 
     if(assignHtml != undefined && assignHtml == true)
     {
@@ -2337,9 +2392,12 @@ function handleImagesEditView(assignHtml)
     }
     else
     {
-      imgPrevContainer.innerHTML += imgHtml; // Add the images as html to the container to display it
+      imgPrevContainer.innerHTML += imgHtml; // Add the images as html to the container to display it. Keep the old images
     }
-    toggleModalImg(0); // Refresh the image holder
+    // toggleSlideImg(0); // Refresh the image holder
+
+    imgSlideNavigation(n); // Navigate to n image. Show image index = n
+    updateViewImageIndexIndication(); // Updating the image count indication
 } 
 
 
@@ -2348,15 +2406,27 @@ function handleImagesEditView(assignHtml)
 // Delete current imgage Add & Edit view ----------------------------------------------------------------------------------
 function deleteCurrentImg() {
     // //   alert(editItemImgArr);
-    // //   alert(modalImgIndex); 
-    console.log('Before Arr:' + editItemImgArr);
-    editItemImgArr.splice(modalImgIndex, 1);
-    console.log('After Arr:' + editItemImgArr);
-    console.log('Index after:' + modalImgIndex);
+    // //   alert(slideImgIndex); 
+    // console.log('Before Arr:' + editItemImgArr);
+    // let imgIndex = slideImgIndex;
+    editItemImgArr.splice(slideImgIndex, 1);
+    // console.log('After Arr:' + editItemImgArr);
+    // console.log('Index after:' + slideImgIndex);
+    // let imgIndex = slideImgIndex;
+    if(slideImgIndex-1 >= 0) // Maintain the image index. Because of deleting an image -1 to the index, show previouse image
+    {
+        slideImgIndex = slideImgIndex-1;
+    }
+    // editItemImgArr.splice(slideImgIndex, 1); // Remove the current image - based on the current index in the view from the local array holding the img links
+    handleImagesEditView(true,slideImgIndex); // Use the local array to populate the img view container
     
-    // editItemImgArr.splice(modalImgIndex, 1); // Remove the current image - based on the current index in the view from the local array holding the img links
-    handleImagesEditView(true); // Use the local array to populate the img view container
-    toggleModalImg(-1);
+  
+    // slideImgIndex = slideImgIndex-1; // Change the index of the currrent image since we are deleting one image
+
+    // toggleSlideImg(-1);
+    // imgSlideNavigation(imgIndex);
+    // console.log(slideImgIndex);
+
     // handleImages(); // Add & show the images in the imgView container
     
 }

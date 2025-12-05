@@ -33,7 +33,7 @@ export const setTitle = (title, img) => {
 
 async function executeCommonViewScriptAsync()
 {
-    // modalImgIndex = 0; // Reset on every view chaange the image index for the image preview container - the container the slide with the images.
+    // slideImgIndex = 0; // Reset on every view chaange the image index for the image preview container - the container the slide with the images.
     // await getDbAsync();
 }
 

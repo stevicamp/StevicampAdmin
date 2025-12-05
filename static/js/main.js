@@ -88,7 +88,7 @@ const handleLocation = async () => {
     else {
         await checkForSearchKeywords();
     }
-    modalImgIndex = 0; // Reset the index for the images preview container, the slide with the image. Otherwise something happens and does not show the image, goes out of the array
+    slideImgIndex = 0; // Reset the index for the images preview container, the slide with the image. Otherwise something happens and does not show the image, goes out of the array
 
 };
 

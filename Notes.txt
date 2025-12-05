@@ -1,6 +1,24 @@
 Stevicamp
 
+1. 
+---------------
+1. There is a bug when opening large image the delete button for the image disapear - edit
+-------------
+1.Edit --> 
+2. on save press --> 
+3. loop imglocalArr --> 
+4. check if blob: ---> 
+5. if blob use the method for uploading single image and upload the image
+6. Get the link for the specific image and replace the blob link  with the new link
+7. After it is done so for all blob: links
+8. Assign the item.photo array with the new array
+9. Save the db as usual with the save method
 
+
+..........
+1.  GLobal share button in the top bar shar only the webpage - open messenger, sms etx default on phone or just copy link
+2. Add cookie notice, but not here, bit in the client website
+...........................
 IMAGES edit - Add view should be also edited it has a sheared html code
 1. Next thing to do is to - on edit get the images js delivr links in to an array
 2. Load that array in the view image box

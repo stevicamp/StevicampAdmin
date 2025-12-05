@@ -59,7 +59,7 @@ async function EditLogic() {
     }
 
     editItemImgArr = item.photos; // The images from the db (the links) to the local array
-    handleImagesEditView();
+    handleImagesEditView(true,0); // Populate the image container slide and show image 1=index 0; true = assign the html, dont keep the old images if there are. In this case there should be not old images since here it opens the view. Maybe if the array is not eareased.
 }
 
 
