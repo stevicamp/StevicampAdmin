@@ -1,6 +1,19 @@
 Stevicamp
 
-1. 
+1. After Add or Edit make sure the new db is fetched up to 5 seconds it will take
+------------------
+1. Seperate repository for the images
+2. Seperate repository for client
+3. Seperate repository for the Admin on another account
+4. Seperate repository for the db
+5. Save the delete images js delivr links to the repository with the images
+
+-------------
+1. conConsider seperate repository for uploading the images and checking the size of the repository if it has reached 140MB then delete all images and history. The images will be still in the js delivr as long as we have the links
+2. Think about - IndexedDB API it is in javascript, not library
+----------------------
+1. In delete
+Delete the old image in github
 ---------------
 1. There is a bug when opening large image the delete button for the image disapear - edit
 -------------

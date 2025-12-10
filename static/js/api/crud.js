@@ -4,6 +4,7 @@
   var githubFilePathDb; // Path for the DB
   var newContent ="";
   var cdn = "https://cdn.jsdelivr.net/gh"; // The cdn
+  // var githubApi = "https://api.github.com/repos/"; 
 
   var base_db = null; // DB - Singleton db
 
@@ -245,10 +246,11 @@ async function deleteFileAsync(githubUser, githubRepo, githubPathFileToDelete, g
 // UPLOAD IMAGES :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // `https://corsproxy.io/?url=https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePathDb}`,
 // Function to update the JSON file
-async function uploadImgAsync(githubUser, githubRepo, githubFilePathDb, githubToken, imgContentBase64, msg, imgComment) 
+async function uploadImgAsync(githubUser, githubRepo, githubFilePathImg, githubToken, imgContentBase64, msg, imgComment) 
 {
    try 
-   {
+   { 
+    console.log('IMG:');
     loadingMsg(`Запазва се снимка ${imgComment}...`);
 
     // const sha = await getFileSha(githubUser, githubRepo, githubFilePathDb, githubToken);
@@ -259,7 +261,7 @@ async function uploadImgAsync(githubUser, githubRepo, githubFilePathDb, githubTo
     };
 
     const response = await fetch(
-      `https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePathDb}`,
+      `https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePathImg}`,
       {
         method: "PUT",
         headers: {

@@ -15,6 +15,10 @@ var popStateUrl = false;
 
 
 var editItemImgArr = []; // Used to hold the links of add and edit view // Also used to display the images in the view image container
+
+let deleteImagesEditArr = []; // Used to hold the deleted images links // it is used when editSave button is pressed loops the images and deletes them before saving the db. 
+
+
 // function b64DecodeUnicode(str) {
 //     // Going backwards: from bytestream, to percent-encoding, to original string.
 //     return decodeURIComponent(atob(str).split('').map(function(c) {
@@ -1176,40 +1180,38 @@ document.getElementById('modalWindow').addEventListener('touchend', e => {
 // Changing images in modal ------------------------------------------------------------------------
 var slideImgIndex = 0; // Hold track of the current img index - showed image
 
-function toggleSlideImg(n) 
-{
+function toggleSlideImg(n) {
 
     let images = document.getElementsByClassName("slide"); // Get the images
 
-if(images.length !== 0) // If there are no images in the image container / the slide then do not execute the code since there is no image and error comes up
-{
-    if (images.length !== 1) 
-        {
-        
-            if(images[slideImgIndex].style.display !== undefined) // If deleting image the image is deleted and can not be hidden
+    if (images.length !== 0) // If there are no images in the image container / the slide then do not execute the code since there is no image and error comes up
+    {
+        if (images.length !== 1) {
+
+            if (images[slideImgIndex].style.display !== undefined) // If deleting image the image is deleted and can not be hidden
             {
                 images[slideImgIndex].style.display = "none"; // Hide the image
             }
 
-        if (images.length - 1 == slideImgIndex && n !== -1)  // If Last image and is not back button
-        {
-            slideImgIndex = -1;
+            if (images.length - 1 == slideImgIndex && n !== -1)  // If Last image and is not back button
+            {
+                slideImgIndex = -1;
+            }
+            else if (slideImgIndex == 0 && n == -1)// If Back button and reached the first image go to the last
+            {
+                slideImgIndex = images.length;
+            }
+
+            images[slideImgIndex + n].style.display = "block"; // Show img n can be -1
+            slideImgIndex += n; // n can be -1
+            // alert(images.length + "-" + slideImgIndex);
         }
-        else if (slideImgIndex == 0 && n == -1)// If Back button and reached the first image go to the last
-        {
-            slideImgIndex = images.length;
+        else {
+            images[0].style.display = "block"; // Show first image wich is also the last because there is only 1
         }
 
-        images[slideImgIndex + n].style.display = "block"; // Show img n can be -1
-        slideImgIndex += n; // n can be -1
-        // alert(images.length + "-" + slideImgIndex);
+        // document.getElementById("imgCount").innerHTML = `${slideImgIndex + 1}/${images.length}`; // Change the image count value that is shown over the image the span
     }
-    else {
-        images[0].style.display = "block"; // Show first image wich is also the last because there is only 1
-    }
-
-    // document.getElementById("imgCount").innerHTML = `${slideImgIndex + 1}/${images.length}`; // Change the image count value that is shown over the image the span
-}
     // if(images.length == 0) // Used for the image count indicator for the user where the user can see how many images there ar in total and the current viewing image // If there are 0 images then sho 0/0
     // {
     //   document.getElementById("imgCount").innerHTML = '0/0'; // Show 0/0 when no image
@@ -1217,16 +1219,14 @@ if(images.length !== 0) // If there are no images in the image container / the s
     updateViewImageIndexIndication();
 }
 
-function updateViewImageIndexIndication()
-{
+function updateViewImageIndexIndication() {
     let images = document.getElementsByClassName("slide"); // Get the images
-    if(images.length !== 0) // Used for the image count indicator for the user where the user can see how many images there ar in total and the current viewing image // If there are 0 images then sho 0/0
+    if (images.length !== 0) // Used for the image count indicator for the user where the user can see how many images there ar in total and the current viewing image // If there are 0 images then sho 0/0
     {
-    document.getElementById("imgCount").innerHTML = `${slideImgIndex + 1}/${images.length}`; // Change the image count value that is shown over the image the span 
+        document.getElementById("imgCount").innerHTML = `${slideImgIndex + 1}/${images.length}`; // Change the image count value that is shown over the image the span 
     }
-    else
-    {
-      document.getElementById("imgCount").innerHTML = '0/0'; // Show 0/0 when no image
+    else {
+        document.getElementById("imgCount").innerHTML = '0/0'; // Show 0/0 when no image
     }
 }
 
@@ -1235,10 +1235,8 @@ function imgSlideNavigation(index) // Not working to navigate to specific image 
 {
     let images = document.getElementsByClassName("slide"); // Get the images from the slide the generated html images in the slide
     // slideImgIndex = index;
-    if (images.length !== 0)
-    { 
-        if(images.length > index)
-        { 
+    if (images.length !== 0) {
+        if (images.length > index) {
             // images[index-1].style.display = "none"; // Hide the image
             images[index].style.display = "block"; // Show img n can be -1
             // slideImgIndex = slideImgIndex-1;
@@ -1258,9 +1256,9 @@ function imgSlideNavigation(index) // Not working to navigate to specific image 
 
         // slideImgIndex = slideImgIndex-1;
     }
-    
-   console.log('index:'+index);
-   console.log('slideImgIndex'+slideImgIndex);
+
+    console.log('index:' + index);
+    console.log('slideImgIndex' + slideImgIndex);
 }
 
 
@@ -1835,14 +1833,14 @@ function handleImages() {
 
 // For converting the local image to Base64 - and uploding it to the github #######################################################
 // Get the image as Base64
-async function readImgAsBase64AndUpload(file, imgComment, githubFilePathDb) {
+async function readImgAsBase64AndUpload(file, imgComment, githubFilePathImg) {
     // let testImg = document.getElementById('imgPicker').files[0] // Get the image from the "input with type="file""
 
     let readerFile = await readFileAsync(file); // Read Img as base 64 from async reader
 
     // Base64
     let dataBase64Img = readerFile.split(',')[1]; // Remove "data:image/png;base64," so it is raw image base64
-    return await uploadImgAsync(githubUser, githubRepo, githubFilePathDb, githubToken, dataBase64Img, '', imgComment); // Upload the image to the server
+    return await uploadImgAsync(githubUser, githubRepo, githubFilePathImg, githubToken, dataBase64Img, '', imgComment); // Upload the image to the server
 }
 
 
@@ -1856,8 +1854,10 @@ async function readFileAsync(file) {
         };
 
         reader.onerror = reject;
-
-        reader.readAsDataURL(file);
+        
+        if (file) {
+            reader.readAsDataURL(file);
+        }
     })
 }
 
@@ -2224,14 +2224,49 @@ async function AddSave() {
 }
 
 
+
+
+function convertToGithubPathArr(arr) {
+    let githubPathArr = [];
+    //     // let jsDelivr = 'https://cdn.jsdelivr.net/gh/stevicamp/Stevicamp@main/index.html';
+    // https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubPathFileToDelete}
+    // https://cdn.jsdelivr.net/gh/stevicamp/Stevicamp/resources/img/caravans/id_LMC-%D0%94%D0%B5%D0%BB%D1%83%D0%BA%D1%81-520%D1%81%D0%BC-2001%D0%B3.-D2025-12-03T19-05-05.232Z/id_LMC-%D0%94%D0%B5%D0%BB%D1%83%D0%BA%D1%81-520%D1%81%D0%BC-2001%D0%B3.-D2025-12-03T19-05-05.232Z-1.png
+    // resources/img/caravans/id_LMC-Делукс-520см-2001г.-D2025-12-03T19-05-05.232Z/id_LMC-Делукс-520см-2001г.-D2025-12-03T19-05-05.232Z-2.png   
+    let path = '';
+    for (let s = 0; s < arr.length; s++) {
+        // itemLink.split('?search=')[1]; 
+        path = arr[s].split(`${cdn}/${githubUser}/${githubRepo}/`)[1]; // Get the path by knowing the rest. For js delivr links this is common - "https://cdn.jsdelivr.net/gh/stevicamp/Stevicamp/"
+        githubPathArr.push(path); // We need only the path
+
+    }
+    return githubPathArr;
+}
+
+
+
+
+
 // Function for Saving Edit Action logic ----------------------------------------------------------------
 async function EditSave() {
     let type = document.getElementById('categoryInput').value; // Used - constructin obj and For saving it in github in specific folder type - caravans, cars, products etc.// This field is input and is populated from the db on load the item in edit view
     const formData = convertFormToJsonById('modalItemDetailsEdit'); // Converting the div html to json - the input ---> to json
     let itemId = formData.id; // Pre populated from the db into the Id input - formData.id wich is read only
 
-    let imagesJsDelivrPathArray = await handleItemImages(itemId, type);// Upload Images and return jsDelivr path for the images
+    // Delete the deleted images if there are some
+    if (deleteImagesEditArr.length > 0) // If the aray is not empty, this means that the user deleted images and know the links are here in this array they ar js delivr links, need to be converted to github 
+    {
+        let imgGithubPathArr = convertToGithubPathArr(deleteImagesEditArr); // Passsing js delivr array and converting it to github array links
+        for (let z = 0; z < imgGithubPathArr.length; z++) // loop the array with the links of the images to be deleted
+        {
+            await deleteFileAsync(githubUser, githubRepo, imgGithubPathArr[z], githubToken, `Deleted - Image by Admin in the View: ${imgGithubPathArr[z]}`); // Delete the image
+        }
 
+        deleteImagesEditArr = []; // Clear the array for the next time to be clean
+    }
+
+
+    let imagesJsDelivrPathArray = await handleItemImagesEdit(itemId, type);// Upload Images and return jsDelivr path for the images
+console.log("Arr#########---------------:"+imagesJsDelivrPathArray);
     //formData.photos = imagesJsDelivrPathArray; // Add the photos array to the json object that will be uploaded
     // ###### Here bellow on before hand if imaged are removed the  the img link will be removed from formData.photo as well as other action for deleding hte specific image    
 
@@ -2243,9 +2278,11 @@ async function EditSave() {
     let db = await getDbAsync(); // The Db
     let rawitem = await recursiveSearchObj(db.items, itemId); // Search and get the matched item - searching by the unique id - must get one item if it excists
     let item = Object.values(rawitem)[0][0]; // The result is ex. caravans[{category:"caravans", price:"1353"}] Get the itemType / category
-    formData.photos = [...item.photos, ...imagesJsDelivrPathArray]; // Add the photos array to the json object that will be uploaded (... if edit mode retain the old photos and add the new to the old - merge the arrays)
+    
+    console.log('ITEM: ---------------' + item.photos);
+    formData.photos = [...imagesJsDelivrPathArray]; // Add the photos array to the json object that will be uploaded (... if edit mode retain the old photos and add the new to the old - merge the arrays)
 
-    // Not tested forgot await
+
     await deleteLocalItemById(itemId); // Remove the old item that is unedited from the local db - if it is not removed there will be two. The item could be assigned instead of deleting, but...this is used for now
 
     db.items[type].push(formData); // Add the item to the local db - later the whole db will be uploaded
@@ -2313,9 +2350,48 @@ async function saveItem(e) {
 
 
 
+// Handle local images - read as base 64 and upload ---------------------------------------
+async function handleItemImagesEdit(itemId, type) {
+    
+    // let images = document.getElementById('imgPicker').files; // Get the images from the "input with type="file""
+
+    let githubFilePathForImg = "";
+
+
+    let okResponse = true;
+    for (let v = 0; v < editItemImgArr.length; v++) // editItemImgArr is the local array that holds both js delivr links from before editing and blob: links that need to be converted to jsdelivr links
+    {
+        if (editItemImgArr[v].includes("base64")) // If local image base64:   // if not js delivr image
+        { 
+            if (okResponse) {
+
+            // let imgExtension = images[v].slice((Math.max(0, images[v].lastIndexOf(".")) || Infinity) + 1); // Get the file extension of the image - .jpg, .png
+             let imgExtension = '.' + editItemImgArr[v].split(';')[0].split('/')[1];
+
+            githubFilePathForImg = `resources/img/${type}/${itemId}/${itemId}--${[v + 1]+'-' + Date.now() + imgExtension}`; // Ex. resources/img/caravans/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z-1
+                   
+                // okResponse = await readImgAsBase64AndUpload(editItemImgArr[v], `${[v + 1]} от ${[editItemImgArr.length]}`, githubFilePathForImg);
+               let dataBase64Img = editItemImgArr[v].split('base64,')[1]; // Remove "data:image/png;base64," so it is raw image base64
+             console.log('Base64Img wihtout base64,...:'+dataBase64Img);
+               okResponse = await uploadImgAsync(githubUser, githubRepo, githubFilePathForImg, githubToken, dataBase64Img, 'Admin Uploaded Image from Edit mode: ', ''); // Upload the image to the server
+              
+                editItemImgArr[v] = convertToJsDelivrPath(githubFilePathForImg); //After uploading the image assign the same index in the array with the jsdelivr image // Add the path to the array that will hold all paths. It is late used to get js delivr paths and then add it to the json object before sending to the server
+            }
+            else {
+                // Here code to remove the last added images................
+                // Need to have variables to remember the name and path, then use delete function from CRUF file to delete each image
+            }
+            // await readImgAsBase64AndUpload(images[v], `${[v+1]} от ${[images.length]}`, githubFilePathForImg); 
+        }
+    }
+    return editItemImgArr;
+}
+
+
 
 // Handle local images - read as base 64 and upload ---------------------------------------
-async function handleItemImages(itemId, type) {
+async function handleItemImages(itemId, type)// Used for Add item 
+{
     let images = document.getElementById('imgPicker').files; // Get the images from the "input with type="file""
     let githubFilePathForImg = "";
 
@@ -2323,8 +2399,9 @@ async function handleItemImages(itemId, type) {
 
     let okResponse = true;
     for (let v = 0; v < images.length; v++) {
-        if (okResponse) {
-            githubFilePathForImg = `resources/img/${type}/${itemId}/${itemId}-${[v + 1]}.png`; // Ex. resources/img/caravans/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z-1
+        if (okResponse) {  
+            let imgExtension = '.' + images[v].name.slice((Math.max(0, images[v].name.lastIndexOf(".")) || Infinity) + 1); // Get the file extension of the image - .jpg, .png
+            githubFilePathForImg = `resources/img/${type}/${itemId}/${itemId}--${[v + 1]+'-' + Date.now() + imgExtension}`; // OLD ---> Ex. resources/img/caravans/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z-1
             imagesPathArray.push(convertToJsDelivrPath(githubFilePathForImg)); // Add the path to the array that will hold all paths. It is late used to get js delivr paths and then add it to the json object before sending to the server
             okResponse = await readImgAsBase64AndUpload(images[v], `${[v + 1]} от ${[images.length]}`, githubFilePathForImg);
         }
@@ -2340,18 +2417,20 @@ async function handleItemImages(itemId, type) {
 
 
 
-function imgPickerHandler() {
+async function imgPickerHandler() {
 
     let currentUrlPath = window.location.pathname; // The current path - ex. Edit or Add
 
     if (currentUrlPath == "/Add") {
-       
+
     }
     else if (currentUrlPath == "/Edit") {
-        imgPickerImagesToLocalArrEdit(); // The img picker images to the local array
+        await imgPickerImagesToLocalArrEdit(); // The img picker images to the local array
+        // updateViewImageIndexIndication(); // Updating the image count indication
+
     }
 
-     handleImages(); // Add & show the images in the imgView container
+    handleImages(); // Add & show the images in the imgView container
 }
 
 
@@ -2360,11 +2439,17 @@ function imgPickerHandler() {
 
 
 // The images from the picker to the local array
-function imgPickerImagesToLocalArrEdit() {
+async function imgPickerImagesToLocalArrEdit() {
     let imgPicker = document.getElementById('imgPicker');
+    let readerFile;
 
-    for (let i = 0; i < imgPicker.files.length; i++) {
-        editItemImgArr.push(window.URL.createObjectURL(imgPicker.files[i])); // Image local src push to array
+    for (let i = 0; i < imgPicker.files.length; i++) 
+    {
+         readerFile = await readFileAsync(imgPicker.files[i]); // Read Img as base 64 from async reader
+        // let dataBase64Img = readerFile.split(',')[1]; // Remove "data:image/png;base64," so it is raw image base64
+         editItemImgArr.push(readerFile); // Image base 64 img push to array
+         console.log('ArrayLoclaBase64:'+editItemImgArr);
+        // editItemImgArr.push(window.URL.createObjectURL(imgPicker.files[i])); // Image local src push to array
     }
 }
 
@@ -2373,66 +2458,74 @@ function imgPickerImagesToLocalArrEdit() {
 
 
 // Add the images from the db in the view image container
-function handleImagesEditView(assignHtml,n) 
-{ 
-    
+function handleImagesEditView(assignHtml, n) {
+
     let imgPrevContainer = document.getElementById('previewImgHolder');
 
-    let imgHtml = '';  
+console.log('Arr 2: -------------------------' + editItemImgArr);
+
+    let imgHtml = '';
     for (let i = 0; i < editItemImgArr.length; i++) {
-       
+
         imgHtml += `<img class="slide" src="${editItemImgArr[i]}">`;
     }
 
     // slideImgIndex = 0; // Reset the index for the images preview container, the slide with the image. Otherwise something happens and does not show the image, goes out of the array // It is also reseted in the main.js on every view change
 
-    if(assignHtml != undefined && assignHtml == true)
-    {
-      imgPrevContainer.innerHTML = imgHtml; // Assign the images html to the container to display it // Used when img is deleted from the local array in order for the view image container to update properly
+    if (assignHtml != undefined && assignHtml == true) {
+        imgPrevContainer.innerHTML = imgHtml; // Assign the images html to the container to display it // Used when img is deleted from the local array in order for the view image container to update properly
     }
-    else
-    {
-      imgPrevContainer.innerHTML += imgHtml; // Add the images as html to the container to display it. Keep the old images
+    else {
+        imgPrevContainer.innerHTML += imgHtml; // Add the images as html to the container to display it. Keep the old images
     }
     // toggleSlideImg(0); // Refresh the image holder
 
     imgSlideNavigation(n); // Navigate to n image. Show image index = n
     updateViewImageIndexIndication(); // Updating the image count indication
-} 
+}
 
 
 
 
 // Delete current imgage Add & Edit view ----------------------------------------------------------------------------------
-function deleteCurrentImg() {
+
+async function deleteCurrentImg() {
     // //   alert(editItemImgArr);
     // //   alert(slideImgIndex); 
     // console.log('Before Arr:' + editItemImgArr);
     // let imgIndex = slideImgIndex;
-    editItemImgArr.splice(slideImgIndex, 1);
-    // console.log('After Arr:' + editItemImgArr);
-    // console.log('Index after:' + slideImgIndex);
-    // let imgIndex = slideImgIndex;
-    if(slideImgIndex-1 >= 0) // Maintain the image index. Because of deleting an image -1 to the index, show previouse image
+    // await deleteFileAsync(githubUser, githubRepo, editItemImgArr[slideImgIndex], githubToken, `Deleted - Image by Admin in the View: ${editItemImgArr[slideImgIndex]}`);
+
+    if (editItemImgArr.length > 0) // If the array is not empty - since if there are no images and delete is pressed undefined is pushed to the array
     {
-        slideImgIndex = slideImgIndex-1;
+        deleteImagesEditArr.push(editItemImgArr[slideImgIndex]); // Add the deleted image to the array that holds the deleted images // they will be deleted when the save button is presses in the methos saveEdit
+        editItemImgArr.splice(slideImgIndex, 1); // Remove the deleted image from the local array
+
+console.log('Arr Delete: ---------------------' + editItemImgArr);
+
+        // console.log('After Arr:' + editItemImgArr);
+        // console.log('Index after:' + slideImgIndex);
+        // let imgIndex = slideImgIndex;
+        if (slideImgIndex - 1 >= 0) // Maintain the image index. Because of deleting an image -1 to the index, show previouse image
+        {
+            slideImgIndex = slideImgIndex - 1;
+        }
+        // editItemImgArr.splice(slideImgIndex, 1); // Remove the current image - based on the current index in the view from the local array holding the img links
+        handleImagesEditView(true, slideImgIndex); // Use the local array to populate the img view container
+
+
+        // slideImgIndex = slideImgIndex-1; // Change the index of the currrent image since we are deleting one image
+
+        // toggleSlideImg(-1);
+        // imgSlideNavigation(imgIndex);
+        // console.log(slideImgIndex);
+
+        // handleImages(); // Add & show the images in the imgView container
     }
-    // editItemImgArr.splice(slideImgIndex, 1); // Remove the current image - based on the current index in the view from the local array holding the img links
-    handleImagesEditView(true,slideImgIndex); // Use the local array to populate the img view container
-    
-  
-    // slideImgIndex = slideImgIndex-1; // Change the index of the currrent image since we are deleting one image
-
-    // toggleSlideImg(-1);
-    // imgSlideNavigation(imgIndex);
-    // console.log(slideImgIndex);
-
-    // handleImages(); // Add & show the images in the imgView container
-    
 }
 
 
- 
+
 
 
 

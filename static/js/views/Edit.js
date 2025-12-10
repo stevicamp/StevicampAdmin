@@ -31,6 +31,7 @@ export async function executeViewScriptAsync() {
 async function EditLogic() {
     closeItemModalOnPopState(); // If modal is opened close it so it it does not apear over the edit view
 
+    // editItemImgArr = []; // Remove the previouse data from before
     let db = await getDbAsync(); // The Db
     let editItemId = decodeURI(window.location.href.split('/Edit?')[1]); // Decode uri so that it works with cyrilic titles if there are. Otherwise the id is encoded and it can not be found by the search func.
     let rawitem = await recursiveSearchObj(db.items, editItemId); // Search and get the matched item - searching by the unique id - must get one item if it excists
