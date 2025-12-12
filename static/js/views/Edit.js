@@ -36,7 +36,7 @@ async function EditLogic() {
     let editItemId = decodeURI(window.location.href.split('/Edit?')[1]); // Decode uri so that it works with cyrilic titles if there are. Otherwise the id is encoded and it can not be found by the search func.
     let rawitem = await recursiveSearchObj(db.items, editItemId); // Search and get the matched item - searching by the unique id - must get one item if it excists
     let item = Object.values(rawitem)[0][0]; // The result is ex. caravans[{category:"caravans", price:"1353"}] Get the itemType / category
-    await loadAppropriateFields(item.category); // every item in the db has a category prop  
+    await loadAppropriateFields(item.category); // Every item in the db has a category prop  
 
     //1. Give name to the input fields
     // 2. make loop here in Edit to loop the item and populate the properties of the itemObj to the fields that will have the same name as the object props

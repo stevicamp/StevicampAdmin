@@ -1907,7 +1907,7 @@ async function caravansHtmlTemplateFields() {
 
 
     return `  
-     <div class="modalItemContainer" tabindex="0" style="margin-top: 0;">
+     <div class="admin-content-holder modalItemContainer" tabindex="0" style="margin-top: 0;">
     <input id="imgPicker" type="file" accept="image/*;capture=camera" multiple="multiple" onchange="imgPickerHandler()">
    <div class="img-preview-container">
     <div style="width: 100%; height: 100%;" id="previewImgHolder"></div>   
@@ -1918,8 +1918,8 @@ async function caravansHtmlTemplateFields() {
    
     <button class="arrow-right prevent-select" onclick="toggleSlideImg(1)">&#10095;</button> 
     
-    <a class="item_share_button" style="margin: auto; background-image: url('static/img/icons/delete.png');" href="javascript:deleteCurrentImg();" title="Изтриване на снимката!!!"></a>
-  <span style="float:right; margin-right:2%; margin-top: 10px;" id="imgCount"></span>
+    <a class="item_share_button" style="margin: auto; background-image: url('static/img/icons/del-img.png');" href="javascript:deleteCurrentImg();" title="Изтриване на снимката!!!"></a>
+  <span style="fmargin: auto;" id="imgCount"></span> 
     </div>
    
     

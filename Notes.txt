@@ -1,5 +1,7 @@
 Stevicamp
 
+1. When opening an item and then the edit view the image count desapears. On Modal close remove imgCount element
+.............
 1. After Add or Edit make sure the new db is fetched up to 5 seconds it will take
 ------------------
 1. Seperate repository for the images
