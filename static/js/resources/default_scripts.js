@@ -1107,7 +1107,7 @@ async function closeItemModal(e) {
     slideImgIndex = 0; // Reset the image tab index on modal close
     document.getElementById("app").style.overflowY = "auto"; // Reset the overflow for the app, so it can be scrolled
 
-    removeElementsByClassName('slide'); // Remove image elements of specific item on close modal
+    removeViewSessionElements();
 }
 
 
@@ -1119,7 +1119,7 @@ function closeItemModalOnPopState() // Close the modal on prev forward button
 
     let modal = document.getElementById("modalWindow");
     modal.style.display = 'none';
-    removeElementsByClassName('slide'); // Remove image elements of specific item on close modal
+    removeViewSessionElements();
 }
 
 
@@ -1262,6 +1262,16 @@ function imgSlideNavigation(index) // Not working to navigate to specific image 
 }
 
 
+
+function removeViewSessionElements()
+{
+    removeElementsByClassName('slide'); // Remove image elements of specific item on close modal
+    
+    if( document.getElementById("imgCount") !== null)
+    {
+        document.getElementById("imgCount").remove(); // Remove image count element of specific item on close modal
+    }
+}
 
 // Used to remove image elements so the about slide can work - otherwise it interfers - this is used on close modal
 function removeElementsByClassName(className) {
@@ -1919,7 +1929,7 @@ async function caravansHtmlTemplateFields() {
     <button class="arrow-right prevent-select" onclick="toggleSlideImg(1)">&#10095;</button> 
     
     <a class="item_share_button" style="margin: auto; background-image: url('static/img/icons/del-img.png');" href="javascript:deleteCurrentImg();" title="Изтриване на снимката!!!"></a>
-  <span style="fmargin: auto;" id="imgCount"></span> 
+  <span style="margin: auto;" id="imgCount"></span> 
     </div>
    
     
