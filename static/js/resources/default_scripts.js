@@ -1928,7 +1928,7 @@ async function caravansHtmlTemplateFields() {
    
     <button class="arrow-right prevent-select" onclick="toggleSlideImg(1)">&#10095;</button> 
     
-    <a class="item_share_button" style="margin: auto; background-image: url('static/img/icons/del-img.png');" href="javascript:deleteCurrentImg();" title="Изтриване на снимката!!!"></a>
+    <a class="item_share_button" style="margin: auto auto 5px auto; background-image: url('static/img/icons/del-img.png');" href="javascript:deleteCurrentImg();" title="Изтриване на снимката!!!"></a>
   <span style="margin: auto;" id="imgCount"></span> 
     </div>
    
