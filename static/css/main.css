@@ -578,13 +578,12 @@ html {
 
 
 
-.contact-information
-{
+.contact-information {
     color: #ff6060;
     text-align: center;
     text-shadow: 2px 2px 2px black;
     font-weight: bold;
-    font-size:10px;
+    font-size: 10px;
     font-style: italic;
 }
 
@@ -828,26 +827,22 @@ h3 {
     text-shadow: 1px 1px #000000;
 }
 
-.modalItemDetails span:hover
-{
-  filter: drop-shadow(2px 2px 5px rgb(0, 153, 255));
+.modalItemDetails span:hover {
+    filter: drop-shadow(2px 2px 5px rgb(0, 153, 255));
 }
 
 
 
-.modalItemDetails a
-{
-  color:rgb(255, 70, 246);
-  text-decoration: none;
+.modalItemDetails a {
+    color: rgb(255, 70, 246);
+    text-decoration: none;
 }
 
-.modalItemDetails a:hover
-{
- color: #00ff4c;
+.modalItemDetails a:hover {
+    color: #00ff4c;
 }
 
-.hr-orange
-{ 
+.hr-orange {
     border: 1px solid rgb(255, 73, 73);
 }
 
@@ -886,7 +881,7 @@ h3 {
     position: relative;
     margin-left: auto;
     margin-right: auto;
-    width: 100%;   
+    width: 100%;
 }
 
 
@@ -946,21 +941,18 @@ h3 {
 
 
 /* // Transport services --------------------------------------------------------- */
-.transport-service-img
-{
+.transport-service-img {
     width: 70%;
     height: auto;
     text-align: center;
 }
 
-.transport-service-details u
-{
+.transport-service-details u {
     color: rgb(66, 215, 245);
 }
-  
-.transport-service-details b
-{
- color: #09ff00;
+
+.transport-service-details b {
+    color: #09ff00;
 }
 
 
@@ -969,22 +961,20 @@ h3 {
 
 /* About View Style............................................................ */
 
-.about
-{
-    text-align: left; padding: 10px;
+.about {
+    text-align: left;
+    padding: 10px;
     text-align: center;
     padding-top: 0;
 }
 
-.about hr
-{
-  width: 100%;
-  margin: 10px 0 10px 0;
+.about hr {
+    width: 100%;
+    margin: 10px 0 10px 0;
 }
 
 
-.about img
-{
+.about img {
     min-width: 20px;
     width: 3vw;
     max-width: 30px;
@@ -999,48 +989,45 @@ h3 {
     /* Standard syntax */
 }
 
-.about b
-{
-   color: #00e1ff; 
+.about b {
+    color: #00e1ff;
 }
 
-.about a
-{
+.about a {
     text-decoration: none;
 }
 
 
 
 
-.about-logo
-{
+.about-logo {
     vertical-align: middle;
     width: 50px;
     height: auto;
 }
 
 
-.about-location-details
-{
+.about-location-details {
     color: lime;
 }
- 
 
 
 
-.goog-te-gadget img{
-    display:none !important;
+
+.goog-te-gadget img {
+    display: none !important;
 }
-body > .skiptranslate {
+
+body>.skiptranslate {
     display: none;
 }
+
 body {
     top: 0px !important;
 }
 
 
-.goog-te-combo
-{
+.goog-te-combo {
     width: 100px;
     background-color: #302b36;
     color: rgb(255, 187, 59);
@@ -1048,13 +1035,13 @@ body {
     font-weight: bold;
 }
 
- 
-.translateAlign
-{
+
+.translateAlign {
     display: flex;
     flex-flow: row;
     width: fit-content;
 }
+
 /*######################### Custom Scrollbar #########################################################*/
 ::-webkit-scrollbar {
     min-width: 100%;
@@ -1193,7 +1180,7 @@ body {
     background-color: rgb(81, 82, 83);
 }
 
- 
+
 
 
 
@@ -1215,7 +1202,7 @@ body {
 }
 
 
- 
+
 
 
 @media screen and (max-width: 450px) {
@@ -1251,114 +1238,107 @@ body {
 
 /* ----------------------- FOR ADMIN ------------------------------------------------- */
 
-.admin-widgets
-{
+.admin-widgets {
     border: 2px solid rgb(250, 59, 52);
     border-radius: 5px;
     filter: drop-shadow(2px 2px 2px rgb(0, 0, 0));
 }
 
 
-.admin-content-holder .admin-credentials-holder
-{
-    display: flex; 
+.admin-content-holder .admin-credentials-holder {
+    display: flex;
     flex-direction: column;
     margin-bottom: 0;
     box-sizing: border-box;
 }
 
-.admin-content-holder input
-{
- height: 30px;
- border-radius: 5px;
- background-color: #bafff9;
- font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
- color:#002fff;
- font-weight: bold;
- border: 2px solid rgb(11, 158, 68);
- margin: 5px;
+.admin-content-holder input {
+    height: 30px;
+    border-radius: 5px;
+    background-color: #bafff9;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: #002fff;
+    font-weight: bold;
+    border: 2px solid rgb(11, 158, 68);
+    margin: 5px;
 }
 
-.admin-content-holder span
-{
-  text-decoration: underline;
-  margin-top: 5px;
+.admin-content-holder span {
+    text-decoration: underline;
+    margin-top: 5px;
 }
 
 
-.admin-content-holder button
-{
-  font-weight: bold;
-  /* color:#002fff; */
-  width: fit-content;
-  margin:5px auto 5px auto;
-  /* border-radius: 5px; */
-  /* border: 2px solid rgb(11, 158, 68); */
+.admin-content-holder button {
+    font-weight: bold;
+    /* color:#002fff; */
+    width: fit-content;
+    margin: 5px auto 5px auto;
+    /* border-radius: 5px; */
+    /* border: 2px solid rgb(11, 158, 68); */
 
 }
 
-.admin-content-holder textarea
-{
-  max-width: 100%;
-  min-width: 100%;
-  min-height: 100px;
-  box-sizing: border-box;
+.admin-content-holder textarea {
+    max-width: 100%;
+    min-width: 100%;
+    min-height: 100px;
+    box-sizing: border-box;
 }
 
 
 
 /* Messages .................................................. */
-.msg, .msg-success, .msg-fail, .msg-loading
-{
+.msg,
+.msg-success,
+.msg-fail,
+.msg-loading {
     position: fixed;
     left: 50%;
-    top:15%;
+    top: 15%;
     transform: translate(-50%, -50%);
     text-align: center;
     font-weight: bold;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     max-width: 200px;
     max-height: 400px;
-       /* font-family: Andale Mono, monospace; */
+    /* font-family: Andale Mono, monospace; */
 }
 
-.msg-success  
-{
-    color: #0004ff; 
+.msg-success {
+    color: #0004ff;
     text-shadow: 1px 1px 2px #05e2ff, -1px -1px 2px #05e2ff;
     filter: drop-shadow(5px 0px 5px rgb(69, 255, 69))drop-shadow(-5px 0px 5px rgb(69, 255, 69))drop-shadow(0px -5px 5px rgb(69, 255, 69))drop-shadow(0px 5px 5px rgb(69, 255, 69));
 }
 
-.msg-fail
-{
-    color: #ffdc16; 
+.msg-fail {
+    color: #ffdc16;
     text-shadow: 1px 1px 2px #000000, -1px -1px 2px #000000;
     filter: drop-shadow(5px 0px 5px rgb(255, 48, 48))drop-shadow(-5px 0px 5px rgb(255, 48, 48))drop-shadow(0px -5px 5px rgb(255, 48, 48))drop-shadow(0px 5px 5px rgb(255, 48, 48));
 }
 
-.msg-loading
-{
-    color: #ffdc16; 
-    text-shadow: 1px 1px 2px #000000, -1px -1px 2px #000000; 
+.msg-loading {
+    color: #ffdc16;
+    text-shadow: 1px 1px 2px #000000, -1px -1px 2px #000000;
     filter: drop-shadow(5px 0px 5px rgb(255, 212, 72))drop-shadow(-5px 0px 5px rgb(255, 212, 72))drop-shadow(0px -5px 5px rgb(255, 212, 72))drop-shadow(0px 5px 5px rgb(255, 212, 72));
 }
 
 
-.msg-loading img
-{  
+.msg-loading img {
     max-width: 65px;
     height: auto;
-    color: #ffdc16; 
+    color: #ffdc16;
     text-shadow: 1px 1px 2px #000000, -1px -1px 2px #000000;
     animation: loading 0.2s infinite linear;
 }
 
 
 @keyframes loading {
-    from{
+    from {
         transform: rotate(0);
     }
-    to{
+
+    to {
         transform: rotate(359deg);
     }
 }
@@ -1366,15 +1346,13 @@ body {
 
 
 /* Apporpirate fields in ADD view ........................................ */
-.apr-field
-{
+.apr-field {
     text-align: center;
     display: flex;
     flex-direction: column;
 }
 
-.apr-field span
-{     
+.apr-field span {
     min-width: 100%;
     margin: 0;
     filter: drop-shadow(-2px 2px 3px black);
@@ -1382,8 +1360,41 @@ body {
 
 
 
-.red
-{
+.red {
     color: red;
 }
- 
+
+
+/* .........INPUT TYPE FILE........................................................................ */
+input#imgPicker::file-selector-button {
+    background: url('/static/img/icons/cam.png') no-repeat top left;
+    background-size:contain;
+    cursor: pointer;
+    color: transparent;
+    height: 50px;
+    background-color: transparent; 
+    border: none;
+    padding: 0;
+}
+
+#imgPicker {
+    /* Ensures the text area has space next to the button */
+    padding-left: 10px;
+    background-color: transparent;
+    /* Makes the main input area transparent */
+    border: none;
+    /* Removes the outer border (teal/green in image) */
+    box-shadow: none;
+    color: lime; 
+    height: auto;
+    width: 180px;
+    cursor: pointer;
+    filter: drop-shadow(2px 2px 1px black);
+    text-shadow: 1px 1px 2px black;
+}
+
+#imgPicker:hover 
+{
+    filter: drop-shadow(2px 1px 1px rgb(6, 164, 255));
+     
+}
