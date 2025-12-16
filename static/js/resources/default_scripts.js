@@ -2435,10 +2435,39 @@ async function handleItemImages(itemId, type)// Used for Add item
 }
 
 
+ 
+
+
+function validateImgPickerFilesOnlyImg()
+{
+     let imgPicker = document.getElementById('imgPicker'); // Get the img picker. The FileList or the input type File is read only and can not remove items from it but it is possible to assign new data objext to it 
+     const dt = new DataTransfer(); // Data transfer obj hold the data
+     const { files } = imgPicker; // Destruct - get the files from img picker in files variable
+
+     let curImgExt;
+   
+    for (let z = 0; z < files.length; z++) // loop the current files in the img picker
+    {
+        // images[v].name.slice((Math.max(0, images[v].name.lastIndexOf(".")) || Infinity) + 1); // Get the file extension of the image - .jpg, .png 
+        curImgExt = files[z].name.slice((Math.max(0, files[z].name.lastIndexOf(".")) || Infinity) + 1); // Get file extension .png, .exe .txt . jpg but it is without the dot
+        // if(curImgExt !== 'jpg'|| curImgExt !== 'png' || curImgExt !== 'gif' || curImgExt !== 'webp' || curImgExt !== 'bmp' || curImgExt !== 'tiff')
+     
+        if(curImgExt == 'png' || curImgExt == 'jpg' || curImgExt == 'jpeg' || curImgExt == 'bmp' || curImgExt == 'gif' || curImgExt == 'tif' || curImgExt == 'webp')
+        {
+            dt.items.add(files[z]); // Add only images to the data transfer obj that will later be assigned to the imgPicker, so here excluding all the unececery files, they are just not added.
+        }
+    }
+
+     imgPicker.files = dt.files; // Assign the image picker with the correct data excluding the files that are not photos .png, .jpg etc.
+}
+
+
+
 
 
 async function imgPickerHandler() {
 
+    validateImgPickerFilesOnlyImg(); // Validate if images else remove from the img picker
     let currentUrlPath = window.location.pathname; // The current path - ex. Edit or Add
 
     if (currentUrlPath == "/Add") {
