@@ -212,6 +212,8 @@ window.addEventListener('popstate', closeItemModalOnPopState);
 document.getElementById('translate').addEventListener("click", initTranlate);
 
 
+
+
 // Listen for keypress ..............................................................................
 document.body.addEventListener('keydown', function (e) {
     e = e || window.event;
@@ -1271,6 +1273,11 @@ function removeViewSessionElements()
     {
         document.getElementById("imgCount").remove(); // Remove image count element of specific item on close modal
     }
+    // if( document.getElementById("img-preview-container") !== null)
+    // {
+    //     document.getElementById("img-preview-container").remove(); // Remove Remove the element so that it is reseted in the next view
+    // }
+      
 }
 
 // Used to remove image elements so the about slide can work - otherwise it interfers - this is used on close modal
@@ -1918,7 +1925,10 @@ async function caravansHtmlTemplateFields() {
 
     return `  
      <div class="admin-content-holder modalItemContainer" tabindex="0" style="margin-top: 0;">
-    <input style="position: fixed; z-index: 10;" id="imgPicker" type="file" accept="image/*;capture=camera" multiple="multiple" onchange="imgPickerHandler()">
+    <input id="imgPicker" type="file" accept="image/*;capture=camera" multiple="multiple" onchange="imgPickerHandler()">
+    
+ 
+
    <div class="img-preview-container">
     <div style="width: 100%; height: 100%;" id="previewImgHolder"></div>   
 

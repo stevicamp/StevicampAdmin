@@ -59,7 +59,8 @@ async function EditLogic() {
         }
     }
 
-    editItemImgArr = item.photos; // The images from the db (the links) to the local array
+    editItemImgArr = JSON.parse(JSON.stringify(item.photos)); // Becauswe in edit mode when items are edited they edit the actual array and on close if image is removed and not saved the list of items is affected with in this case removed image. This can be bigger problem if the admin then edits another item and saves it it will save also the other element with the removed image
+    // editItemImgArr = item.photos; // The images from the db (the links) to the local array
     handleImagesEditView(true,0); // Populate the image container slide and show image 1=index 0; true = assign the html, dont keep the old images if there are. In this case there should be not old images since here it opens the view. Maybe if the array is not eareased.
 }
 
