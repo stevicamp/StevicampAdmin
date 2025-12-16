@@ -27,6 +27,9 @@ html,
 
 }
 
+button {
+  margin: 0;
+}
 
 /* Outline on using tab =====================================================================================*/
 :focus-visible {
@@ -881,7 +884,7 @@ h3 {
     position: relative;
     margin-left: auto;
     margin-right: auto;
-    width: 100%;
+    width: 100%; 
 }
 
 
@@ -891,7 +894,7 @@ h3 {
 
 
 .arrow-right {
-    right: 0%;
+    right: 0%; 
 }
 
 
@@ -910,7 +913,9 @@ h3 {
     font-size: 5vw;
     text-shadow: 1px 1px 3px #ffee00;
     /* color: rgb(0, 0, 0); */
-    color: rgb(255, 243, 82);
+    color: rgb(255, 243, 82); 
+    margin: 0;
+    padding: 0;  
 }
 
 
@@ -1273,7 +1278,7 @@ body {
     font-weight: bold;
     /* color:#002fff; */
     width: fit-content;
-    margin: 5px auto 5px auto;
+    /* margin: 5px auto 5px auto; */
     /* border-radius: 5px; */
     /* border: 2px solid rgb(11, 158, 68); */
 
@@ -1378,12 +1383,9 @@ input#imgPicker::file-selector-button {
 }
 
 #imgPicker {
-    /* Ensures the text area has space next to the button */
-    padding-left: 10px;
-    background-color: transparent;
-    /* Makes the main input area transparent */
-    border: none;
-    /* Removes the outer border (teal/green in image) */
+    
+    background-color: transparent; 
+    border: none; 
     box-shadow: none;
     color: lime; 
     height: auto;
@@ -1391,6 +1393,7 @@ input#imgPicker::file-selector-button {
     cursor: pointer;
     filter: drop-shadow(2px 2px 1px black);
     text-shadow: 1px 1px 2px black;
+    box-sizing: border-box; 
 }
 
 #imgPicker:hover 

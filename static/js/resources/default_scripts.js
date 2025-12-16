@@ -1917,7 +1917,7 @@ async function caravansHtmlTemplateFields() {
 
 
     return `  
-     <div class="admin-content-holder modalItemContainer" tabindex="0" style="margin-top: 0; position: relative;">
+     <div class="admin-content-holder modalItemContainer" tabindex="0" style="margin-top: 0;">
     <input style="position: fixed; z-index: 10;" id="imgPicker" type="file" accept="image/*;capture=camera" multiple="multiple" onchange="imgPickerHandler()">
    <div class="img-preview-container">
     <div style="width: 100%; height: 100%;" id="previewImgHolder"></div>   
