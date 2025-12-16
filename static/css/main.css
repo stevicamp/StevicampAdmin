@@ -913,9 +913,7 @@ h3 {
     font-size: 5vw;
     text-shadow: 1px 1px 3px #ffee00;
     /* color: rgb(0, 0, 0); */
-    color: rgb(255, 243, 82); 
-    margin: 0;
-    padding: 0;  
+    color: rgb(255, 243, 82);  
 }
 
 
@@ -1277,7 +1275,7 @@ body {
 .admin-content-holder button {
     font-weight: bold;
     /* color:#002fff; */
-    width: fit-content;
+    /* width: fit-content; */
     /* margin: 5px auto 5px auto; */
     /* border-radius: 5px; */
     /* border: 2px solid rgb(11, 158, 68); */
