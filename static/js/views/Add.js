@@ -149,7 +149,11 @@ autoLoadCredentials();
     let db = await getDbAsync();
     let jsonDb = JSON.stringify(db);
     let developerInput = document.getElementById("developerInput");
-    developerInput.value = jsonDb;
+    
+    if(jsonDb !== null && jsonDb !== undefined && db !== 'null')
+    {
+      developerInput.value = jsonDb;
+    }
   }
 
 
