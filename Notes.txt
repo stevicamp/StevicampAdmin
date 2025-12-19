@@ -1,7 +1,10 @@
 Stevicamp
 
 
-
+1. Change img positioning from like 1 image, 2 image so that the images can change places - maybe i the localArray change the places a dropdown with the count of all selected images and on selecting the specific number the image will be moved to the specific chosen position in the array that will affect the img view container. The drop down is general for all images it will only check for the current image that is displayed from the array and then move it
+.................
+1. On checking the extension of the selected file add to chekc if a file with the same name and size is already selected if selected then discard, so that there are no duplicates
+...............
 1. Move credentials from Add View to another view named settings
 .......
 1. Later add list of chosen file from the local array when image picker is used show th files that are in the local array o admin
