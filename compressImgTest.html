@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="file" id="inputImg">
+     <input type="range" min="1" max="100" value="100" id="imgCompressionSlider">
+     <label id = "imgCompressionSliderLabel"></label>
+     <label id="imgSizeLabel"></label>
+
+     <input type="checkbox" id="myCheck" onclick="myFunction()">
+    <img id="img">
+    <script>
+        async function compressImage(blobImg, newHeight, fromat, percent, smoothing) {
+            // blobImg - an image from the input type="file" that is FileList ex. theInputElementGottenById.files[0] = an blob image
+            // fromat = jpeg; or png; or etc.
+            // percent from 0-100%
+            let bitmap = await createImageBitmap(blobImg);
+            let canvas = document.createElement("canvas");
+            let ctx = canvas.getContext("2d"); // Context
+
+            if (newHeight !== '') // New width and height calc. based on the new width
+            {
+                let ratio = (bitmap.width / bitmap.height); // Calc. the ratio
+                let newWidth = newHeight * ratio; // Calc. the new height
+                canvas.width = newWidth;
+                canvas.height = newHeight;
+            }
+            else {
+                canvas.width = bitmap.width; // Original width and height
+                canvas.height = bitmap.height;
+            }
+
+            ctx.imageSmoothingEnabled = smoothing; // Smoothing the image, so it is not very sharp
+            ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+            let dataUrl = canvas.toDataURL(`image/${fromat}`, percent / 100);
+            return dataUrl;
+        }
+
+        document.getElementById('inputImg').addEventListener('change', async (e) => {
+            let img = e.target.files[0];
+            console.log('File Name: ', img.name)
+            console.log('Original Size: ', img.size.toLocaleString())
+
+            let imgCompressed = await compressImage(img, '750', 'webp', 75, false) // set to 75%
+            let compSize = atob(imgCompressed.split(",")[1]).length; // The Compressed size in kb
+            console.log('Compressed Size in kb: ', compSize.toLocaleString())
+            //console.log(imgCompressed)
+
+            document.getElementById('img').src = imgCompressed;
+        });
+
+
+          document.getElementById('imgCompressionSlider').addEventListener('input',  async (e) =>
+          {
+          
+           let img =   document.getElementById('inputImg').files[0]; // The first file
+           let compPercent = document.getElementById('imgCompressionSlider').value; // The percantage
+           let imgCompressed = await compressImage(img, '750', 'webp', compPercent, true) // set to 75%
+           
+           document.getElementById('img').src = imgCompressed; // Assign the image so to be shown to the user
+           document.getElementById('imgCompressionSliderLabel').textContent = compPercent + '%'; // Update the label that shows the percantage
+        //    document.getElementById('imgSizeLabel').textContent = Math.ceil(((imgCompressed.length*6)/8)/1024) + 'kb'; // Update the label that shows the image size
+           document.getElementById('imgSizeLabel').textContent = (imgCompressed.length*0.75/1024).toFixed(1) + 'kb'; // Update the label that shows the image size. 6/8 = 0.75 also handles the padding of base64 string. there is == etc. 
+            
+
+         
+            // let img = e.target.files[0];
+            // console.log('File Name: ', img.name)
+            // console.log('Original Size: ', img.size.toLocaleString())
+
+            // let imgCompressed = await compressImage(img, '750', 'webp', 75, false) // set to 75%
+            // let compSize = atob(imgCompressed.split(",")[1]).length; // The Compressed size in kb
+            // console.log('Compressed Size in kb: ', compSize.toLocaleString())
+            // //console.log(imgCompressed)
+
+            // document.getElementById('img').src = imgCompressed;
+ 
+          });
+
+
+        // https://stackoverflow.com/questions/14672746/how-to-compress-an-image-via-javascript-in-the-browser
+
+    </script>
+
+</body>
+
+</html>
