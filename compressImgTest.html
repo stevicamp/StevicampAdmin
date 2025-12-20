@@ -10,15 +10,21 @@
 <body>
     <input type="file" id="inputImg">
     <input type="range" min="1" max="100" value="100" id="imgCompressionSlider">
-    <label id="imgCompressionSliderLabel"></label>
-    <label id="imgSizeLabel"></label>
-    <label id="imgOriginalSizeLabel"></label>
-    <label id="imgSizeInPx"></label>
-    <label id="imgFileName"></label>
+    <span id="imgCompressionSliderLabel"></span>
+    <span id="imgSizeLabel"></span>
+    <span id="imgOriginalSizeLabel"></span>
+    <span id="imgSizeInPx"></span>
+    <span id="imgFileName"></span>
     <button id="imgRotate">Rotate</button>
     
-    <label id="imgSaturationValueLabel"></label>
-    <input type="range" min="100" max="350" value="100" id="imgSaturrationSlider">
+    <span id="imgSaturationLabel"></span>
+    <input type="range" min="50" max="350" value="100" id="imgSaturrationSlider">
+ 
+    <span id="imgContrastLabel"></span>
+    <input type="range" min="80" max="150" value="100" id="imgContrastSlider">
+    
+    <label id="imgBrightnessLabel"></label>
+    <input type="range" min="80" max="150" value="100" id="imgBrightnessSlider">
 
     <input type="checkbox" id="enableSmoothCheckbox">
 
@@ -31,7 +37,7 @@
 
         let rotatedNumber = 0;
 
-        async function compressImage(blobImg, newHeight, fromat, percent, smoothing, rotate, saturation) {
+        async function compressImage(blobImg, newHeight, fromat, percent, smoothing, rotate, saturation, contrast, brightness) {
             // blobImg - an image from the input type="file" that is FileList ex. theInputElementGottenById.files[0] = an blob image
             // fromat = jpeg; or png; or etc.
             // percent from 0-100%
@@ -104,11 +110,15 @@
             if (smoothing === true) {
                 ctx.imageSmoothingEnabled = smoothing;// The soothing of image so there are not edges, but it gets litle blured instead of sharp edges
                 ctx.imageSmoothingQuality = "high"; // If smoothing true then use it // Smoothing the image, so it is not very sharp   
+                 
+                // Flip img horizontaly
+                // ctx.translate(canvas.width, 0);
+                // ctx.scale(-1, 1);
             }
-            if(saturation > 100)
-            {
-              ctx.filter = `saturate(${saturation}%)`; // The saturation
-            }
+            
+             ctx.filter = `saturate(${saturation}%) contrast(${contrast}%) brightness(${brightness}%)`; // The saturation, contrast, brightness 
+            
+         
 
             ctx.drawImage(bitmap, 0, 0, newWidth, newHeight);
 
@@ -141,7 +151,9 @@
             let img = document.getElementById('inputImg').files[0]; // The first file
             let compPercent = document.getElementById('imgCompressionSlider').value; // The percantage
             let saturation =  document.getElementById('imgSaturrationSlider').value;
-            let imgCompressed = await compressImage(img, newHeight, extension, compPercent, imgSmoothing, rotate, saturation); // img = blob; newHeight (ex.) = 750; extension = png; jpeg; webp; compPercent = (from 0 to 100); imgSmoothing = true / false; rotate = true / false; 
+            let contrast = document.getElementById('imgContrastSlider').value;
+            let brightness = document.getElementById('imgBrightnessSlider').value;
+            let imgCompressed = await compressImage(img, newHeight, extension, compPercent, imgSmoothing, rotate, saturation, contrast, brightness); // img = blob; newHeight (ex.) = 750; extension = png; jpeg; webp; compPercent = (from 0 to 100); imgSmoothing = true / false; rotate = true / false; 
 
             document.getElementById('img').src = imgCompressed; // Assign the image so to be shown to the user
             document.getElementById('imgCompressionSliderLabel').textContent = 'Compression to:' + compPercent + '%'; // Update the label that shows the percantage
@@ -150,7 +162,9 @@
             //    document.getElementById('imgOriginalSizeLabel').textContent = 'Orig. Size:' + img.size.toLocaleString() + 'kb'; // The original size
             document.getElementById('imgOriginalSizeLabel').textContent = 'Orig. Size:' + (img.size / 1048576).toFixed(2) + 'MB'; // The original size - from bytes to MB - 1,048,576 Bytes = 1 Megabyte (MB). 
             document.getElementById('imgFileName').textContent = 'File Name:' + img.name;
-            document.getElementById('imgSaturationValueLabel').textContent = saturation + '%'; // The satiration value to the user
+            document.getElementById('imgSaturationLabel').textContent = saturation + '%'; // The satiration value to the user
+            document.getElementById('imgContrastLabel').textContent = contrast + '%'; // The satiration value to the user
+            document.getElementById('imgBrightnessLabel').textContent = brightness + '%'; // The satiration value to the user
             document.getElementById('imgSizeInPx').textContent = 'Compr. Pixels:......';
         }
 
@@ -180,20 +194,35 @@
             await executeCompression(750, 'webp', false);
         });
 
-        // 2. The saturation slider
+
+        // 3. The saturation slider
         document.getElementById('imgSaturrationSlider').addEventListener('input', async (e) => {
 
             await executeCompression(750, 'webp', false);
         });
 
 
+        // 4. The Contrast slider
+        document.getElementById('imgContrastSlider').addEventListener('input', async (e) => {
 
-        // 3. The checkbox
+            await executeCompression(750, 'webp', false);
+        });
+
+
+        // 5. The Brightness slider
+        document.getElementById('imgBrightnessSlider').addEventListener('input', async (e) => {
+
+            await executeCompression(750, 'webp', false);
+        });
+
+
+
+        // 6. The checkbox
         document.getElementById('enableSmoothCheckbox').addEventListener('change', async (e) => {
             await executeCompression(750, 'webp', false);
         });
 
-        // 4. Img Rotate
+        // 7. Img Rotate
         document.getElementById('imgRotate').addEventListener('mousedown', async (e) => {
             await executeCompression(750, 'webp', true);
         });
