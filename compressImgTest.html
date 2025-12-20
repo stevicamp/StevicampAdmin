@@ -13,89 +13,117 @@
     <label id="imgCompressionSliderLabel"></label>
     <label id="imgSizeLabel"></label>
     <label id="imgOriginalSizeLabel"></label>
+    <label id="imgSizeInPx"></label>
     <label id="imgFileName"></label>
     <button id="imgRotate">Rotate</button>
+    
+    <label id="imgSaturationValueLabel"></label>
+    <input type="range" min="100" max="350" value="100" id="imgSaturrationSlider">
 
     <input type="checkbox" id="enableSmoothCheckbox">
 
 
     <img id="img">
     <script>
+
+        let canvas = document.createElement("canvas"); // Create canvas, so to reuse the canvas for better performance
+        let ctx = canvas.getContext("2d"); // Context
+
         let rotatedNumber = 0;
 
-        async function compressImage(blobImg, newHeight, fromat, percent, smoothing, rotate) {
+        async function compressImage(blobImg, newHeight, fromat, percent, smoothing, rotate, saturation) {
             // blobImg - an image from the input type="file" that is FileList ex. theInputElementGottenById.files[0] = an blob image
             // fromat = jpeg; or png; or etc.
             // percent from 0-100%
 
-            let bitmap = await createImageBitmap(blobImg);
-            let canvas = document.createElement("canvas");
-            let ctx = canvas.getContext("2d"); // Context
 
-            if (newHeight !== '') // New width and height calc. based on the new width
-            {
-                let ratio = (bitmap.width / bitmap.height); // Calc. the ratio
-                let newWidth = newHeight * ratio; // Calc. the new height
-                canvas.width = newWidth;
-                canvas.height = newHeight;
+            const bitmap = await createImageBitmap(blobImg); // Create image bitmap
 
-                if (rotate) {
 
-                    ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset transformation matrix before starting
 
-                    if (rotatedNumber == 0) // 90 Degrees Clockwise
-                    {
-                        // Swapp the width and height for the image since it is rotated and the width becomes height and the oposite
-                        canvas.width = newHeight;
-                        canvas.height = newWidth;
+           
 
-                        ctx.translate(canvas.width, 0); // Move the "pen" to the new top-right corner
-                        ctx.rotate(Math.PI / 2);// Rotate 90 degrees clockwise (must be in Radians: 90 * PI / 180)
-                        rotatedNumber = 1;
-                    }
-                    else if (rotatedNumber == 1) // 180 Degrees
-                    {
-                        canvas.width = newWidth;
-                        canvas.height = newHeight;
-                        ctx.translate(canvas.width, canvas.height); // Move to bottom-right
-                        ctx.rotate(Math.PI);// Rotate 180 degrees clockwise - // Upside down 
-                        rotatedNumber = 2;
-                    }
-                    else if (rotatedNumber == 2)// 270 Degrees
-                    {
-                        canvas.width = newHeight;
-                        canvas.height = newWidth;
-                        // ctx.translate(0, canvas.height); // Move to bottom-left
-                        ctx.translate(0, canvas.height);
-                        ctx.rotate(3 * Math.PI / 2);// Rotate 270 degrees clockwise  
-                        rotatedNumber = 3;
-                    }
-                    else if (rotatedNumber == 3) // 360 Degrees (Back to 0)
-                    {
-                        canvas.width = newWidth;
-                        canvas.height = newHeight;
-                        // ctx.translate(canvas.width, 0); // Move the "pen" to the new top-right corner
-                        // ctx.rotate(2 * Math.PI);// Rotate 360 degrees clockwise  
-                        rotatedNumber = 0;
-                    }
+            // Calculate dimensions
+            // const ratio = bitmap.width / bitmap.height; // Calc. the ratio 
+            const newWidth = newHeight * (bitmap.width / bitmap.height); // (Calc. the new width) if newHeight is present then calc the new width else use the bitmap.width 
 
+
+
+
+            // ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+            ctx.setTransform(1, 0, 0, 1, 0, 0); // // Clear the canvas - reset rotation/scale
+
+
+            if (rotate) {
+
+                // ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset transformation matrix before starting
+
+                if (rotatedNumber == 0) // 90 Degrees Clockwise
+                {
+                    // Swapp the width and height for the image since it is rotated and the width becomes height and the oposite
+                    canvas.width = newHeight;
+                    canvas.height = newWidth;
+
+                    ctx.translate(canvas.width, 0); // Move the "pen" to the new top-right corner
+                    ctx.rotate(Math.PI / 2);// Rotate 90 degrees clockwise (must be in Radians: 90 * PI / 180)
+                    rotatedNumber = 1;
                 }
-                ctx.imageSmoothingEnabled = smoothing; // Smoothing the image, so it is not very sharp
-                ctx.drawImage(bitmap, 0, 0, newWidth, newHeight);
+                else if (rotatedNumber == 1) // 180 Degrees
+                {
+                    canvas.width = newWidth;
+                    canvas.height = newHeight;
+                    ctx.translate(canvas.width, canvas.height); // Move to bottom-right
+                    ctx.rotate(Math.PI);// Rotate 180 degrees clockwise - // Upside down 
+                    rotatedNumber = 2;
+                }
+                else if (rotatedNumber == 2)// 270 Degrees
+                {
+                    canvas.width = newHeight;
+                    canvas.height = newWidth;
+                    // ctx.translate(0, canvas.height); // Move to bottom-left
+                    ctx.translate(0, canvas.height);
+                    ctx.rotate(3 * Math.PI / 2);// Rotate 270 degrees clockwise  
+                    rotatedNumber = 3;
+                }
+                else if (rotatedNumber == 3) // 360 Degrees (Back to 0)
+                {
+                    canvas.width = newWidth;
+                    canvas.height = newHeight;
+                    // ctx.translate(canvas.width, 0); // Move the "pen" to the new top-right corner
+                    // ctx.rotate(2 * Math.PI);// Rotate 360 degrees clockwise  
+                    rotatedNumber = 0;
+                }
 
-                let dataUrl = canvas.toDataURL(`image/${fromat}`, percent / 100);
-                return dataUrl;
             }
             else {
-                canvas.width = bitmap.width; // Original width and under this line ---> height
-                canvas.height = bitmap.height;
-                ctx.imageSmoothingEnabled = smoothing; // Smoothing the image, so it is not very sharp
-                ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
-
-                let dataUrl = canvas.toDataURL(`image/${fromat}`, percent / 100);
-                return dataUrl;
+                canvas.width = newWidth;
+                canvas.height = newHeight;
             }
 
+             // Options  
+            if (smoothing === true) {
+                ctx.imageSmoothingEnabled = smoothing;// The soothing of image so there are not edges, but it gets litle blured instead of sharp edges
+                ctx.imageSmoothingQuality = "high"; // If smoothing true then use it // Smoothing the image, so it is not very sharp   
+            }
+            if(saturation > 100)
+            {
+              ctx.filter = `saturate(${saturation}%)`; // The saturation
+            }
+
+            ctx.drawImage(bitmap, 0, 0, newWidth, newHeight);
+
+            let dataUrl = canvas.toDataURL(`image/${fromat}`, percent / 100);
+            return dataUrl;
+
+
+            // canvas.width = bitmap.width; // Original width and under this line ---> height
+            // canvas.height = bitmap.height;
+            // ctx.imageSmoothingEnabled = smoothing; // Smoothing the image, so it is not very sharp
+            // ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+
+            // let dataUrl = canvas.toDataURL(`image/${fromat}`, percent / 100);
+            // return dataUrl;
+            //.......................
 
 
             // ctx.imageSmoothingEnabled = smoothing; // Smoothing the image, so it is not very sharp
@@ -109,10 +137,11 @@
 
         // 0. Executon
         async function executeCompression(newHeight, extension, rotate) {
-            let imgSmoothing = document.getElementById('enableSmoothCheckbox').value; // Smoothing checkbox true / false. So the image is not sharp when downscaled
+            let imgSmoothing = document.getElementById('enableSmoothCheckbox').checked; // Smoothing checkbox true / false. So the image is not sharp when downscaled
             let img = document.getElementById('inputImg').files[0]; // The first file
             let compPercent = document.getElementById('imgCompressionSlider').value; // The percantage
-            let imgCompressed = await compressImage(img, newHeight, extension, compPercent, imgSmoothing, rotate); // img = blob; newHeight (ex.) = 750; extension = png; jpeg; webp; compPercent = (from 0 to 100); imgSmoothing = true / false; rotate = true / false; 
+            let saturation =  document.getElementById('imgSaturrationSlider').value;
+            let imgCompressed = await compressImage(img, newHeight, extension, compPercent, imgSmoothing, rotate, saturation); // img = blob; newHeight (ex.) = 750; extension = png; jpeg; webp; compPercent = (from 0 to 100); imgSmoothing = true / false; rotate = true / false; 
 
             document.getElementById('img').src = imgCompressed; // Assign the image so to be shown to the user
             document.getElementById('imgCompressionSliderLabel').textContent = 'Compression to:' + compPercent + '%'; // Update the label that shows the percantage
@@ -121,6 +150,8 @@
             //    document.getElementById('imgOriginalSizeLabel').textContent = 'Orig. Size:' + img.size.toLocaleString() + 'kb'; // The original size
             document.getElementById('imgOriginalSizeLabel').textContent = 'Orig. Size:' + (img.size / 1048576).toFixed(2) + 'MB'; // The original size - from bytes to MB - 1,048,576 Bytes = 1 Megabyte (MB). 
             document.getElementById('imgFileName').textContent = 'File Name:' + img.name;
+            document.getElementById('imgSaturationValueLabel').textContent = saturation + '%'; // The satiration value to the user
+            document.getElementById('imgSizeInPx').textContent = 'Compr. Pixels:......';
         }
 
 
@@ -143,8 +174,14 @@
 
 
 
-        // 2. The slider
+        // 2. The compression slider
         document.getElementById('imgCompressionSlider').addEventListener('input', async (e) => {
+
+            await executeCompression(750, 'webp', false);
+        });
+
+        // 2. The saturation slider
+        document.getElementById('imgSaturrationSlider').addEventListener('input', async (e) => {
 
             await executeCompression(750, 'webp', false);
         });
@@ -152,12 +189,12 @@
 
 
         // 3. The checkbox
-        document.getElementById('enableSmoothCheckbox').addEventListener('check', async (e) => {
-            await executeCompression(newHeight, 'webp', false);
+        document.getElementById('enableSmoothCheckbox').addEventListener('change', async (e) => {
+            await executeCompression(750, 'webp', false);
         });
 
         // 4. Img Rotate
-        document.getElementById('imgRotate').addEventListener('click', async (e) => {
+        document.getElementById('imgRotate').addEventListener('mousedown', async (e) => {
             await executeCompression(750, 'webp', true);
         });
         // https://stackoverflow.com/questions/14672746/how-to-compress-an-image-via-javascript-in-the-browser
