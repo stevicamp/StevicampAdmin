@@ -8,26 +8,28 @@
 </head>
 
 <body>
-    <input type="file" id="inputImg">
-    <input type="range" min="1" max="100" value="100" id="imgCompressionSlider">
-    <span id="imgCompressionSliderLabel"></span>
-    <span id="imgSizeLabel"></span>
-    <span id="imgOriginalSizeLabel"></span>
-    <span id="imgSizeInPx"></span>
-    <span id="imgFileName"></span>
-    <button id="imgRotate">Rotate</button>
-    
-    <span id="imgSaturationLabel"></span>
-    <input type="range" min="50" max="350" value="100" id="imgSaturrationSlider">
- 
-    <span id="imgContrastLabel"></span>
-    <input type="range" min="80" max="150" value="100" id="imgContrastSlider">
-    
-    <label id="imgBrightnessLabel"></label>
-    <input type="range" min="80" max="150" value="100" id="imgBrightnessSlider">
+    <div style="display:inline-table; max-width:100%; overflow-x: auto;">
+        <input type="file" id="inputImg">
+        <input type="range" min="1" max="100" value="100" id="imgCompressionSlider">
+        <span id="imgCompressionSliderLabel"></span>
+        <span id="imgSizeLabel"></span>
+        <span id="imgOriginalSizeLabel"></span>
+        <span id="imgSizeInPx"></span>
+        <span id="imgFileName"></span>
+        <button id="imgRotate">Rotate</button>
 
-    <input type="checkbox" id="enableSmoothCheckbox">
+        <span id="imgSaturationLabel"></span>
+        <input type="range" min="50" max="350" value="100" id="imgSaturrationSlider">
 
+        <span id="imgContrastLabel"></span>
+        <input type="range" min="90" max="120" value="100" id="imgContrastSlider">
+
+        <span id="imgBrightnessLabel"></span>
+        <input type="range" min="90" max="120" value="100" id="imgBrightnessSlider">
+
+        <span>Smoothnes:</span>
+        <input type="checkbox" id="enableSmoothCheckbox">
+    </div>
 
     <img id="img">
     <script>
@@ -47,7 +49,7 @@
 
 
 
-           
+
 
             // Calculate dimensions
             // const ratio = bitmap.width / bitmap.height; // Calc. the ratio 
@@ -106,19 +108,19 @@
                 canvas.height = newHeight;
             }
 
-             // Options  
+            // Options  
             if (smoothing === true) {
                 ctx.imageSmoothingEnabled = smoothing;// The soothing of image so there are not edges, but it gets litle blured instead of sharp edges
                 ctx.imageSmoothingQuality = "high"; // If smoothing true then use it // Smoothing the image, so it is not very sharp   
-                 
+
                 // Flip img horizontaly
                 // ctx.translate(canvas.width, 0);
                 // ctx.scale(-1, 1);
             }
-            
-             ctx.filter = `saturate(${saturation}%) contrast(${contrast}%) brightness(${brightness}%)`; // The saturation, contrast, brightness 
-            
-         
+
+            ctx.filter = `saturate(${saturation}%) contrast(${contrast}%) brightness(${brightness}%)`; // The saturation, contrast, brightness 
+
+
 
             ctx.drawImage(bitmap, 0, 0, newWidth, newHeight);
 
@@ -150,7 +152,7 @@
             let imgSmoothing = document.getElementById('enableSmoothCheckbox').checked; // Smoothing checkbox true / false. So the image is not sharp when downscaled
             let img = document.getElementById('inputImg').files[0]; // The first file
             let compPercent = document.getElementById('imgCompressionSlider').value; // The percantage
-            let saturation =  document.getElementById('imgSaturrationSlider').value;
+            let saturation = document.getElementById('imgSaturrationSlider').value;
             let contrast = document.getElementById('imgContrastSlider').value;
             let brightness = document.getElementById('imgBrightnessSlider').value;
             let imgCompressed = await compressImage(img, newHeight, extension, compPercent, imgSmoothing, rotate, saturation, contrast, brightness); // img = blob; newHeight (ex.) = 750; extension = png; jpeg; webp; compPercent = (from 0 to 100); imgSmoothing = true / false; rotate = true / false; 
