@@ -18,7 +18,9 @@ var editItemImgArr = []; // Used to hold the links of add and edit view // Also 
 
 let deleteImagesEditArr = []; // Used to hold the deleted images links // it is used when editSave button is pressed loops the images and deletes them before saving the db. 
 
+let imgCompressionSizeGlobal = 750;
 
+let imgCompressionExtensionGlobal = 'webp';
 // function b64DecodeUnicode(str) {
 //     // Going backwards: from bytestream, to percent-encoding, to original string.
 //     return decodeURIComponent(atob(str).split('').map(function(c) {
@@ -215,18 +217,18 @@ document.getElementById('translate').addEventListener("click", initTranlate);
 
 
 // Listen for keypress ..............................................................................
-document.body.addEventListener('keydown', function (e) {
+document.body.addEventListener('keydown', async function (e) {
     e = e || window.event;
 
     let modal = document.getElementById("modalWindow");
     if (e.key === "ArrowLeft" && modal.style.display == "flex") // Change image prev
     {
-        toggleSlideImg(-1); // Change img 
+        await toggleSlideImg(-1); // Change img 
         document.activeElement.blur();
     }
     else if (e.key === "ArrowRight" && modal.style.display == "flex") // Change image next
     {
-        toggleSlideImg(1); // Change img
+        await toggleSlideImg(1); // Change img
         document.activeElement.blur();
     }
     else if (e.key === "ArrowUp" && modal.style.display == "flex") // Scroll up item details with arrow up
@@ -336,6 +338,13 @@ function modalItemShareButtonsHtml(itemLink, title) {
 }
 
 
+
+// The image slide arrow buttons
+function imgSlideArrowButtons() {
+    return `<button id="arrow-leftSlideImg" class="arrow-left prevent-select">&#10094;</button>
+    <button id="arrow-rightSlideImg" class="arrow-right prevent-select">&#10095;</button> `;
+}
+
 // Phone number and viber number --------------------------------------------------------------------------
 function phoneViberNumberInfoHtml(phone, viberPhone) {
     return ` <span title="Натиснете за да звъннете по телефона"><a href="tel:${phone}"><img src="static/img/icons/phone.png"><font size="2"><b>Тел: </b><u>${phone}</u></font></a></span>
@@ -379,8 +388,7 @@ async function caravansHtmlTemplate(obj) {
    <div class="img-preview-container">
        ${imagesHtml}
 
-       <button class="arrow-left prevent-select" onclick="toggleSlideImg(-1)">&#10094;</button>
-       <button class="arrow-right prevent-select" onclick="toggleSlideImg(1)">&#10095;</button> 
+      ${imgSlideArrowButtons()} 
        
         ${modalItemShareButtonsHtml(itemLink, obj.title)} 
    
@@ -480,8 +488,7 @@ async function carsHtmlTemplate(obj) {
    <div class="img-preview-container">
        ${imagesHtml}
 
-       <button class="arrow-left prevent-select" onclick="toggleSlideImg(-1)">&#10094;</button>
-       <button class="arrow-right prevent-select" onclick="toggleSlideImg(1)">&#10095;</button> 
+       ${imgSlideArrowButtons()} 
        
        ${modalItemShareButtonsHtml(itemLink, obj.title)}
     </div>
@@ -564,8 +571,7 @@ async function microbusHtmlTemplate(obj) {
    <div class="img-preview-container">
        ${imagesHtml}
 
-       <button class="arrow-left prevent-select" onclick="toggleSlideImg(-1)">&#10094;</button>
-       <button class="arrow-right prevent-select" onclick="toggleSlideImg(1)">&#10095;</button> 
+      ${imgSlideArrowButtons()} 
        
        ${modalItemShareButtonsHtml(itemLink, obj.title)}
     </div>
@@ -652,8 +658,7 @@ async function scootersHtmlTemplate(obj) {
    <div class="img-preview-container">
        ${imagesHtml}
 
-       <button class="arrow-left prevent-select" onclick="toggleSlideImg(-1)">&#10094;</button>
-       <button class="arrow-right prevent-select" onclick="toggleSlideImg(1)">&#10095;</button> 
+       ${imgSlideArrowButtons()} 
        
        ${modalItemShareButtonsHtml(itemLink, obj.title)}
     </div>
@@ -715,8 +720,7 @@ async function trailersHtmlTemplate(obj) {
    <div class="img-preview-container">
        ${imagesHtml}
 
-       <button class="arrow-left prevent-select" onclick="toggleSlideImg(-1)">&#10094;</button>
-       <button class="arrow-right prevent-select" onclick="toggleSlideImg(1)">&#10095;</button> 
+      ${imgSlideArrowButtons()}  
        
        ${modalItemShareButtonsHtml(itemLink, obj.title)}
     </div>
@@ -787,8 +791,7 @@ async function wheelsHtmlTemplate(obj) {
    <div class="img-preview-container">
        ${imagesHtml}
 
-       <button class="arrow-left prevent-select" onclick="toggleSlideImg(-1)">&#10094;</button>
-       <button class="arrow-right prevent-select" onclick="toggleSlideImg(1)">&#10095;</button> 
+       ${imgSlideArrowButtons()}  
        
        ${modalItemShareButtonsHtml(itemLink, obj.title)}
     </div>
@@ -866,8 +869,7 @@ async function productsHtmlTemplate(obj) {
    <div class="img-preview-container">
        ${imagesHtml}
 
-       <button class="arrow-left prevent-select" onclick="toggleSlideImg(-1)">&#10094;</button>
-       <button class="arrow-right prevent-select" onclick="toggleSlideImg(1)">&#10095;</button> 
+       ${imgSlideArrowButtons()} 
        
        ${modalItemShareButtonsHtml(itemLink, obj.title)}
     </div>
@@ -930,8 +932,7 @@ async function equipmentHtmlTemplate(obj) {
    <div class="img-preview-container">
        ${imagesHtml}
 
-       <button class="arrow-left prevent-select" onclick="toggleSlideImg(-1)">&#10094;</button>
-       <button class="arrow-right prevent-select" onclick="toggleSlideImg(1)">&#10095;</button> 
+       ${imgSlideArrowButtons()} 
        
        ${modalItemShareButtonsHtml(itemLink, obj.title)}
     </div>
@@ -992,8 +993,7 @@ async function appliancesHtmlTemplate(obj) {
    <div class="img-preview-container">
        ${imagesHtml}
 
-       <button class="arrow-left prevent-select" onclick="toggleSlideImg(-1)">&#10094;</button>
-       <button class="arrow-right prevent-select" onclick="toggleSlideImg(1)">&#10095;</button> 
+      ${imgSlideArrowButtons()}
        
        ${modalItemShareButtonsHtml(itemLink, obj.title)}
     </div>
@@ -1085,7 +1085,7 @@ async function showModal(itemId) // Show modal is used so when navigating trough
     modal.style.display = 'flex'; // Show modal 
     // modal.tabIndex = 1;
     // modal.focus();
-    toggleSlideImg(0);
+    await toggleSlideImg(0);
 
     document.getElementById("app").style.overflow = "hidden"; // hide the overflow for the app container so it is not triggered while the modal is open
 
@@ -1131,14 +1131,14 @@ function closeItemModalOnPopState() // Close the modal on prev forward button
 let touchstartX = 0
 let touchendX = 0
 
-function checkDirection() {
+async function checkDirection() {
     // Left .....................
     if (touchendX < touchstartX && (touchstartX - touchendX) > 50) {
-        toggleSlideImg(-1);
+        await toggleSlideImg(-1);
     }
     else if (touchendX > touchstartX && (touchendX - touchstartX) > 50) // Right ..................
     {
-        toggleSlideImg(1);
+        await toggleSlideImg(1);
     }
 
 }
@@ -1150,9 +1150,9 @@ document.getElementById('modalWindow').addEventListener('touchstart', e => {
     touchstartX = e.changedTouches[0].screenX;
 });
 
-document.getElementById('modalWindow').addEventListener('touchend', e => {
+document.getElementById('modalWindow').addEventListener('touchend', async (e) => {
     touchendX = e.changedTouches[0].screenX;
-    checkDirection();
+    await checkDirection();
 });
 
 
@@ -1182,7 +1182,7 @@ document.getElementById('modalWindow').addEventListener('touchend', e => {
 // Changing images in modal ------------------------------------------------------------------------
 var slideImgIndex = 0; // Hold track of the current img index - showed image
 
-function toggleSlideImg(n) {
+async function toggleSlideImg(n) {
 
     let images = document.getElementsByClassName("slide"); // Get the images
 
@@ -1219,6 +1219,8 @@ function toggleSlideImg(n) {
     //   document.getElementById("imgCount").innerHTML = '0/0'; // Show 0/0 when no image
     // }
     updateViewImageIndexIndication();
+    await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
+
 }
 
 function updateViewImageIndexIndication() {
@@ -1259,25 +1261,23 @@ function imgSlideNavigation(index) // Not working to navigate to specific image 
         // slideImgIndex = slideImgIndex-1;
     }
 
-    console.log('index:' + index);
-    console.log('slideImgIndex' + slideImgIndex);
+    // console.log('index:' + index);
+    // console.log('slideImgIndex' + slideImgIndex);
 }
 
 
 
-function removeViewSessionElements()
-{
+function removeViewSessionElements() {
     removeElementsByClassName('slide'); // Remove image elements of specific item on close modal
-    
-    if( document.getElementById("imgCount") !== null)
-    {
+
+    if (document.getElementById("imgCount") !== null) {
         document.getElementById("imgCount").remove(); // Remove image count element of specific item on close modal
     }
     // if( document.getElementById("img-preview-container") !== null)
     // {
     //     document.getElementById("img-preview-container").remove(); // Remove Remove the element so that it is reseted in the next view
     // }
-      
+
 }
 
 // Used to remove image elements so the about slide can work - otherwise it interfers - this is used on close modal
@@ -1815,7 +1815,7 @@ function initTranlate() {
 
 let imgSrcArray = [];
 // For The Image picker ......................................................................
-function handleImages() {
+async function handleImages() {
 
     let imgPrevContainer = document.getElementById('previewImgHolder');
 
@@ -1834,7 +1834,7 @@ function handleImages() {
 
     imgPrevContainer.innerHTML += imgHtml; // Add the image as html to the container to display it
 
-    toggleSlideImg(0); // Refresh the image holder
+    await toggleSlideImg(0); // Refresh the image holder
 }
 
 
@@ -1871,7 +1871,7 @@ async function readFileAsync(file) {
         };
 
         reader.onerror = reject;
-        
+
         if (file) {
             reader.readAsDataURL(file);
         }
@@ -1925,18 +1925,17 @@ async function caravansHtmlTemplateFields() {
 
     return `  
      <div class="admin-content-holder modalItemContainer" tabindex="0" style="margin-top: 0;">
-    <input id="imgPicker" type="file" accept="image/*;capture=camera" multiple="multiple" onchange="imgPickerHandler()">
+    <input id="imgPicker" type="file" accept="image/*;capture=camera" multiple="multiple">
     
  
-
+ ${imgCompressionHtml()}
+ 
    <div class="img-preview-container">
     <div style="width: 100%; height: 100%;" id="previewImgHolder"></div>   
 
      
 
-    <button class="arrow-left prevent-select" onclick="toggleSlideImg(-1)">&#10094;</button>
-   
-    <button class="arrow-right prevent-select" onclick="toggleSlideImg(1)">&#10095;</button> 
+    ${imgSlideArrowButtons()}
     
     <a class="item_share_button" style="margin: auto auto 5px auto; background-image: url('static/img/icons/del-img.png');" href="javascript:deleteCurrentImg();" title="Изтриване на снимката!!!"></a>
   <span style="margin: auto;" id="imgCount"></span> 
@@ -2185,11 +2184,14 @@ async function loadAppropriateFields(itemTypePass) {
 
     if (itemType == "caravans") {
         apFields.innerHTML = await caravansHtmlTemplateFields();
-        document.getElementById("saveItemButton").addEventListener("click", (e) => { saveItem(e) }); // For upload
-        document.getElementById("generateCaravanTitleBtn").addEventListener("click", generateCaravanTitle); // Generate caravan title
-        //  document.getElementById("imgPicker").addEventListener("onchange", handleImages); // For the modal
+        document.getElementById("saveItemButton")?.addEventListener("click", (e) => { saveItem(e) }); // For upload
+        document.getElementById("generateCaravanTitleBtn")?.addEventListener("click", generateCaravanTitle); // Generate caravan title
+        //  document.getElementById("imgPicker").addEventListener("change", handleImages); // For the modal
+        document.getElementById("imgPicker")?.addEventListener("change", async () => { await imgPickerHandler() }); // Imgpicker handler  // Common for all categories
+        imgCompressionEventDeclaraton();
     }
-
+    document.getElementById('arrow-leftSlideImg')?.addEventListener('click', async () => { await toggleSlideImg(-1) }); // The img slide left button
+    document.getElementById('arrow-rightSlideImg')?.addEventListener('click', async () => { await toggleSlideImg(1) }); // The img slide right button
 
 }
 
@@ -2286,7 +2288,7 @@ async function EditSave() {
 
 
     let imagesJsDelivrPathArray = await handleItemImagesEdit(itemId, type);// Upload Images and return jsDelivr path for the images
-console.log("Arr#########---------------:"+imagesJsDelivrPathArray);
+    console.log("Arr#########---------------:" + imagesJsDelivrPathArray);
     //formData.photos = imagesJsDelivrPathArray; // Add the photos array to the json object that will be uploaded
     // ###### Here bellow on before hand if imaged are removed the  the img link will be removed from formData.photo as well as other action for deleding hte specific image    
 
@@ -2298,7 +2300,7 @@ console.log("Arr#########---------------:"+imagesJsDelivrPathArray);
     let db = await getDbAsync(); // The Db
     let rawitem = await recursiveSearchObj(db.items, itemId); // Search and get the matched item - searching by the unique id - must get one item if it excists
     let item = Object.values(rawitem)[0][0]; // The result is ex. caravans[{category:"caravans", price:"1353"}] Get the itemType / category
-    
+
     console.log('ITEM: ---------------' + item.photos);
     formData.photos = [...imagesJsDelivrPathArray]; // Add the photos array to the json object that will be uploaded (... if edit mode retain the old photos and add the new to the old - merge the arrays)
 
@@ -2372,7 +2374,7 @@ async function saveItem(e) {
 
 // Handle local images - read as base 64 and upload ---------------------------------------
 async function handleItemImagesEdit(itemId, type) {
-    
+
     // let images = document.getElementById('imgPicker').files; // Get the images from the "input with type="file""
 
     let githubFilePathForImg = "";
@@ -2382,19 +2384,19 @@ async function handleItemImagesEdit(itemId, type) {
     for (let v = 0; v < editItemImgArr.length; v++) // editItemImgArr is the local array that holds both js delivr links from before editing and blob: links that need to be converted to jsdelivr links
     {
         if (editItemImgArr[v].includes("base64")) // If local image base64:   // if not js delivr image
-        { 
+        {
             if (okResponse) {
 
-            // let imgExtension = images[v].slice((Math.max(0, images[v].lastIndexOf(".")) || Infinity) + 1); // Get the file extension of the image - .jpg, .png
-             let imgExtension = '.' + editItemImgArr[v].split(';')[0].split('/')[1];
+                // let imgExtension = images[v].slice((Math.max(0, images[v].lastIndexOf(".")) || Infinity) + 1); // Get the file extension of the image - .jpg, .png
+                let imgExtension = '.' + editItemImgArr[v].split(';')[0].split('/')[1];
 
-            githubFilePathForImg = `resources/img/${type}/${itemId}/${itemId}--${[v + 1]+'-' + Date.now() + imgExtension}`; // Ex. resources/img/caravans/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z-1
-                   
+                githubFilePathForImg = `resources/img/${type}/${itemId}/${itemId}--${[v + 1] + '-' + Date.now() + imgExtension}`; // Ex. resources/img/caravans/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z-1
+
                 // okResponse = await readImgAsBase64AndUpload(editItemImgArr[v], `${[v + 1]} от ${[editItemImgArr.length]}`, githubFilePathForImg);
-               let dataBase64Img = editItemImgArr[v].split('base64,')[1]; // Remove "data:image/png;base64," so it is raw image base64
-             console.log('Base64Img wihtout base64,...:'+dataBase64Img);
-               okResponse = await uploadImgAsync(githubUser, githubRepo, githubFilePathForImg, githubToken, dataBase64Img, 'Admin Uploaded Image from Edit mode: ', ''); // Upload the image to the server
-              
+                let dataBase64Img = editItemImgArr[v].split('base64,')[1]; // Remove "data:image/png;base64," so it is raw image base64
+                console.log('Base64Img wihtout base64,...:' + dataBase64Img);
+                okResponse = await uploadImgAsync(githubUser, githubRepo, githubFilePathForImg, githubToken, dataBase64Img, 'Admin Uploaded Image from Edit mode: ', ''); // Upload the image to the server
+
                 editItemImgArr[v] = convertToJsDelivrPath(githubFilePathForImg); //After uploading the image assign the same index in the array with the jsdelivr image // Add the path to the array that will hold all paths. It is late used to get js delivr paths and then add it to the json object before sending to the server
             }
             else {
@@ -2419,9 +2421,9 @@ async function handleItemImages(itemId, type)// Used for Add item
 
     let okResponse = true;
     for (let v = 0; v < images.length; v++) {
-        if (okResponse) {  
+        if (okResponse) {
             let imgExtension = '.' + images[v].name.slice((Math.max(0, images[v].name.lastIndexOf(".")) || Infinity) + 1); // Get the file extension of the image - .jpg, .png
-            githubFilePathForImg = `resources/img/${type}/${itemId}/${itemId}--${[v + 1]+'-' + Date.now() + imgExtension}`; // OLD ---> Ex. resources/img/caravans/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z-1
+            githubFilePathForImg = `resources/img/${type}/${itemId}/${itemId}--${[v + 1] + '-' + Date.now() + imgExtension}`; // OLD ---> Ex. resources/img/caravans/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z-1
             imagesPathArray.push(convertToJsDelivrPath(githubFilePathForImg)); // Add the path to the array that will hold all paths. It is late used to get js delivr paths and then add it to the json object before sending to the server
             okResponse = await readImgAsBase64AndUpload(images[v], `${[v + 1]} от ${[images.length]}`, githubFilePathForImg);
         }
@@ -2435,30 +2437,28 @@ async function handleItemImages(itemId, type)// Used for Add item
 }
 
 
- 
 
 
-function validateImgPickerFilesOnlyImg()
-{
-     let imgPicker = document.getElementById('imgPicker'); // Get the img picker. The FileList or the input type File is read only and can not remove items from it but it is possible to assign new data objext to it 
-     const dt = new DataTransfer(); // Data transfer obj hold the data
-     const { files } = imgPicker; // Destruct - get the files from img picker in files variable
 
-     let curImgExt;
-   
+function validateImgPickerFilesOnlyImg() {
+    let imgPicker = document.getElementById('imgPicker'); // Get the img picker. The FileList or the input type File is read only and can not remove items from it but it is possible to assign new data objext to it 
+    const dt = new DataTransfer(); // Data transfer obj hold the data
+    const { files } = imgPicker; // Destruct - get the files from img picker in files variable
+
+    let curImgExt;
+
     for (let z = 0; z < files.length; z++) // loop the current files in the img picker
     {
         // images[v].name.slice((Math.max(0, images[v].name.lastIndexOf(".")) || Infinity) + 1); // Get the file extension of the image - .jpg, .png 
         curImgExt = files[z].name.slice((Math.max(0, files[z].name.lastIndexOf(".")) || Infinity) + 1); // Get file extension .png, .exe .txt . jpg but it is without the dot
         // if(curImgExt !== 'jpg'|| curImgExt !== 'png' || curImgExt !== 'gif' || curImgExt !== 'webp' || curImgExt !== 'bmp' || curImgExt !== 'tiff')
-     
-        if(curImgExt == 'png' || curImgExt == 'jpg' || curImgExt == 'jpeg' || curImgExt == 'bmp' || curImgExt == 'gif' || curImgExt == 'tif' || curImgExt == 'webp')
-        {
+
+        if (curImgExt == 'png' || curImgExt == 'jpg' || curImgExt == 'jpeg' || curImgExt == 'bmp' || curImgExt == 'gif' || curImgExt == 'tif' || curImgExt == 'webp') {
             dt.items.add(files[z]); // Add only images to the data transfer obj that will later be assigned to the imgPicker, so here excluding all the unececery files, they are just not added.
         }
     }
 
-     imgPicker.files = dt.files; // Assign the image picker with the correct data excluding the files that are not photos .png, .jpg etc.
+    imgPicker.files = dt.files; // Assign the image picker with the correct data excluding the files that are not photos .png, .jpg etc.
 }
 
 
@@ -2467,6 +2467,7 @@ function validateImgPickerFilesOnlyImg()
 
 async function imgPickerHandler() {
 
+    await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false); // The compression tools options, saturation, rotation etc.
     validateImgPickerFilesOnlyImg(); // Validate if images else remove from the img picker
     let currentUrlPath = window.location.pathname; // The current path - ex. Edit or Add
 
@@ -2479,7 +2480,7 @@ async function imgPickerHandler() {
 
     }
 
-    handleImages(); // Add & show the images in the imgView container
+    await handleImages(); // Add & show the images in the imgView container
 }
 
 
@@ -2492,12 +2493,11 @@ async function imgPickerImagesToLocalArrEdit() {
     let imgPicker = document.getElementById('imgPicker');
     let readerFile;
 
-    for (let i = 0; i < imgPicker.files.length; i++) 
-    {
-         readerFile = await readFileAsync(imgPicker.files[i]); // Read Img as base 64 from async reader
+    for (let i = 0; i < imgPicker.files.length; i++) {
+        readerFile = await readFileAsync(imgPicker.files[i]); // Read Img as base 64 from async reader
         // let dataBase64Img = readerFile.split(',')[1]; // Remove "data:image/png;base64," so it is raw image base64
-         editItemImgArr.push(readerFile); // Image base 64 img push to array
-         console.log('ArrayLoclaBase64:'+editItemImgArr);
+        editItemImgArr.push(readerFile); // Image base 64 img push to array
+        console.log('ArrayLoclaBase64:' + editItemImgArr);
         // editItemImgArr.push(window.URL.createObjectURL(imgPicker.files[i])); // Image local src push to array
     }
 }
@@ -2511,7 +2511,7 @@ function handleImagesEditView(assignHtml, n) {
 
     let imgPrevContainer = document.getElementById('previewImgHolder');
 
-console.log('Arr 2: -------------------------' + editItemImgArr);
+    console.log('Arr 2: -------------------------' + editItemImgArr);
 
     let imgHtml = '';
     for (let i = 0; i < editItemImgArr.length; i++) {
@@ -2550,7 +2550,7 @@ async function deleteCurrentImg() {
         deleteImagesEditArr.push(editItemImgArr[slideImgIndex]); // Add the deleted image to the array that holds the deleted images // they will be deleted when the save button is presses in the methos saveEdit
         editItemImgArr.splice(slideImgIndex, 1); // Remove the deleted image from the local array
 
-console.log('Arr Delete: ---------------------' + editItemImgArr);
+        console.log('Arr Delete: ---------------------' + editItemImgArr);
 
         // console.log('After Arr:' + editItemImgArr);
         // console.log('Index after:' + slideImgIndex);
@@ -2738,3 +2738,250 @@ function loadCredentialsFromLocalStorageToGlobalVariables() {
 
 // Execute on script Load ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 autoLoadCredentialsGlobal(); // Auto execute when efaultscript.js is loaded
+
+
+
+//================IMG-Compression===============================================================================================
+let canvas = document.createElement("canvas"); // Create canvas, so to reuse the canvas for better performance
+let ctx = canvas.getContext("2d"); // Context
+let rotatedStep = 0; // 0,1,2,3 → 0°, 90°, 180°, 270°
+
+
+// async function rotateBase64Img90deg(base64Data, extension) {
+//     var image = new Image();
+//     image.src = base64Data;
+//     ctx.setTransform(1, 0, 0, 1, 0, 0); // // Clear the canvas - reset rotation/scale
+//     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clea
+//     ctx.translate(image.width, image.height);
+//     ctx.rotate(180 * Math.PI / 180);
+//     let dataUrl = canvas.toDataURL(`image/${extension}`, 1);
+//     return dataUrl;
+// }
+
+
+
+async function rotateBlobImg90deg(blobImg, saturation, contrast, brightness) {
+
+    const bitmap = await createImageBitmap(blobImg); // Decode the Blob/File into an ImageBitmap (fast, off-thread decoding)
+    rotatedStep = (rotatedStep + 1) % 4; // 0→3 cycling // Modulus 0%4=0; 1%4=1; 4%4=0; 5%4=1; // So that it is between 0-3 // Prepare for the next - // Increase rotation step and keep it between 0–3 // 0 = 0°, 1 = 90°, 2 = 180°, 3 = 270°
+    
+    ctx.setTransform(1, 0, 0, 1, 0, 0); // // Clear the canvas - reset rotation/scale - // Reset the canvas transformation matrix // Clears any previous rotation, scaling, or translation
+    // Decide canvas size based on rotation  // Even steps (0, 2) → image is upright or upside-down // Odd steps (1, 3) → image is sideways, so width/height must be swapped
+    // Canvas size depends on rotation
+    if (rotatedStep % 2 === 0) { // 0° or 180° // vertical orientation both vertical right & vertival left
+        canvas.width = bitmap.width; // Normal width
+        canvas.height = bitmap.height; // Normal height
+    }
+    else { // Not rotated or upside down - horizontal orientation both up and down
+        // 90° or 270°
+        canvas.width = bitmap.height; // Swap width
+        canvas.height = bitmap.width; // Swap height
+    }
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);  // Clear the entire canvas to remove any previous image
+    ctx.translate(canvas.width / 2, canvas.height / 2);// Move origin to center // Move the canvas origin (0,0) to the center of the canvas  // This allows rotation around the image center instead of top-left
+    ctx.rotate(rotatedStep * Math.PI / 2); // Rotating before drawing - // Rotate the canvas  // Each step is 90 degrees → π/2 radians // 0 * π/2 = 0°  // 1 * π/2 = 90° // 2 * π/2 = 180°  // 3 * π/2 = 270°
+   
+    ctx.filter = `saturate(${saturation}%) contrast(${contrast}%) brightness(${brightness}%)`; // The saturation, contrast, brightness 
+ 
+    ctx.drawImage(bitmap, -bitmap.width / 2, -bitmap.height / 2, bitmap.width, bitmap.height); // Draw centered - // Draw the image centered at the new origin (0,0) // Negative half-width/height centers the image correctly
+    //  -bitmap.width / 2,   // Left edge of image
+    //     -bitmap.height / 2,  // Top edge of image
+    //     bitmap.width,        // Image width
+    //     bitmap.height        // Image height
+    let dataUrl = canvas.toDataURL('image/png'); // Export the canvas as a PNG Base64 data URL (lossless) otherwie if it is rotated several times it gets blury if webo or jpg
+    return dataUrl;
+}
+
+
+
+async function compressImage(blobImg, newHeight, fromat, percent, smoothing, rotate, saturation, contrast, brightness) {
+    // blobImg - an image from the input type="file" that is FileList ex. theInputElementGottenById.files[0] = an blob image
+    // fromat = jpeg; or png; or etc.
+    // percent from 0-100%
+    const bitmap = await createImageBitmap(blobImg); // Create image bitmap
+
+    // Calculate dimensions
+    // const ratio = bitmap.width / bitmap.height; // Calc. the ratio 
+    const newWidth = newHeight * (bitmap.width / bitmap.height); // (Calc. the new width) if newHeight is present then calc the new width else use the bitmap.width 
+
+    // ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+    ctx.setTransform(1, 0, 0, 1, 0, 0); // // Clear the canvas - reset rotation/scale
+
+
+    canvas.width = newWidth;
+    canvas.height = newHeight;
+
+    // Options  
+    if (smoothing === true) {
+        ctx.imageSmoothingEnabled = smoothing;// The soothing of image so there are not edges, but it gets litle blured instead of sharp edges
+        ctx.imageSmoothingQuality = "high"; // If smoothing true then use it // Smoothing the image, so it is not very sharp   
+
+        // Flip img horizontaly
+        // ctx.translate(canvas.width, 0);
+        // ctx.scale(-1, 1);
+    }
+
+    ctx.filter = `saturate(${saturation}%) contrast(${contrast}%) brightness(${brightness}%)`; // The saturation, contrast, brightness 
+    ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+    let dataUrl = canvas.toDataURL(`image/${fromat}`, percent / 100);
+    return dataUrl;
+}
+
+
+
+
+// 0. Executon
+async function executeCompression(newHeight, extension, rotate, save) {
+
+    let rawImg = editItemImgArr[slideImgIndex];  // The img
+    let img;
+
+    if (typeof rawImg === "string" && /^https?:\/\//i.test(rawImg)) // If Link // The last is regular expression // !(rawImg instanceof Blob) && 
+    {
+        const response = await fetch(rawImg);
+        img = await response.blob();
+    }
+    else if (!(rawImg instanceof Blob) && typeof rawImg === "string" && rawImg.startsWith('data:image/')) // Check if base64 and convert to blob
+    {
+        let cleanBase64 = rawImg.replace(/^data:[^;]+;base64,/, ""); // Remove the data: so to work with Unit8Array
+        img = new Blob([Uint8Array.fromBase64(cleanBase64)]); // Base 64 to blob to use in the canvas
+    }
+
+    let imgSmoothing = document.getElementById('enableSmoothCheckbox').checked; // Smoothing checkbox true / false. So the image is not sharp when downscaled
+
+    let compPercent = document.getElementById('imgCompressionSlider').value; // The percantage
+    let saturation = document.getElementById('imgSaturrationSlider').value;
+    let contrast = document.getElementById('imgContrastSlider').value;
+    let brightness = document.getElementById('imgBrightnessSlider').value;
+
+    let imgCompressed;
+
+    if (rotate) {
+        imgCompressed = await rotateBlobImg90deg(img, saturation, contrast, brightness);
+    }
+    else {
+        imgCompressed = await compressImage(img, newHeight, extension, compPercent, imgSmoothing, rotate, saturation, contrast, brightness); // img = blob; newHeight (ex.) = 750; extension = png; jpeg; webp; compPercent = (from 0 to 100); imgSmoothing = true / false; rotate = true / false; 
+    }
+    let slideArr = document.getElementsByClassName('slide');
+
+    // let currentSlide;
+
+    // Get the slide that is style.display: block; the image that is viewed the other images are also slide css class but hidden; display: none;
+    for (let b = 0; b < slideArr.length; b++) {
+        const style = window.getComputedStyle(slideArr[b]);
+        if (style.display === 'block') {
+            // currentSlide = slideArr[b]; // Show the edited compressed image to the view 
+            slideArr[b].src = imgCompressed; // Show the edited compressed image to the view  // Assign the image so to the current slide img to be shown to the user
+            break;
+        }
+    }
+
+    if (save !== undefined && save === true) {
+        editItemImgArr[slideImgIndex] = imgCompressed; // Assign it to the local array so that the actual edited compressed image is in the array
+    }
+
+    // currentSlide.src = imgCompressed; // Assign the image so to be shown to the user
+    // editItemImgArr[slideImgIndex] = imgCompressed; // Assign it to the local array so that the actual edited compressed image is in the array
+    document.getElementById('imgCompressionSliderLabel').textContent = 'Compression to:' + compPercent + '%'; // Update the label that shows the percantage
+    //    document.getElementById('imgSizeLabel').textContent = Math.ceil(((imgCompressed.length*6)/8)/1024) + 'kb'; // Update the label that shows the image size
+    document.getElementById('imgSizeLabel').textContent = 'Curr. Size:' + (imgCompressed.length * 0.75 / 1024).toFixed(1) + 'kb'; // Update the label that shows the image size. 6/8 = 0.75 also handles the padding of base64 string. there is == etc. - 1,024 Bytes: 1 Kilobyte (KB).
+    //    document.getElementById('imgOriginalSizeLabel').textContent = 'Orig. Size:' + img.size.toLocaleString() + 'kb'; // The original size
+    document.getElementById('imgOriginalSizeLabel').textContent = 'Orig. Size:' + (img.size / 1048576).toFixed(2) + 'MB'; // The original size - from bytes to MB - 1,048,576 Bytes = 1 Megabyte (MB). 
+    document.getElementById('imgFileName').textContent = 'File Name:' + img.name;
+    document.getElementById('imgSaturationLabel').textContent = saturation + '%'; // The satiration value to the user
+    document.getElementById('imgContrastLabel').textContent = contrast + '%'; // The satiration value to the user
+    document.getElementById('imgBrightnessLabel').textContent = brightness + '%'; // The satiration value to the user
+    document.getElementById('imgSizeInPx').textContent = 'Compr. Pixels:......';
+}
+
+
+
+
+// // 1. The inputIMG
+// document.getElementById('inputImg').addEventListener('change', async (e) => {
+
+//  
+//     await executeCompression(750, 'webp', false);
+// });
+
+
+function imgCompressionEventDeclaraton() {
+
+
+
+    // 2. The compression slider
+    document.getElementById('imgCompressionSlider')?.addEventListener('input', async (e) => {
+
+        await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
+    });
+
+
+    // 3. The saturation slider
+    document.getElementById('imgSaturrationSlider')?.addEventListener('input', async (e) => {
+
+        await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
+    });
+
+
+    // 4. The Contrast slider
+    document.getElementById('imgContrastSlider')?.addEventListener('input', async (e) => {
+
+        await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
+    });
+
+
+    // 5. The Brightness slider
+    document.getElementById('imgBrightnessSlider')?.addEventListener('input', async (e) => {
+
+        await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
+    });
+
+
+
+    // 6. The checkbox
+    document.getElementById('enableSmoothCheckbox')?.addEventListener('change', async (e) => {
+        await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
+    });
+
+    // 7. Img Rotate
+    document.getElementById('imgRotate')?.addEventListener('mousedown', async (e) => {
+        await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, true, false);
+    });
+
+    // 8. Img Save
+    document.getElementById('imgCompressionSave')?.addEventListener('mousedown', async (e) => {
+        await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, true, true);
+    });
+
+}
+
+
+
+// ---------IMG-Compression-Html--------------------------------------------------------------------------
+
+function imgCompressionHtml() {
+    return `   <div style="display:inline-table; max-width:100%; overflow-x: auto;">
+        
+        <input type="range" min="1" max="100" value="100" id="imgCompressionSlider">
+        <span id="imgCompressionSliderLabel"></span>
+        <span id="imgSizeLabel"></span>
+        <span id="imgOriginalSizeLabel"></span>
+        <span id="imgSizeInPx"></span>
+        <span id="imgFileName"></span>
+        <button id="imgRotate">Rotate</button>
+        <button id="imgCompressionSave">Save Image</button>
+
+        <span id="imgSaturationLabel"></span>
+        <input type="range" min="50" max="350" value="100" id="imgSaturrationSlider">
+
+        <span id="imgContrastLabel"></span>
+        <input type="range" min="90" max="120" value="100" id="imgContrastSlider">
+
+        <span id="imgBrightnessLabel"></span>
+        <input type="range" min="90" max="120" value="100" id="imgBrightnessSlider">
+
+        <span>Smoothnes:</span>
+        <input type="checkbox" id="enableSmoothCheckbox">
+    </div>`;
+}

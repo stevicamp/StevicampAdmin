@@ -43,24 +43,14 @@
             // blobImg - an image from the input type="file" that is FileList ex. theInputElementGottenById.files[0] = an blob image
             // fromat = jpeg; or png; or etc.
             // percent from 0-100%
-
-
             const bitmap = await createImageBitmap(blobImg); // Create image bitmap
-
-
-
-
 
             // Calculate dimensions
             // const ratio = bitmap.width / bitmap.height; // Calc. the ratio 
             const newWidth = newHeight * (bitmap.width / bitmap.height); // (Calc. the new width) if newHeight is present then calc the new width else use the bitmap.width 
 
-
-
-
             // ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
             ctx.setTransform(1, 0, 0, 1, 0, 0); // // Clear the canvas - reset rotation/scale
-
 
             if (rotate) {
 
@@ -230,6 +220,9 @@
         });
         // https://stackoverflow.com/questions/14672746/how-to-compress-an-image-via-javascript-in-the-browser
 
+
+
+        
     </script>
 
 </body>

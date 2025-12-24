@@ -1,6 +1,18 @@
 Stevicamp
 
 
+
+
+ 
+
+
+-------------------
+1. Changing images with arrow keys not working - Do. If no tab selection then on keypress change the image
+...........
+1. editlocalArr make it common also for add item ---> change the name and make it for add item too and clean it on view change
+------------
+1. In edit mode on imges changed the data when image is adjusted is for the first image nt for the actual
+--------------
 1. Change img positioning from like 1 image, 2 image so that the images can change places - maybe i the localArray change the places a dropdown with the count of all selected images and on selecting the specific number the image will be moved to the specific chosen position in the array that will affect the img view container. The drop down is general for all images it will only check for the current image that is displayed from the array and then move it
 .................
 1. On checking the extension of the selected file add to chekc if a file with the same name and size is already selected if selected then discard, so that there are no duplicates
