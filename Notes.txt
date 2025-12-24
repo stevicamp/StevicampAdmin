@@ -3,9 +3,9 @@ Stevicamp
 
 
 
- 
-
-
+ 1. Bug on opening imgpicker and closing it without picking image - all images disapear
+........
+1. THere is bug in delete image in edit view - refused to select from the picker the same image if it is removed
 -------------------
 1. Changing images with arrow keys not working - Do. If no tab selection then on keypress change the image
 ...........

@@ -18,7 +18,7 @@ var editItemImgArr = []; // Used to hold the links of add and edit view // Also 
 
 let deleteImagesEditArr = []; // Used to hold the deleted images links // it is used when editSave button is pressed loops the images and deletes them before saving the db. 
 
-let imgCompressionSizeGlobal = 750;
+let imgCompressionSizeGlobal = 1000;
 
 let imgCompressionExtensionGlobal = 'webp';
 // function b64DecodeUnicode(str) {
@@ -1219,8 +1219,8 @@ async function toggleSlideImg(n) {
     //   document.getElementById("imgCount").innerHTML = '0/0'; // Show 0/0 when no image
     // }
     updateViewImageIndexIndication();
+    resetImgCompressionFields(); // Reset the fields and the rotation variable on img change
     await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
-
 }
 
 function updateViewImageIndexIndication() {
@@ -2760,14 +2760,17 @@ let rotatedStep = 0; // 0,1,2,3 → 0°, 90°, 180°, 270°
 
 
 
-async function rotateBlobImg90deg(blobImg, saturation, contrast, brightness) {
+async function rotateBitmapImg90deg(bitmap, applyPrevRotation) {
 
-    const bitmap = await createImageBitmap(blobImg); // Decode the Blob/File into an ImageBitmap (fast, off-thread decoding)
-    rotatedStep = (rotatedStep + 1) % 4; // 0→3 cycling // Modulus 0%4=0; 1%4=1; 4%4=0; 5%4=1; // So that it is between 0-3 // Prepare for the next - // Increase rotation step and keep it between 0–3 // 0 = 0°, 1 = 90°, 2 = 180°, 3 = 270°
-    
-    ctx.setTransform(1, 0, 0, 1, 0, 0); // // Clear the canvas - reset rotation/scale - // Reset the canvas transformation matrix // Clears any previous rotation, scaling, or translation
-    // Decide canvas size based on rotation  // Even steps (0, 2) → image is upright or upside-down // Odd steps (1, 3) → image is sideways, so width/height must be swapped
-    // Canvas size depends on rotation
+    if(!applyPrevRotation)
+    { 
+        // const bitmap = await createImageBitmap(blobImg); // Decode the Blob/File into an ImageBitmap (fast, off-thread decoding)
+        rotatedStep = (rotatedStep + 1) % 4; // 0→3 cycling // Modulus 0%4=0; 1%4=1; 4%4=0; 5%4=1; // So that it is between 0-3 // Prepare for the next - // Increase rotation step and keep it between 0–3 // 0 = 0°, 1 = 90°, 2 = 180°, 3 = 270°
+    }
+
+    // ctx.setTransform(1, 0, 0, 1, 0, 0); // // Clear the canvas - reset rotation/scale - // Reset the canvas transformation matrix // Clears any previous rotation, scaling, or translation
+    // // Decide canvas size based on rotation  // Even steps (0, 2) → image is upright or upside-down // Odd steps (1, 3) → image is sideways, so width/height must be swapped
+    // // Canvas size depends on rotation
     if (rotatedStep % 2 === 0) { // 0° or 180° // vertical orientation both vertical right & vertival left
         canvas.width = bitmap.width; // Normal width
         canvas.height = bitmap.height; // Normal height
@@ -2781,17 +2784,21 @@ async function rotateBlobImg90deg(blobImg, saturation, contrast, brightness) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);  // Clear the entire canvas to remove any previous image
     ctx.translate(canvas.width / 2, canvas.height / 2);// Move origin to center // Move the canvas origin (0,0) to the center of the canvas  // This allows rotation around the image center instead of top-left
     ctx.rotate(rotatedStep * Math.PI / 2); // Rotating before drawing - // Rotate the canvas  // Each step is 90 degrees → π/2 radians // 0 * π/2 = 0°  // 1 * π/2 = 90° // 2 * π/2 = 180°  // 3 * π/2 = 270°
-   
-    ctx.filter = `saturate(${saturation}%) contrast(${contrast}%) brightness(${brightness}%)`; // The saturation, contrast, brightness 
- 
+
+    // ctx.filter = `saturate(${saturation}%) contrast(${contrast}%) brightness(${brightness}%)`; // The saturation, contrast, brightness 
+
     ctx.drawImage(bitmap, -bitmap.width / 2, -bitmap.height / 2, bitmap.width, bitmap.height); // Draw centered - // Draw the image centered at the new origin (0,0) // Negative half-width/height centers the image correctly
-    //  -bitmap.width / 2,   // Left edge of image
-    //     -bitmap.height / 2,  // Top edge of image
-    //     bitmap.width,        // Image width
-    //     bitmap.height        // Image height
-    let dataUrl = canvas.toDataURL('image/png'); // Export the canvas as a PNG Base64 data URL (lossless) otherwie if it is rotated several times it gets blury if webo or jpg
-    return dataUrl;
+    // //  -bitmap.width / 2,   // Left edge of image
+    // //     -bitmap.height / 2,  // Top edge of image
+    // //     bitmap.width,        // Image width
+    // //     bitmap.height        // Image height
+    // let dataUrl = canvas.toDataURL('image/png'); // Export the canvas as a PNG Base64 data URL (lossless) otherwie if it is rotated several times it gets blury if webo or jpg
+    // return dataUrl;
+    return await createImageBitmap(canvas);
+
 }
+
+ 
 
 
 
@@ -2799,16 +2806,38 @@ async function compressImage(blobImg, newHeight, fromat, percent, smoothing, rot
     // blobImg - an image from the input type="file" that is FileList ex. theInputElementGottenById.files[0] = an blob image
     // fromat = jpeg; or png; or etc.
     // percent from 0-100%
-    const bitmap = await createImageBitmap(blobImg); // Create image bitmap
+    let bitmap = await createImageBitmap(blobImg); // Create image bitmap
+
+
+
+    if (rotate) {
+        bitmap = await rotateBitmapImg90deg(bitmap, false); // The rotated image as bitmap 
+    }
+    else if (rotatedStep > 0) 
+    {
+        bitmap = await rotateBitmapImg90deg(bitmap, true); // Apply rotation from previouse time if there is no rotation know
+    }
+
+    let newWidth = bitmap.width;
+
+    if (newHeight && Math.abs(bitmap.height - newHeight) > 1) // Beacuse browser can take +- 1 px somehow? Broesers somethimes decode images off 1px says the robot? // Another Ex. Math.abs(100 - 750) = 650
+    {
+        //    newWidth = newHeight * (bitmap.width / bitmap.height); 
+        // drawHeight = newHeight; // The Height that is provided ex. 750 px.
+        newWidth = Math.round(newHeight * (bitmap.width / bitmap.height)); // (Calc. the new width) if newHeight is present then calc the new width else use the bitmap.width // Math round so to get the clossest possible, not floo, not celi. Because new with can be ex. 499.7 . Now rounds it to 500 px
+    }
+    else {
+        newHeight = bitmap.height;
+    }
+
 
     // Calculate dimensions
     // const ratio = bitmap.width / bitmap.height; // Calc. the ratio 
-    const newWidth = newHeight * (bitmap.width / bitmap.height); // (Calc. the new width) if newHeight is present then calc the new width else use the bitmap.width 
+    // const newWidth = newHeight * (bitmap.width / bitmap.height); // (Calc. the new width) if newHeight is present then calc the new width else use the bitmap.width 
 
     // ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
-    ctx.setTransform(1, 0, 0, 1, 0, 0); // // Clear the canvas - reset rotation/scale
 
-
+    //   ctx.setTransform(1, 0, 0, 1, 0, 0); // To clear the old canvas // And this do I need it? // No need of this because of hte resizing the canvas the resizing does it
     canvas.width = newWidth;
     canvas.height = newHeight;
 
@@ -2829,6 +2858,14 @@ async function compressImage(blobImg, newHeight, fromat, percent, smoothing, rot
 }
 
 
+function resetImgCompressionFields() {
+     
+    rotatedStep = 0; // Reset the rotation step
+    document.getElementById('imgCompressionSlider').value = 100;
+    document.getElementById('imgSaturrationSlider').value = 100;
+    document.getElementById('imgContrastSlider').value = 100;
+    document.getElementById('imgBrightnessSlider').value = 100;
+}
 
 
 // 0. Executon
@@ -2855,14 +2892,8 @@ async function executeCompression(newHeight, extension, rotate, save) {
     let contrast = document.getElementById('imgContrastSlider').value;
     let brightness = document.getElementById('imgBrightnessSlider').value;
 
-    let imgCompressed;
+    let imgCompressed = await compressImage(img, newHeight, extension, compPercent, imgSmoothing, rotate, saturation, contrast, brightness); // img = blob; newHeight (ex.) = 750; extension = png; jpeg; webp; compPercent = (from 0 to 100); imgSmoothing = true / false; rotate = true / false; 
 
-    if (rotate) {
-        imgCompressed = await rotateBlobImg90deg(img, saturation, contrast, brightness);
-    }
-    else {
-        imgCompressed = await compressImage(img, newHeight, extension, compPercent, imgSmoothing, rotate, saturation, contrast, brightness); // img = blob; newHeight (ex.) = 750; extension = png; jpeg; webp; compPercent = (from 0 to 100); imgSmoothing = true / false; rotate = true / false; 
-    }
     let slideArr = document.getElementsByClassName('slide');
 
     // let currentSlide;
@@ -2951,7 +2982,8 @@ function imgCompressionEventDeclaraton() {
 
     // 8. Img Save
     document.getElementById('imgCompressionSave')?.addEventListener('mousedown', async (e) => {
-        await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, true, true);
+        await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, true);
+        resetImgCompressionFields();
     });
 
 }
