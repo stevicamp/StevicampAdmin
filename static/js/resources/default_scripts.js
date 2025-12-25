@@ -1089,6 +1089,9 @@ async function showModal(itemId) // Show modal is used so when navigating trough
 
     document.getElementById("app").style.overflow = "hidden"; // hide the overflow for the app container so it is not triggered while the modal is open
 
+    document.getElementById('arrow-leftSlideImg')?.addEventListener('click', async () => { await toggleSlideImg(-1) }); // The img slide left button
+    document.getElementById('arrow-rightSlideImg')?.addEventListener('click', async () => { await toggleSlideImg(1) }); // The img slide right button
+
 }
 
 
@@ -1219,8 +1222,14 @@ async function toggleSlideImg(n) {
     //   document.getElementById("imgCount").innerHTML = '0/0'; // Show 0/0 when no image
     // }
     updateViewImageIndexIndication();
-    resetImgCompressionFields(); // Reset the fields and the rotation variable on img change
-    await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
+
+
+    if (window.location.pathname == "/Add" || window.location.pathname == "/Edit") // Only in Add or Edit View otherwise can not find the fields undefined
+    {
+        resetImgCompressionFields(); // Reset the fields and the rotation variable on img change
+        await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
+    }
+
 }
 
 function updateViewImageIndexIndication() {
@@ -1269,15 +1278,9 @@ function imgSlideNavigation(index) // Not working to navigate to specific image 
 
 function removeViewSessionElements() {
     removeElementsByClassName('slide'); // Remove image elements of specific item on close modal
-
-    if (document.getElementById("imgCount") !== null) {
-        document.getElementById("imgCount").remove(); // Remove image count element of specific item on close modal
-    }
-    // if( document.getElementById("img-preview-container") !== null)
-    // {
-    //     document.getElementById("img-preview-container").remove(); // Remove Remove the element so that it is reseted in the next view
-    // }
-
+    // document.getElementById("imgCount")?.remove(); // Remove image count element of specific item on close modal
+    document.getElementsByClassName("img-preview-container")[0]?.remove(); // Remove Remove the element so that it is reseted in the next view
+     slideImgIndex = 0; // So that the imgCount is not lagging - otherwise there is a bug. When opening the item going to second image, then edit and the count shows img 2, but is viewing img on in the edit mode
 }
 
 // Used to remove image elements so the about slide can work - otherwise it interfers - this is used on close modal
@@ -2762,8 +2765,7 @@ let rotatedStep = 0; // 0,1,2,3 → 0°, 90°, 180°, 270°
 
 async function rotateBitmapImg90deg(bitmap, applyPrevRotation) {
 
-    if(!applyPrevRotation)
-    { 
+    if (!applyPrevRotation) {
         // const bitmap = await createImageBitmap(blobImg); // Decode the Blob/File into an ImageBitmap (fast, off-thread decoding)
         rotatedStep = (rotatedStep + 1) % 4; // 0→3 cycling // Modulus 0%4=0; 1%4=1; 4%4=0; 5%4=1; // So that it is between 0-3 // Prepare for the next - // Increase rotation step and keep it between 0–3 // 0 = 0°, 1 = 90°, 2 = 180°, 3 = 270°
     }
@@ -2798,7 +2800,7 @@ async function rotateBitmapImg90deg(bitmap, applyPrevRotation) {
 
 }
 
- 
+
 
 
 
@@ -2813,8 +2815,7 @@ async function compressImage(blobImg, newHeight, fromat, percent, smoothing, rot
     if (rotate) {
         bitmap = await rotateBitmapImg90deg(bitmap, false); // The rotated image as bitmap 
     }
-    else if (rotatedStep > 0) 
-    {
+    else if (rotatedStep > 0) {
         bitmap = await rotateBitmapImg90deg(bitmap, true); // Apply rotation from previouse time if there is no rotation know
     }
 
@@ -2859,7 +2860,7 @@ async function compressImage(blobImg, newHeight, fromat, percent, smoothing, rot
 
 
 function resetImgCompressionFields() {
-     
+
     rotatedStep = 0; // Reset the rotation step
     document.getElementById('imgCompressionSlider').value = 100;
     document.getElementById('imgSaturrationSlider').value = 100;

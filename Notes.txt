@@ -1,8 +1,8 @@
 Stevicamp
 
 
-
-
+1. Adding item opens carVAN CATEGORY VERY SLOW
+................
  1. Bug on opening imgpicker and closing it without picking image - all images disapear
 ........
 1. THere is bug in delete image in edit view - refused to select from the picker the same image if it is removed
