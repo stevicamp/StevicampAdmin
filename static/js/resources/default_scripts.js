@@ -1817,29 +1817,29 @@ function initTranlate() {
 }
 
 
-let imgSrcArray = [];
-// For The Image picker ......................................................................
-async function handleImages() {
+// let imgSrcArray = [];
+// // For The Image picker ......................................................................
+// async function handleImages() {
+// // Can not chose again deleted image, this is why we need to use the localEditArray instead of imgPicker.Files
+//     let imgPrevContainer = document.getElementById('previewImgHolder');
 
-    let imgPrevContainer = document.getElementById('previewImgHolder');
+//     let imgPicker = document.getElementById('imgPicker');
 
-    let imgPicker = document.getElementById('imgPicker');
+//     let imgHtml = '';
+//     let imgSrc = '';
 
-    let imgHtml = '';
-    let imgSrc = '';
+//     //    imgPrevContainer.innerHTML = ""; // Earease if there are old images
 
-    //    imgPrevContainer.innerHTML = ""; // Earease if there are old images
+//     for (let i = 0; i < imgPicker.files.length; i++) {
+//         imgSrc = window.URL.createObjectURL(imgPicker.files[i]);
+//         // imgSrcArray.push(imgSrc); // Add the generated img url
+//         imgHtml += `<img class="slide" src="${imgSrc}">`;
+//     }
 
-    for (let i = 0; i < imgPicker.files.length; i++) {
-        imgSrc = window.URL.createObjectURL(imgPicker.files[i]);
-        // imgSrcArray.push(imgSrc); // Add the generated img url
-        imgHtml += `<img class="slide" src="${imgSrc}">`;
-    }
+//     imgPrevContainer.innerHTML += imgHtml; // Add the image as html to the container to display it
 
-    imgPrevContainer.innerHTML += imgHtml; // Add the image as html to the container to display it
-
-    await toggleSlideImg(0); // Refresh the image holder
-}
+//     await toggleSlideImg(0); // Refresh the image holder
+// }
 
 
 
@@ -2476,7 +2476,7 @@ async function imgPickerHandler() {
     let currentUrlPath = window.location.pathname; // The current path - ex. Edit or Add
 
     if (currentUrlPath == "/Add") {
-
+         await imgPickerImagesToLocalArrEdit(); // The img picker images to the local array
     }
     else if (currentUrlPath == "/Edit") {
         await imgPickerImagesToLocalArrEdit(); // The img picker images to the local array
@@ -2484,7 +2484,7 @@ async function imgPickerHandler() {
 
     }
 
-    await handleImages(); // Add & show the images in the imgView container
+    // await handleImages(); // Add & show the images in the imgView container // This one is moved to   await imgPickerImagesToLocalArrEdit();
 }
 
 
@@ -2492,10 +2492,14 @@ async function imgPickerHandler() {
 
 
 
-// The images from the picker to the local array
+// The images from the picker to the local array - And add the same images to the previewImgHolder so that the user can see them isntead of previiously using the blob create link. Because when deletingg an image It can not be chosen aain from the file explorer
 async function imgPickerImagesToLocalArrEdit() {
     let imgPicker = document.getElementById('imgPicker');
     let readerFile;
+
+    let imgPrevContainer = document.getElementById('previewImgHolder');
+    let imgHtml = '';
+    
 
     for (let i = 0; i < imgPicker.files.length; i++) {
         readerFile = await readFileAsync(imgPicker.files[i]); // Read Img as base 64 from async reader
@@ -2503,7 +2507,15 @@ async function imgPickerImagesToLocalArrEdit() {
         editItemImgArr.push(readerFile); // Image base 64 img push to array
         console.log('ArrayLoclaBase64:' + editItemImgArr);
         // editItemImgArr.push(window.URL.createObjectURL(imgPicker.files[i])); // Image local src push to array
+
+        imgHtml += `<img class="slide" src="${readerFile}">`;
+        
     }
+
+    imgPicker.value = ''; // Clear the imgPicker - so that if img is deleted tht there is posibility to add the image to the array again otherwise it can not chose the image since it remembers the name of the selected image, this image is in the editLocalArray and then ex. removed, but it is still found selected in the img picker
+
+    imgPrevContainer.innerHTML += imgHtml; // Add the image as html to the container to display it
+    await toggleSlideImg(0); // Refresh the image holder
 }
 
 
@@ -2929,7 +2941,7 @@ async function executeCompression(newHeight, extension, rotate, save) {
     document.getElementById('imgSizeLabel').textContent = 'Curr. Size:' + (imgCompressed.length * 0.75 / 1024).toFixed(1) + 'kb'; // Update the label that shows the image size. 6/8 = 0.75 also handles the padding of base64 string. there is == etc. - 1,024 Bytes: 1 Kilobyte (KB).
     //    document.getElementById('imgOriginalSizeLabel').textContent = 'Orig. Size:' + img.size.toLocaleString() + 'kb'; // The original size
     document.getElementById('imgOriginalSizeLabel').textContent = 'Orig. Size:' + (img.size / 1048576).toFixed(2) + 'MB'; // The original size - from bytes to MB - 1,048,576 Bytes = 1 Megabyte (MB). 
-    document.getElementById('imgFileName').textContent = 'File Name:' + img.name;
+    // document.getElementById('imgFileName').textContent = 'File Name:' ;
     document.getElementById('imgSaturationLabel').textContent = saturation + '%'; // The satiration value to the user
     document.getElementById('imgContrastLabel').textContent = contrast + '%'; // The satiration value to the user
     document.getElementById('imgBrightnessLabel').textContent = brightness + '%'; // The satiration value to the user

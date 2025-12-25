@@ -2,11 +2,11 @@ Stevicamp
 
 
 
-1. There is a bug when editing and image instead of removing the old image and using the new edited image both are in github
+#1. There is a bug when editing and image instead of removing the old image and using the new edited image both are in github
 .......
-1. Adding item opens carVAN CATEGORY VERY SLOW
+# Now not - 1. Adding item opens carVAN CATEGORY VERY SLOW
 ................
- 1. Bug on opening imgpicker and closing it without picking image - all images disapear
+# Now not - 1. Bug on opening imgpicker and closing it without picking image - all images disapear
 ........
 1. THere is bug in delete image in edit view - refused to select from the picker the same image if it is removed
 -------------------
