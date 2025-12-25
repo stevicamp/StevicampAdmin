@@ -30,6 +30,7 @@ let imgCompressionExtensionGlobal = 'webp';
 
 
 
+
 function decodeBase64Unicode(base64) {
     const text = atob(base64);
     const length = text.length;
@@ -2550,7 +2551,11 @@ async function deleteCurrentImg() {
 
     if (editItemImgArr.length > 0) // If the array is not empty - since if there are no images and delete is pressed undefined is pushed to the array
     {
-        deleteImagesEditArr.push(editItemImgArr[slideImgIndex]); // Add the deleted image to the array that holds the deleted images // they will be deleted when the save button is presses in the methos saveEdit
+         if(editItemImgArr[slideImgIndex].startsWith('http')) // If link - most likely jsdelivr link
+        {
+            deleteImagesEditArr.push(editItemImgArr[slideImgIndex]); // Add the deleted image to the array that holds the deleted images // they will be deleted when the save button is presses in the methos saveEdit
+        }
+        // deleteImagesEditArr.push(editItemImgArr[slideImgIndex]); // Add the deleted image to the array that holds the deleted images // they will be deleted when the save button is presses in the methos saveEdit
         editItemImgArr.splice(slideImgIndex, 1); // Remove the deleted image from the local array
 
         console.log('Arr Delete: ---------------------' + editItemImgArr);
@@ -2910,6 +2915,10 @@ async function executeCompression(newHeight, extension, rotate, save) {
     }
 
     if (save !== undefined && save === true) {
+        if(editItemImgArr[slideImgIndex].startsWith('http'))
+        {
+          deleteImagesEditArr.push(editItemImgArr[slideImgIndex]);
+        }
         editItemImgArr[slideImgIndex] = imgCompressed; // Assign it to the local array so that the actual edited compressed image is in the array
     }
 
@@ -2943,28 +2952,28 @@ function imgCompressionEventDeclaraton() {
 
 
     // 2. The compression slider
-    document.getElementById('imgCompressionSlider')?.addEventListener('input', async (e) => {
+    document.getElementById('imgCompressionSlider')?.addEventListener('input', async () => {
 
         await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
     });
 
 
     // 3. The saturation slider
-    document.getElementById('imgSaturrationSlider')?.addEventListener('input', async (e) => {
+    document.getElementById('imgSaturrationSlider')?.addEventListener('input', async () => {
 
         await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
     });
 
 
     // 4. The Contrast slider
-    document.getElementById('imgContrastSlider')?.addEventListener('input', async (e) => {
+    document.getElementById('imgContrastSlider')?.addEventListener('input', async () => {
 
         await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
     });
 
 
     // 5. The Brightness slider
-    document.getElementById('imgBrightnessSlider')?.addEventListener('input', async (e) => {
+    document.getElementById('imgBrightnessSlider')?.addEventListener('input', async () => {
 
         await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
     });
@@ -2972,17 +2981,17 @@ function imgCompressionEventDeclaraton() {
 
 
     // 6. The checkbox
-    document.getElementById('enableSmoothCheckbox')?.addEventListener('change', async (e) => {
+    document.getElementById('enableSmoothCheckbox')?.addEventListener('change', async () => {
         await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
     });
 
     // 7. Img Rotate
-    document.getElementById('imgRotate')?.addEventListener('mousedown', async (e) => {
+    document.getElementById('imgRotate')?.addEventListener('mousedown', async () => {
         await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, true, false);
     });
 
     // 8. Img Save
-    document.getElementById('imgCompressionSave')?.addEventListener('mousedown', async (e) => {
+    document.getElementById('imgCompressionSave')?.addEventListener('mousedown', async () => {
         await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, true);
         resetImgCompressionFields();
     });
