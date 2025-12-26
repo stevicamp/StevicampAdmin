@@ -23,6 +23,11 @@ export async function executeViewScriptAsync() {
 }
 
 
+// Used to execute script before injecting the html to the app container
+export async function executeCommonViewScriptBeforeHtmlInjAsync()
+{ 
+     removeViewSessionElements(); // Clear the the local common array for add and edit so that there is no mixing also clear som fields
+}
 
 
 

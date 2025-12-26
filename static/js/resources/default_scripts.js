@@ -14,7 +14,7 @@ var prevUrl = "";
 var popStateUrl = false;
 
 
-var editItemImgArr = []; // Used to hold the links of add and edit view // Also used to display the images in the view image container
+var editItemImgArr = []; // Used to hold the links of add and edit view // Also used to display the images in the view image container // Also now sed for Add mode 
 
 let deleteImagesEditArr = []; // Used to hold the deleted images links // it is used when editSave button is pressed loops the images and deletes them before saving the db. 
 
@@ -1280,8 +1280,11 @@ function imgSlideNavigation(index) // Not working to navigate to specific image 
 function removeViewSessionElements() {
     removeElementsByClassName('slide'); // Remove image elements of specific item on close modal
     // document.getElementById("imgCount")?.remove(); // Remove image count element of specific item on close modal
+ 
     document.getElementsByClassName("img-preview-container")[0]?.remove(); // Remove Remove the element so that it is reseted in the next view
-     slideImgIndex = 0; // So that the imgCount is not lagging - otherwise there is a bug. When opening the item going to second image, then edit and the count shows img 2, but is viewing img on in the edit mode
+
+    slideImgIndex = 0; // So that the imgCount is not lagging - otherwise there is a bug. When opening the item going to second image, then edit and the count shows img 2, but is viewing img on in the edit mode
+    editItemImgArr.length = 0; // Reset the array so that nothing from other view be in it. Otherwise there is a problem with micing thr view and Add view img preview container
 }
 
 // Used to remove image elements so the about slide can work - otherwise it interfers - this is used on close modal
@@ -2229,7 +2232,8 @@ async function AddSave() {
     itemId = formData.id = createId(itemName); // Creating the id
 
 
-    let imagesJsDelivrPathArray = await handleItemImages(itemId, type);// Upload Images and return jsDelivr path for the images
+    // let imagesJsDelivrPathArray = await handleItemImages(itemId, type);// Upload Images and return jsDelivr path for the images
+    let imagesJsDelivrPathArray = await handleItemImagesEdit(itemId, type); // Upload Images and return jsDelivr path for the images // Used also for edit
 
     formData.photos = imagesJsDelivrPathArray; // Add the photos array to the json object that will be uploaded
     formData.id = itemId;
@@ -2326,6 +2330,7 @@ async function saveItem(e) {
     let currentUrlPath = window.location.pathname; // The current path - ex. Edit or Add
 
     if (currentUrlPath == "/Add") {
+        removeViewSessionElements();
         await AddSave(); // Add save logic
     }
     else if (currentUrlPath == "/Edit") {
@@ -2415,30 +2420,30 @@ async function handleItemImagesEdit(itemId, type) {
 
 
 
-// Handle local images - read as base 64 and upload ---------------------------------------
-async function handleItemImages(itemId, type)// Used for Add item 
-{
-    let images = document.getElementById('imgPicker').files; // Get the images from the "input with type="file""
-    let githubFilePathForImg = "";
+// // Handle local images - read as base 64 and upload ---------------------------------------
+// async function handleItemImages(itemId, type)// Used for Add item 
+// {
+//     let images = document.getElementById('imgPicker').files; // Get the images from the "input with type="file""
+//     let githubFilePathForImg = "";
 
-    let imagesPathArray = [];
+//     let imagesPathArray = [];
 
-    let okResponse = true;
-    for (let v = 0; v < images.length; v++) {
-        if (okResponse) {
-            let imgExtension = '.' + images[v].name.slice((Math.max(0, images[v].name.lastIndexOf(".")) || Infinity) + 1); // Get the file extension of the image - .jpg, .png
-            githubFilePathForImg = `resources/img/${type}/${itemId}/${itemId}--${[v + 1] + '-' + Date.now() + imgExtension}`; // OLD ---> Ex. resources/img/caravans/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z-1
-            imagesPathArray.push(convertToJsDelivrPath(githubFilePathForImg)); // Add the path to the array that will hold all paths. It is late used to get js delivr paths and then add it to the json object before sending to the server
-            okResponse = await readImgAsBase64AndUpload(images[v], `${[v + 1]} от ${[images.length]}`, githubFilePathForImg);
-        }
-        else {
-            // Here code to remove the last added images................
-            // Need to have variables to remember the name and path, then use delete function from CRUF file to delete each image
-        }
-        // await readImgAsBase64AndUpload(images[v], `${[v+1]} от ${[images.length]}`, githubFilePathForImg); 
-    }
-    return imagesPathArray;
-}
+//     let okResponse = true;
+//     for (let v = 0; v < images.length; v++) {
+//         if (okResponse) {
+//             let imgExtension = '.' + images[v].name.slice((Math.max(0, images[v].name.lastIndexOf(".")) || Infinity) + 1); // Get the file extension of the image - .jpg, .png
+//             githubFilePathForImg = `resources/img/${type}/${itemId}/${itemId}--${[v + 1] + '-' + Date.now() + imgExtension}`; // OLD ---> Ex. resources/img/caravans/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z-1
+//             imagesPathArray.push(convertToJsDelivrPath(githubFilePathForImg)); // Add the path to the array that will hold all paths. It is late used to get js delivr paths and then add it to the json object before sending to the server
+//             okResponse = await readImgAsBase64AndUpload(images[v], `${[v + 1]} от ${[images.length]}`, githubFilePathForImg);
+//         }
+//         else {
+//             // Here code to remove the last added images................
+//             // Need to have variables to remember the name and path, then use delete function from CRUF file to delete each image
+//         }
+//         // await readImgAsBase64AndUpload(images[v], `${[v+1]} от ${[images.length]}`, githubFilePathForImg); 
+//     }
+//     return imagesPathArray;
+// }
 
 
 
@@ -2471,12 +2476,17 @@ function validateImgPickerFilesOnlyImg() {
 
 async function imgPickerHandler() {
 
-    await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false); // The compression tools options, saturation, rotation etc.
+    if (editItemImgArr[slideImgIndex] != null) // Only if not null or undefined - if in add view mode then it will be null since there are no images in add mode when opening it
+    {
+        await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false); // The compression tools options, saturation, rotation etc.
+    }
+
+
     validateImgPickerFilesOnlyImg(); // Validate if images else remove from the img picker
     let currentUrlPath = window.location.pathname; // The current path - ex. Edit or Add
 
     if (currentUrlPath == "/Add") {
-         await imgPickerImagesToLocalArrEdit(); // The img picker images to the local array
+        await imgPickerImagesToLocalArrEdit(); // The img picker images to the local array
     }
     else if (currentUrlPath == "/Edit") {
         await imgPickerImagesToLocalArrEdit(); // The img picker images to the local array
@@ -2499,7 +2509,7 @@ async function imgPickerImagesToLocalArrEdit() {
 
     let imgPrevContainer = document.getElementById('previewImgHolder');
     let imgHtml = '';
-    
+
 
     for (let i = 0; i < imgPicker.files.length; i++) {
         readerFile = await readFileAsync(imgPicker.files[i]); // Read Img as base 64 from async reader
@@ -2509,7 +2519,7 @@ async function imgPickerImagesToLocalArrEdit() {
         // editItemImgArr.push(window.URL.createObjectURL(imgPicker.files[i])); // Image local src push to array
 
         imgHtml += `<img class="slide" src="${readerFile}">`;
-        
+
     }
 
     imgPicker.value = ''; // Clear the imgPicker - so that if img is deleted tht there is posibility to add the image to the array again otherwise it can not chose the image since it remembers the name of the selected image, this image is in the editLocalArray and then ex. removed, but it is still found selected in the img picker
@@ -2563,7 +2573,7 @@ async function deleteCurrentImg() {
 
     if (editItemImgArr.length > 0) // If the array is not empty - since if there are no images and delete is pressed undefined is pushed to the array
     {
-         if(editItemImgArr[slideImgIndex].startsWith('http')) // If link - most likely jsdelivr link
+        if (editItemImgArr[slideImgIndex].startsWith('http')) // If link - most likely jsdelivr link
         {
             deleteImagesEditArr.push(editItemImgArr[slideImgIndex]); // Add the deleted image to the array that holds the deleted images // they will be deleted when the save button is presses in the methos saveEdit
         }
@@ -2927,9 +2937,8 @@ async function executeCompression(newHeight, extension, rotate, save) {
     }
 
     if (save !== undefined && save === true) {
-        if(editItemImgArr[slideImgIndex].startsWith('http'))
-        {
-          deleteImagesEditArr.push(editItemImgArr[slideImgIndex]);
+        if (editItemImgArr[slideImgIndex].startsWith('http')) {
+            deleteImagesEditArr.push(editItemImgArr[slideImgIndex]);
         }
         editItemImgArr[slideImgIndex] = imgCompressed; // Assign it to the local array so that the actual edited compressed image is in the array
     }

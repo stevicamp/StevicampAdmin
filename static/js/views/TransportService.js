@@ -27,3 +27,8 @@ export async function executeViewScriptAsync() {
 
 
 
+
+// Used to execute script before injecting the html to the app container
+export async function executeCommonViewScriptBeforeHtmlInjAsync()
+{ 
+}

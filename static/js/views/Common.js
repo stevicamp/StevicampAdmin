@@ -31,6 +31,12 @@ export const setTitle = (title, img) => {
 
 }
 
+// Used to execute script before injecting the html to the app container
+export async function executeCommonViewScriptBeforeHtmlInjAsync()
+{ 
+}
+
+
 async function executeCommonViewScriptAsync()
 {
     // slideImgIndex = 0; // Reset on every view chaange the image index for the image preview container - the container the slide with the images.

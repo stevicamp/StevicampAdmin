@@ -56,7 +56,14 @@ export async function getHtmlAsync() {
 }
 
 
-  
+
+export async function executeCommonViewScriptBeforeHtmlInjAsync()
+{ 
+     removeViewSessionElements(); // Clear the the local common array for add and edit so that there is no mixing also clear som fields
+}
+
+
+
 
 // View Script -------------------------------------------------
 export async function executeViewScriptAsync() {
