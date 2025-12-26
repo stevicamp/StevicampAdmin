@@ -1280,7 +1280,7 @@ function imgSlideNavigation(index) // Not working to navigate to specific image 
 function removeViewSessionElements() {
     removeElementsByClassName('slide'); // Remove image elements of specific item on close modal
     // document.getElementById("imgCount")?.remove(); // Remove image count element of specific item on close modal
- 
+
     document.getElementsByClassName("img-preview-container")[0]?.remove(); // Remove Remove the element so that it is reseted in the next view
 
     slideImgIndex = 0; // So that the imgCount is not lagging - otherwise there is a bug. When opening the item going to second image, then edit and the count shows img 2, but is viewing img on in the edit mode
@@ -2330,8 +2330,8 @@ async function saveItem(e) {
     let currentUrlPath = window.location.pathname; // The current path - ex. Edit or Add
 
     if (currentUrlPath == "/Add") {
-        removeViewSessionElements();
         await AddSave(); // Add save logic
+        // removeViewSessionElements();
     }
     else if (currentUrlPath == "/Edit") {
         // Edit is not working properly - instead of editing it copies the item edits it and add it to the db, but the old item is still in the db
@@ -2592,7 +2592,7 @@ async function deleteCurrentImg() {
         // editItemImgArr.splice(slideImgIndex, 1); // Remove the current image - based on the current index in the view from the local array holding the img links
         handleImagesEditView(true, slideImgIndex); // Use the local array to populate the img view container
 
-
+        // resetImgCompressionFields(); // Clear the img compression fields
         // slideImgIndex = slideImgIndex-1; // Change the index of the currrent image since we are deleting one image
 
         // toggleSlideImg(-1);
