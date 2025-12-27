@@ -1944,7 +1944,7 @@ async function caravansHtmlTemplateFields() {
 
     ${imgSlideArrowButtons()}
     
-    <a class="item_share_button" style="margin: auto auto 5px auto; background-image: url('static/img/icons/del-img.png');" href="javascript:deleteCurrentImg();" title="Изтриване на снимката!!!"></a>
+    <a class="item_share_button" style="position: absolute; left:0; right:0; margin-inline: auto; bottom: 25px; background-image: url('static/img/icons/del-img.png');" href="javascript:deleteCurrentImg();" title="Изтриване на снимката!!!"></a>
   <span style="margin: auto;" id="imgCount"></span> 
     </div>
    
