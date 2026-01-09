@@ -1,8 +1,8 @@
 Stevicamp
 
-1. After addin and deletingitem it did not delete the image? - Not sure what was the problem, now it works
+#1. After adding and deletingitem it did not delete the image? - Not sure what was the problem, now it works
 .........
-1. There is a bug when saving add caravans - there is no image upload
+#1. There is a bug when saving add caravans - there is no image upload
 ....................
 1. Maybe convertinf from base64 to blob for the edit and add view
 ...................

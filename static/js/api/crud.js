@@ -13,7 +13,7 @@
 // async function getDbAsync() {
 //     if (base_db == null) {
         
-//        const sha = await getFileSha(githubUser, githubRepo, githubFilePathDb, githubToken);
+//        const sha = await getFileShaAsync(githubUser, githubRepo, githubFilePathDb, githubToken);
 // console.log('DB SHA: '+sha); 
 // console.log('DB Path: '+githubFilePathDb);
 // console.log('DB User: '+githubUser);
@@ -88,7 +88,7 @@ async function getDbAsync() {
 
 //`https://corsproxy.io/?url=https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePathDb}`,
 // Function to get the file's SHA
-async function getFileSha(githubUser, githubRepo, githubFilePathDb, githubToken) {
+async function getFileShaAsync(githubUser, githubRepo, githubFilePathDb, githubToken) {
   try {
     const response = await fetch(
       `https://api.github.com/repos/${githubUser}/${githubRepo}/contents/${githubFilePathDb}`,
@@ -144,7 +144,7 @@ async function updateJsonFileAsync(githubUser, githubRepo, githubFilePathDb, git
 
     loadingMsg('Запазва се...');
     // newContent = document.getElementById("developerInput").value;
-    const sha = await getFileSha(githubUser, githubRepo, githubFilePathDb, githubToken);
+    const sha = await getFileShaAsync(githubUser, githubRepo, githubFilePathDb, githubToken);
     // const contentBase64 = btoa(JSON.stringify(encodeURI(content), null, 2)); // EncodeUri because of non latin character later in db on fetch decodeUri
     const contentBase64 =  btoa(unescape(encodeURIComponent(content))); // EncodeUri because of non latin character later in db on fetch decodeUri
     // const contentBase64 =  btoa(unescape(encodeURIComponent(content))); // EncodeUri because of non latin character later in db on fetch decodeUri
@@ -199,7 +199,7 @@ async function deleteFileAsync(githubUser, githubRepo, githubPathFileToDelete, g
   try {
 
     loadingMsg('Изтрива се...');
-    const sha = await getFileSha(githubUser, githubRepo, githubPathFileToDelete, githubToken);
+    const sha = await getFileShaAsync(githubUser, githubRepo, githubPathFileToDelete, githubToken);
 
     const body = 
     {
@@ -253,7 +253,7 @@ async function uploadImgAsync(githubUser, githubRepo, githubFilePathImg, githubT
     console.log('IMG:');
     loadingMsg(`Запазва се снимка ${imgComment}...`);
 
-    // const sha = await getFileSha(githubUser, githubRepo, githubFilePathDb, githubToken);
+    // const sha = await getFileShaAsync(githubUser, githubRepo, githubFilePathDb, githubToken);
 
     const body = {
       message: `${msg}`,
