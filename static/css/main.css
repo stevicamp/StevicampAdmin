@@ -513,8 +513,7 @@ html {
 
 /* ----------Content holder conatainer, all items----------- */
 .content_container_holder {
-    /* position: relative; */
-
+    /* position: relative; */ 
     width: 100%;
     height: 100%;
     box-sizing: border-box;
@@ -891,6 +890,7 @@ h3 {
 
 
 .imgCompressionContainer {
+    position: absolute;
     display: inline-flex;
     flex-direction: row;
     position: relative;
@@ -909,7 +909,7 @@ h3 {
 .row {
     position: relative;
     min-width: 100px;
-    width: 100%;
+    width: 100%; 
     max-width: none; 
     flex-shrink: 0;
     

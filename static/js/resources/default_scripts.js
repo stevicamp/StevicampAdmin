@@ -1944,9 +1944,9 @@ async function caravansHtmlTemplateFields() {
 
     ${imgSlideArrowButtons()}
     
-    <a class="item_share_button" style="position: absolute; left:0; right:0; margin-inline: auto; bottom: 25px; background-image: url('static/img/icons/del-img.png');" href="javascript:deleteCurrentImg();" title="Изтриване на снимката!!!"></a>
-  <span style="margin: auto;" id="imgCount"></span> 
-    </div>
+      <button id="rotateImgView" class="item_share_button" style="position: absolute; left:100px; right:0; margin-inline: auto; bottom: 25px; cursor: pointer; padding: 0; border: 0; outline: none; background-color: transparent; background-image: url('static/img/icons/rotate.png');"></button>
+     <a class="item_share_button" style="position: absolute; left:0; right:0; margin-inline: auto; bottom: 25px; background-image: url('static/img/icons/del-img.png');" href="javascript:deleteCurrentImg();" title="Изтриване на снимката!!!"></a>
+    <span style="margin: auto;" id="imgCount"></span></div> 
    
     
    <div id="modalItemDetailsEdit" class="modalItemDetails" style="max-width: 400px;" tabindex="0">
@@ -2200,7 +2200,8 @@ async function loadAppropriateFields(itemTypePass) {
     }
     document.getElementById('arrow-leftSlideImg')?.addEventListener('click', async () => { await toggleSlideImg(-1) }); // The img slide left button
     document.getElementById('arrow-rightSlideImg')?.addEventListener('click', async () => { await toggleSlideImg(1) }); // The img slide right button
-
+    document.getElementById('rotateImgView')?.addEventListener('click', async () => { await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, true, false) }); // THe img rotate button
+   
 }
 
 // Generate Title ================================================================
@@ -3027,15 +3028,15 @@ function imgCompressionEventDeclaraton() {
 function imgCompressionHtml() {
     return `   <div class="imgCompressionContainer">
         
+    <span id="imgCompressionSliderLabel"></span>
         <input type="range" min="1" max="100" value="100" id="imgCompressionSlider">
-        <span id="imgCompressionSliderLabel"></span>
         <span id="imgSizeLabel"></span>
         <span id="imgOriginalSizeLabel"></span>
         <span id="imgSizeInPx"></span>
         <span id="imgFileName"></span>
-        <button id="imgRotate">Rotate</button>
-        <button id="imgCompressionSave">Save Image</button>
-
+        
+          <button id="imgRotate">Rotate</button>
+         <button id="imgCompressionSave">Save Image</button>
         <span id="imgSaturationLabel"></span>
         <input type="range" min="50" max="350" value="100" id="imgSaturrationSlider">
 
@@ -3049,3 +3050,6 @@ function imgCompressionHtml() {
         <input type="checkbox" id="enableSmoothCheckbox">
     </div>`;
 }
+
+        // <button id="imgRotate">Rotate</button>
+        // <button id="imgCompressionSave">Save Image</button>
