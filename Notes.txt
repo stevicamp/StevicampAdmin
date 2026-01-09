@@ -1,5 +1,13 @@
 Stevicamp
 
+SPA APP
+1. Different categories in differnet files + max 100 products per file - inplement dynamic scroll + buttons
+2. Images for every product in folder in gathered in a gategory folder.
+3. Spa without modules? or only with modules?
+
+.....
+1. Add timestamp and add loading message after the time is over remove the message and fetch the db from the github
+.......
 #1. After adding and deletingitem it did not delete the image? - Not sure what was the problem, now it works
 .........
 #1. There is a bug when saving add caravans - there is no image upload

@@ -1931,15 +1931,15 @@ async function caravansHtmlTemplateFields() {
 
 
     return `  
+     <div class="row">
      <div class="admin-content-holder modalItemContainer" tabindex="0" style="margin-top: 0;">
     <input id="imgPicker" type="file" accept="image/*;capture=camera" multiple="multiple">
     
- 
- ${imgCompressionHtml()}
- 
    <div class="img-preview-container">
-    <div style="width: 100%; height: 100%;" id="previewImgHolder"></div>   
-
+   
+    
+       <div style="width: 100%; height: 100%;" id="previewImgHolder"></div>   
+    
      
 
     ${imgSlideArrowButtons()}
@@ -2168,7 +2168,8 @@ async function caravansHtmlTemplateFields() {
 
        <button id="saveItemButton">Запази</button>
    </div>
-</div>`;
+</div> 
+${imgCompressionHtml()}</div>`;
 
 
 }
@@ -3024,7 +3025,7 @@ function imgCompressionEventDeclaraton() {
 // ---------IMG-Compression-Html--------------------------------------------------------------------------
 
 function imgCompressionHtml() {
-    return `   <div style="display:inline-table; max-width:100%; overflow-x: auto;">
+    return `   <div class="imgCompressionContainer">
         
         <input type="range" min="1" max="100" value="100" id="imgCompressionSlider">
         <span id="imgCompressionSliderLabel"></span>
