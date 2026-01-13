@@ -1931,7 +1931,7 @@ async function caravansHtmlTemplateFields() {
 
 
     return `  
-     <div class="row">
+    <div class="row">
      <div class="admin-content-holder modalItemContainer" tabindex="0" style="margin-top: 0;">
     <input id="imgPicker" type="file" accept="image/*;capture=camera" multiple="multiple">
     
@@ -2168,8 +2168,9 @@ async function caravansHtmlTemplateFields() {
 
        <button id="saveItemButton">Запази</button>
    </div>
-</div> 
-${imgCompressionHtml()}</div>`;
+   
+</div> ${imgCompressionHtml()}</div>
+`;
 
 
 }
@@ -2947,16 +2948,16 @@ async function executeCompression(newHeight, extension, rotate, save) {
 
     // currentSlide.src = imgCompressed; // Assign the image so to be shown to the user
     // editItemImgArr[slideImgIndex] = imgCompressed; // Assign it to the local array so that the actual edited compressed image is in the array
-    document.getElementById('imgCompressionSliderLabel').textContent = 'Compression to:' + compPercent + '%'; // Update the label that shows the percantage
+    document.getElementById('imgCompressionSliderLabel').textContent = 'Compr.:' + compPercent + '%'; // Update the label that shows the percantage
     //    document.getElementById('imgSizeLabel').textContent = Math.ceil(((imgCompressed.length*6)/8)/1024) + 'kb'; // Update the label that shows the image size
-    document.getElementById('imgSizeLabel').textContent = 'Curr. Size:' + (imgCompressed.length * 0.75 / 1024).toFixed(1) + 'kb'; // Update the label that shows the image size. 6/8 = 0.75 also handles the padding of base64 string. there is == etc. - 1,024 Bytes: 1 Kilobyte (KB).
+    document.getElementById('imgSizeLabel').textContent = 'Curr. Size:' + (imgCompressed.length * 0.75 / 1024).toFixed(1) + 'kb; '; // Update the label that shows the image size. 6/8 = 0.75 also handles the padding of base64 string. there is == etc. - 1,024 Bytes: 1 Kilobyte (KB).
     //    document.getElementById('imgOriginalSizeLabel').textContent = 'Orig. Size:' + img.size.toLocaleString() + 'kb'; // The original size
-    document.getElementById('imgOriginalSizeLabel').textContent = 'Orig. Size:' + (img.size / 1048576).toFixed(2) + 'MB'; // The original size - from bytes to MB - 1,048,576 Bytes = 1 Megabyte (MB). 
+    document.getElementById('imgOriginalSizeLabel').textContent = 'Orig. Size:' + (img.size / 1048576).toFixed(2) + 'MB; '; // The original size - from bytes to MB - 1,048,576 Bytes = 1 Megabyte (MB). 
     // document.getElementById('imgFileName').textContent = 'File Name:' ;
     document.getElementById('imgSaturationLabel').textContent = saturation + '%'; // The satiration value to the user
     document.getElementById('imgContrastLabel').textContent = contrast + '%'; // The satiration value to the user
     document.getElementById('imgBrightnessLabel').textContent = brightness + '%'; // The satiration value to the user
-    document.getElementById('imgSizeInPx').textContent = 'Compr. Pixels:......';
+    // document.getElementById('imgSizeInPx').textContent = 'Compr. Pixels:......';
 }
 
 
@@ -3028,27 +3029,53 @@ function imgCompressionEventDeclaraton() {
 function imgCompressionHtml() {
     return `   <div class="imgCompressionContainer">
         
-    <span id="imgCompressionSliderLabel"></span>
+        <div class="col">
+        <img src="static/img/icons/compress.png"/>
+        <span id="imgCompressionSliderLabel"></span>
         <input type="range" min="1" max="100" value="100" id="imgCompressionSlider">
+        </div>
+        
+        <div class="col">
+        <img src="static/img/icons/load.png"/>
         <span id="imgSizeLabel"></span>
         <span id="imgOriginalSizeLabel"></span>
+        </div>
+
+        <div class="col">
         <span id="imgSizeInPx"></span>
         <span id="imgFileName"></span>
+        </div>
         
-          <button id="imgRotate">Rotate</button>
-         <button id="imgCompressionSave">Save Image</button>
-        <span id="imgSaturationLabel"></span>
-        <input type="range" min="50" max="350" value="100" id="imgSaturrationSlider">
-
-        <span id="imgContrastLabel"></span>
-        <input type="range" min="90" max="120" value="100" id="imgContrastSlider">
-
-        <span id="imgBrightnessLabel"></span>
-        <input type="range" min="90" max="120" value="100" id="imgBrightnessSlider">
-
+        <div class="col">
+        <img src="static/img/icons/smoothing.png"/>
         <span>Smoothnes:</span>
         <input type="checkbox" id="enableSmoothCheckbox">
-    </div>`;
+        </div>
+
+        <div class="col">
+        <img src="static/img/icons/saturate.png"/>
+        <span id="imgSaturationLabel"></span>
+        <input type="range" min="50" max="350" value="100" id="imgSaturrationSlider">
+        </div>
+        
+        <div class="col">
+        <img src="static/img/icons/contrast.png"/>
+        <span id="imgContrastLabel"></span>
+        <input type="range" min="90" max="120" value="100" id="imgContrastSlider">
+        </div>
+
+        <div class="col">
+        <img src="static/img/icons/brightness.png"/>
+        <span id="imgBrightnessLabel"></span>
+        <input type="range" min="90" max="120" value="100" id="imgBrightnessSlider">
+        </div>
+
+        <div class="col">
+        <button id="imgRotate">Rotate</button>
+        <button id="imgCompressionSave">Save Image</button>
+        </div>   
+   
+        </div>`;
 }
 
         // <button id="imgRotate">Rotate</button>

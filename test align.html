@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            /* allows items to go to next row */
+        }
+
+        .item {
+            flex: 1 1 50%;
+            /* default: first two share the row */
+        }
+
+        .item:last-child {
+            flex-basis: 100%;
+            /* last item takes full row */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+  <div class="item" style="background-color: red;">1</div>
+  <div class="item" style="background-color: blue;">2</div>
+  <div class="item" style="background-color: lime;">3</div>
+</div>
+</body>
+
+</html>

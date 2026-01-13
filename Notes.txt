@@ -1,5 +1,11 @@
 Stevicamp
 
+
+
+1. Button that resetes the edits of an image.
+2. On change image if it is edited ask do you want to save it, on button press save whole product to db just save the edited image
+
+........
 SPA APP
 1. Different categories in differnet files + max 100 products per file - inplement dynamic scroll + buttons
 2. Images for every product in folder in gathered in a gategory folder.
