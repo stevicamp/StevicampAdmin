@@ -20,6 +20,8 @@ let deleteImagesEditArr = []; // Used to hold the deleted images links // it is 
 
 let imgCompressionSizeGlobal = 1000;
 
+let imgCompressionPercentFixed = 70;
+
 let imgCompressionExtensionGlobal = 'webp';
 // function b64DecodeUnicode(str) {
 //     // Going backwards: from bytestream, to percent-encoding, to original string.
@@ -2202,7 +2204,7 @@ async function loadAppropriateFields(itemTypePass) {
     document.getElementById('arrow-leftSlideImg')?.addEventListener('click', async () => { await toggleSlideImg(-1) }); // The img slide left button
     document.getElementById('arrow-rightSlideImg')?.addEventListener('click', async () => { await toggleSlideImg(1) }); // The img slide right button
     document.getElementById('rotateImgView')?.addEventListener('click', async () => { await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, true, false) }); // THe img rotate button
-   
+
 }
 
 // Generate Title ================================================================
@@ -2407,6 +2409,16 @@ async function handleItemImagesEdit(itemId, type) {
                 // okResponse = await readImgAsBase64AndUpload(editItemImgArr[v], `${[v + 1]} от ${[editItemImgArr.length]}`, githubFilePathForImg);
                 let dataBase64Img = editItemImgArr[v].split('base64,')[1]; // Remove "data:image/png;base64," so it is raw image base64
                 console.log('Base64Img wihtout base64,...:' + dataBase64Img);
+
+                // Check the size of the image if it is not reduced already by admin
+                if ((dataBase64Img.length * 0.75 / 1024).toFixed(1) > 165) // If size is over 165kb reduce the size
+                {
+                    let cleanBase64 = dataBase64Img.replace(/^data:[^;]+;base64,/, ""); // Remove the data: so to work with Unit8Array 
+                    let img = new Blob([Uint8Array.fromBase64(cleanBase64)]); // Base 64 to blob to use in the canvas
+                    dataBase64Img = await compressImage(img, imgCompressionSizeGlobal, imgCompressionExtensionGlobal, imgCompressionPercentFixed, true, false, 100, 100, 100);
+                    dataBase64Img = dataBase64Img.split('base64,')[1];
+                }
+
                 okResponse = await uploadImgAsync(githubUser, githubRepo, githubFilePathForImg, githubToken, dataBase64Img, 'Admin Uploaded Image from Edit mode: ', ''); // Upload the image to the server
 
                 editItemImgArr[v] = convertToJsDelivrPath(githubFilePathForImg); //After uploading the image assign the same index in the array with the jsdelivr image // Add the path to the array that will hold all paths. It is late used to get js delivr paths and then add it to the json object before sending to the server
@@ -2420,6 +2432,7 @@ async function handleItemImagesEdit(itemId, type) {
     }
     return editItemImgArr;
 }
+
 
 
 
@@ -3078,5 +3091,5 @@ function imgCompressionHtml() {
         </div>`;
 }
 
-        // <button id="imgRotate">Rotate</button>
-        // <button id="imgCompressionSave">Save Image</button>
+// <button id="imgRotate">Rotate</button>
+// <button id="imgCompressionSave">Save Image</button>
