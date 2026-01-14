@@ -5,7 +5,7 @@ import * as Common from "./Common.js"
 
 // VIEW HTML ---------------------------------------------------
 export async function getHtmlAsync() {
-    return `<div style="width: 100%; height: 88%; box-sizing: border-box; display: flex;" id="aproppiriateFieldsContainer"></div>`;
+    return `<div id="aproppiriateFieldsContainer" class="admin-content-holder modalItemContainer" tabindex="0"></div>`;
 }
 
 

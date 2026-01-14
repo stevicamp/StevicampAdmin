@@ -513,7 +513,7 @@ html {
 
 /* ----------Content holder conatainer, all items----------- */
 .content_container_holder {
-    /* position: relative; */ 
+    /* position: relative; */
     width: 100%;
     height: 100%;
     box-sizing: border-box;
@@ -777,9 +777,8 @@ h3 {
 
 /* Modal Images and item details ------------------------------------------------ */
 .modalItemContainer {
-    display: inline-flex;
     width: 100%;
-    max-height: 100%;
+    height: 100%;
 }
 
 
@@ -788,6 +787,11 @@ h3 {
     display: flex;
     flex-direction: column;
 
+}
+
+.modalItemContainer .imgCompressionContainer {
+    display: flex;
+    flex-direction: row;
 }
 
 .modalItemDetails {
@@ -883,12 +887,39 @@ h3 {
 
 .img-preview-container {
     position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%; 
+    width: 100%;
+    height: auto;
+}
+
+#aproppiriateFieldsContainer {
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: minmax(0, 1fr) auto;
+    overflow: hidden;
 }
 
 
+.imgCompressionContainer {
+    grid-column: 1 / -1;
+    padding: 0;
+    align-items: center;
+    height: 80px;
+    display: inline-flex;
+    flex-direction: row;
+    min-width: 100px;
+    width: 100%;
+    flex-shrink: 0;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    overflow-x: auto;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+/* 
 .imgCompressionContainer {
     position: absolute;
     display: inline-flex;
@@ -904,15 +935,15 @@ h3 {
     white-space: nowrap;
     overflow-x: auto; 
     margin-top: 20px;
-}
+} */
 
 .row {
     position: relative;
     min-width: 100px;
-    width: 100%; 
-    max-width: none; 
+    width: 100%;
+    max-width: none;
     flex-shrink: 0;
-    
+
     /*     
     display: flex; 
     flex-direction: column;
@@ -1224,53 +1255,6 @@ body {
 
 
 
-/* Media Styles ----------------------------------------------------------------- */
-/* LOGO (Hide Logo when the view is small [Mobile devices]) ======================================================================================================================================================*/
-.logo {
-    display: none;
-}
-
-/* If window size is over 400px, than show logo otherwise dont show */
-@media screen and (min-width: 400px) {
-    .logo {
-        display: block;
-    }
-}
-
-
-
-
-
-@media screen and (max-width: 450px) {
-
-    .modalItemContainer {
-        display: flex;
-        /* flex-direction: column; */
-        flex-flow: column;
-        /* flex-wrap: wrap; */
-        width: 100%;
-        max-height: 100%;
-    }
-
-    .img-preview-container {
-        height: 40%;
-    }
-
-    .modalItemDetails {
-        max-width: 100%;
-        min-width: 100%;
-        height: 60%;
-        width: 100%;
-        border: 2px solid rgb(78, 130, 182);
-        border-top: 3px solid rgb(78, 130, 182);
-
-        /* min-width: 100%; */
-        /* width: 100%; */
-        /* max-width: 100%; */
-
-    }
-}
-
 
 /* ----------------------- FOR ADMIN ------------------------------------------------- */
 
@@ -1457,4 +1441,57 @@ input#imgPicker::file-selector-button {
     margin-bottom: 5px;
     width: 25px;
 
+}
+
+
+
+
+
+
+
+/* Media Styles ----------------------------------------------------------------- */
+/* LOGO (Hide Logo when the view is small [Mobile devices]) ======================================================================================================================================================*/
+.logo {
+    display: none;
+}
+
+/* If window size is over 400px, than show logo otherwise dont show */
+@media screen and (min-width: 400px) {
+    .logo {
+        display: block;
+    }
+}
+
+
+
+
+
+@media screen and (max-width: 450px) {
+
+    .modalItemContainer {
+        display: flex !important; 
+        /* flex-direction: column; */
+        flex-flow: column !important;
+        /* flex-wrap: wrap; */
+        width: 100% !important;
+        max-height: 100% !important;
+    }
+
+    .img-preview-container {
+        height: 40% !important;
+    }
+
+    .modalItemDetails {
+        max-width: 100% !important;
+        min-width: 100% !important;
+        height: 60% !important;
+        width: 100% !important;
+        border: 2px solid rgb(78, 130, 182) !important;
+        border-top: 3px solid rgb(78, 130, 182) !important;
+
+        /* min-width: 100%; */
+        /* width: 100%; */
+        /* max-width: 100%; */
+
+    }
 }

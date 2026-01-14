@@ -6,30 +6,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            /* allows items to go to next row */
-        }
+        html, body {
+  height: 100%;
+  margin: 0;
+}
 
-        .item {
-            flex: 1 1 50%;
-            /* default: first two share the row */
-        }
+.layout {
+  height: 100vh;               /* Full viewport height */
+  display: grid;
+  grid-template-columns: 1fr 1fr;   /* Two parallel columns */
+  grid-template-rows: 1fr auto;     /* Top resizes, bottom fixed */
+}
 
-        .item:last-child {
-            flex-basis: 100%;
-            /* last item takes full row */
-        }
+.top {
+  overflow: auto;              /* Optional scrolling */
+}
+
+.left {
+  background: lightblue;
+}
+
+.right {
+  background: lightgreen;
+}
+
+.bottom {
+  grid-column: 1 / -1;         /* Span across both columns */
+  height: 80px;                /* Fixed height */
+  background: lightcoral;
+}
+
     </style>
 </head>
 
 <body>
-    <div class="container">
-  <div class="item" style="background-color: red;">1</div>
-  <div class="item" style="background-color: blue;">2</div>
-  <div class="item" style="background-color: lime;">3</div>
+   <div class="layout">
+  <div class="top left">Left</div>
+  <div class="top right">Right</div>
+  <div class="bottom">Bottom (fixed)</div>
 </div>
+
 </body>
 
 </html>

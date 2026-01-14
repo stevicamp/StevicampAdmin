@@ -1931,29 +1931,23 @@ async function caravansHtmlTemplateFields() {
 
     //  <img class="slide" src='${obj.photos[h]}'></img>
 
-
+ //<div class="admin-content-holder modalItemContainer" tabindex="0" style="margin-top: 0;">
     return `  
-    <div class="row">
-     <div class="admin-content-holder modalItemContainer" tabindex="0" style="margin-top: 0;">
+   
+    
     <input id="imgPicker" type="file" accept="image/*;capture=camera" multiple="multiple">
     
-   <div class="img-preview-container">
-   
-    
-       <div style="width: 100%; height: 100%;" id="previewImgHolder"></div>   
-    
      
-
-    ${imgSlideArrowButtons()}
-    
-      <button id="rotateImgView" class="item_share_button" style="position: absolute; left:100px; right:0; margin-inline: auto; bottom: 25px; cursor: pointer; padding: 0; border: 0; outline: none; background-color: transparent; background-image: url('static/img/icons/rotate.png');"></button>
-     <a class="item_share_button" style="position: absolute; left:0; right:0; margin-inline: auto; bottom: 25px; background-image: url('static/img/icons/del-img.png');" href="javascript:deleteCurrentImg();" title="Изтриване на снимката!!!"></a>
-    <span style="margin: auto;" id="imgCount"></span></div> 
+   <div class="img-preview-container">
+       <div style="width: 100%; height: 100%;" id="previewImgHolder"></div>   
+       ${imgSlideArrowButtons()}
+       <button id="rotateImgView" class="item_share_button" style="position: absolute; left:100px; right:0; margin-inline: auto; bottom: 25px; cursor: pointer; padding: 0; border: 0; outline: none; background-color: transparent; background-image: url('static/img/icons/rotate.png');"></button>
+       <a class="item_share_button" style="position: absolute; left:0; right:0; margin-inline: auto; bottom: 25px; background-image: url('static/img/icons/del-img.png');" href="javascript:deleteCurrentImg();" title="Изтриване на снимката!!!"></a>
+       <span style="margin: auto;" id="imgCount"></span>
+    </div> 
    
     
-   <div id="modalItemDetailsEdit" class="modalItemDetails" style="max-width: 400px;" tabindex="0">
-   
-   
+   <div id="modalItemDetailsEdit" class="modalItemDetails" tabindex="0">
    
          <h3 class="item-title"><img src="static/img/icons/caravan.png"><u></br>Категория каравани:</u></h3> 
        
@@ -2169,9 +2163,9 @@ async function caravansHtmlTemplateFields() {
          <span>Дата:</span><input id="dateInput" name="date" readonly> 
 
        <button id="saveItemButton">Запази</button>
+    
    </div>
-   
-</div> ${imgCompressionHtml()}</div>
+   ${imgCompressionHtml()}
 `;
 
 
