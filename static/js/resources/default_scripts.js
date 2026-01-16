@@ -1914,6 +1914,11 @@ function convertFormToJsonById(formId) {
             {
                 formData[element.name] = dateTodayIso();
             }
+
+            if(element.value == '')
+            {
+                formData[element.name] = '-';
+            }
         }
     }
 
