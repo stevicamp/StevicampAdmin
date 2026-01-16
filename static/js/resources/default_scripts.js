@@ -1994,6 +1994,7 @@ async function caravansHtmlTemplateFields() {
                 <option value="2018г."></option>
             </datalist
        <hr>
+
        <span><img src="static/img/icons/ruler.png"><b>Дължина:</b> </br><input id="caravanLength" name="length" placeholder="Дължинна" list="caravanLengthList"></span>
        <datalist id="caravanLengthList">
                 <option value="380см"></option>
@@ -2152,10 +2153,10 @@ async function caravansHtmlTemplateFields() {
        <hr class="hr-orange"> 
        <span><img src="static/img/icons/id.png"><b>ID:</b><input style="font-size:7px;" name="id"></span>
        <hr>
-       <span><img src="static/img/icons/keywords.png"></br><input id="keywords" name="keywords" placeholder="Ключови думи" value="каравана, каравани, karavana, karavani, caravans, caravan"></span>
+       <span><img src="static/img/icons/keywords.png"><b>Ключови думи:</b></br><input id="keywords" name="keywords" placeholder="Ключови думи" value="каравана, каравани, karavana, karavani, caravans, caravan"></span>
        <hr> 
        
-       <h3 class="item-title"><img src="static/img/icons/caravan.png"><u></br><input id="title" name="title" placeholder="Заглавие"></u></h3> 
+       <h3 class="item-title"><img src="static/img/icons/caravan.png"><b>Заглавие:</b><u></br><input id="title" name="title" placeholder="Заглавие"></u></h3> 
        <button id="generateCaravanTitleBtn">Генер. заглавие</button>
 
        <hr>
@@ -3081,7 +3082,6 @@ function imgCompressionHtml() {
         <button id="imgRotate">Rotate</button>
         <button id="imgCompressionSave">Save Image</button>
         </div>   
-   
         </div>`;
 }
 

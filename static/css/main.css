@@ -904,19 +904,16 @@ h3 {
 
 .imgCompressionContainer {
     grid-column: 1 / -1;
-    padding: 0;
     align-items: center;
-    height: 80px;
+    height: auto;
     display: inline-flex;
     flex-direction: row;
-    min-width: 100px;
     width: 100%;
     flex-shrink: 0;
     flex-wrap: nowrap;
     white-space: nowrap;
     overflow-x: auto;
     margin-top: 20px;
-    justify-content: center;
 }
 
 /* 
@@ -1429,17 +1426,18 @@ input#imgPicker::file-selector-button {
     display: flex;
     flex-direction: column;
     margin-right: 15px;
+    margin-top: 15px;
 }
 
 .col span {
-    font-size: 11PX;
+    font-size: 11px;
 }
 
 .col img {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 5px;
-    width: 25px;
+    width: 20px;
 
 }
 

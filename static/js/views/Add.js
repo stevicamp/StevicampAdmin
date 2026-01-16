@@ -47,7 +47,7 @@ export async function getHtmlAsync() {
                  <option value="equipment">9.Екипировка</option>
                </select>
            
-               <div style="width: 100%; height: 88%; box-sizing: border-box; display: flex;" id="aproppiriateFieldsContainer"></div> 
+               <div id="aproppiriateFieldsContainer" class="admin-content-holder modalItemContainer"></div> 
                </div> 
             `;
 
