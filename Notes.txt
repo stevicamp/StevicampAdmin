@@ -2,6 +2,9 @@ Stevicamp
 
 
 
+..........
+1. If needed ad edited date array to each item, so to display when the item was edited
+............
 1. Button that resetes the edits of an image.
 2. On change image if it is edited ask do you want to save it, on button press save whole product to db just save the edited image
 

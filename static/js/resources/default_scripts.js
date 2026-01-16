@@ -1909,6 +1909,11 @@ function convertFormToJsonById(formId) {
         {
             let element = childElements[i];
             formData[element.name] = element.value;
+            
+            if(element.name == 'date')
+            {
+                formData[element.name] = dateTodayIso();
+            }
         }
     }
 
@@ -1921,7 +1926,12 @@ function convertFormToJsonById(formId) {
 
 
 
-
+function dateTodayIso()
+{
+     var date = new Date(); // New Date object
+    
+    return date.toISOString().slice(0, -1);
+}
 
 
 
