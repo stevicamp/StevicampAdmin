@@ -111,6 +111,7 @@ export async function executeViewScriptAsync() {
 
 // Auto Load credentials - only works if in Add view
 autoLoadCredentials();
+
 }
 
 

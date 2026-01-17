@@ -15,7 +15,7 @@ export async function getHtmlAsync() {
 export async function executeViewScriptAsync() {
     Common.setTitle("Редактирай", "edit");
     await EditLogic();
-
+     await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false); // Used in order to populate the imgCOmpressionContainer with the relevant data on opening edit
     // Save item func in default scripts does not work since it is created acording to the add view it will not work here.
     // Image preview is not populated
     // If new image is added it will need to be uploaded
