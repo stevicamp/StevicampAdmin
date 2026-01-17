@@ -1909,15 +1909,13 @@ function convertFormToJsonById(formId) {
         {
             let element = childElements[i];
             formData[element.name] = element.value;
-            
-            if(element.name == 'date')
-            {
-                formData[element.name] = dateTodayIso();
+
+            if (element.value == '') {
+                formData[element.name] = '-';
             }
 
-            if(element.value == '')
-            {
-                formData[element.name] = '-';
+               if (element.name == 'date') {
+                formData[element.name] = dateTodayIso();
             }
         }
     }
@@ -1931,10 +1929,9 @@ function convertFormToJsonById(formId) {
 
 
 
-function dateTodayIso()
-{
-     var date = new Date(); // New Date object
-    
+function dateTodayIso() {
+    var date = new Date(); // New Date object
+
     return date.toISOString().slice(0, -1);
 }
 
@@ -1946,7 +1943,7 @@ async function caravansHtmlTemplateFields() {
 
     //  <img class="slide" src='${obj.photos[h]}'></img>
 
- //<div class="admin-content-holder modalItemContainer" tabindex="0" style="margin-top: 0;">
+    //<div class="admin-content-holder modalItemContainer" tabindex="0" style="margin-top: 0;">
     return `  
    
     
@@ -2700,27 +2697,31 @@ function createId(productName) {
 
 //:::::::::::::::::::::::::: DELETE :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
 async function deleteItemByItemLink(itemLink) {
-    // Here add - show modal are you sure you want to delete
-    let db = await getDbAsync(); // Get the db
-    let itemId = itemLink.split('?search=')[1]; // Get the item id from the item link
-    let rawItem = await recursiveSearchObj(db.items, itemId); // Find the raw item by using the id 
-    let item = Object.values(rawItem)[0][0]; // [0] = ex. "caravans" [0] = the first item in the array - basicaly it is only one because only one item at a time will be deleted
-    db['items'][`${item.category}`].splice(item.index, 1); // Remove the item from the local DB // keyword "delete" can be used too - but is a little different 
 
-    // Here loop all images photos and delete each one
+    if (confirm('Да се изтрие ли тази обява !!! \n' + itemLink) == true) {
+        // Here add - show modal are you sure you want to delete
+        let db = await getDbAsync(); // Get the db
+        let itemId = itemLink.split('?search=')[1]; // Get the item id from the item link
+        let rawItem = await recursiveSearchObj(db.items, itemId); // Find the raw item by using the id 
+        let item = Object.values(rawItem)[0][0]; // [0] = ex. "caravans" [0] = the first item in the array - basicaly it is only one because only one item at a time will be deleted
+        db['items'][`${item.category}`].splice(item.index, 1); // Remove the item from the local DB // keyword "delete" can be used too - but is a little different 
 
-    let updatedDbAsJson = JSON.stringify(db);
-    await updateJsonFileAsync(githubUser, githubRepo, githubFilePathDb, githubToken, updatedDbAsJson, `Admin - Deleted item in APP: ${item.id}`); // Update the DB so the deleted item is no longer in the remote db
-    await deleteItemImagesByLinks(item.photos); // Delete the images of the item that has to be deleted
+        // Here loop all images photos and delete each one
 
-    // #If image delete fails get the item id and update the error file in github for later manual removement of the images
-    // #Make clean up button that searches the db for the specific item if it does not excist searches for the images if they excist delete them
-    // Here update the db - json file with the new local DB without the deleted item 
+        let updatedDbAsJson = JSON.stringify(db);
+        await updateJsonFileAsync(githubUser, githubRepo, githubFilePathDb, githubToken, updatedDbAsJson, `Admin - Deleted item in APP: ${item.id}`); // Update the DB so the deleted item is no longer in the remote db
+        await deleteItemImagesByLinks(item.photos); // Delete the images of the item that has to be deleted
 
+        // #If image delete fails get the item id and update the error file in github for later manual removement of the images
+        // #Make clean up button that searches the db for the specific item if it does not excist searches for the images if they excist delete them
+        // Here update the db - json file with the new local DB without the deleted item 
+        console.log(item);
+        //   delete item; 
+    }
+    else
+    {
 
-
-    console.log(item);
-    //   delete item; 
+    }
 }
 
 
