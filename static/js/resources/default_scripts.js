@@ -336,7 +336,7 @@ function modalItemShareButtonsHtml(itemLink, title) {
      <a class="item_share_button" style="background-image: url('static/img/icons/delete.png');" href="javascript:deleteItemByItemLink('${itemLink}');" title="Изтриване!!!"></a>
      <a class="item_share_button" style="background-image: url('static/img/icons/edit.png');" href='/Edit?${itemLink.split('?search=')[1]}' data-link title="Редактиране!"></a>
      
-    <span style="float:right; margin-right:2%; margin-top: 10px;" id="imgCount"></span>
+    <span style="float:right; margin-right:2%; margin-top: 20px;" id="imgCount"></span>
     </div>`;
 }
 
@@ -1952,13 +1952,14 @@ async function caravansHtmlTemplateFields() {
     
     <input id="imgPicker" type="file" accept="image/*;capture=camera" multiple="multiple">
     
-     
-   <div class="img-preview-container">
-       <div style="width: 100%; height: 100%;" id="previewImgHolder"></div>   
-       ${imgSlideArrowButtons()}
-       <button id="rotateImgView" class="item_share_button" style="position: absolute; left:100px; right:0; margin-inline: auto; bottom: 25px; cursor: pointer; padding: 0; border: 0; outline: none; background-color: transparent; background-image: url('static/img/icons/rotate.png');"></button>
-       <a class="item_share_button" style="position: absolute; left:0; right:0; margin-inline: auto; bottom: 25px; background-image: url('static/img/icons/del-img.png');" href="javascript:deleteCurrentImg();" title="Изтриване на снимката!!!"></a>
-       <span style="margin: auto;" id="imgCount"></span>
+    
+    <div class="img-preview-container">
+    <div style="width: 100%; height: 100%;" id="previewImgHolder"></div>   
+    ${imgSlideArrowButtons()}
+    <button id="rotateImgView" class="item_share_button" style="position: absolute; left:100px; right:0; margin-inline: auto; bottom: 25px; cursor: pointer; padding: 0; border: 0; outline: none; background-color: transparent; background-image: url('static/img/icons/rotate.png');"></button>
+    <a class="item_share_button" style="position: absolute; left:0; right:0; margin-inline: auto; bottom: 25px; background-image: url('static/img/icons/del-img.png');" href="javascript:deleteCurrentImg();" title="Изтриване на снимката!!!"></a>
+    <a class="item_share_button" style="position: absolute; left:210px; right:0; margin-inline: auto; bottom: 25px; background-image: url('static/img/icons/save-edit.png');" href="javascript:executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, true);" title="Запазване на промените на снимката."></a>
+    <span style="position:absolute; right:20px; bottom: 25px;" id="imgCount"></span>
     </div> 
    
     

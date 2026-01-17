@@ -796,7 +796,7 @@ h3 {
     flex-direction: row;
     max-width: fit-content;
     width: 100%;
-    margin: 10px auto;
+    margin: auto;
     overflow-x: auto;
     border: 2px solid grey;
     border-radius: 4px;
