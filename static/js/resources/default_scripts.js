@@ -1951,12 +1951,12 @@ async function caravansHtmlTemplateFields() {
     
     
     <div class="img-preview-container">
-    <div style="width: 100%; height: 100%;" id="previewImgHolder"></div>   
+    <div id="previewImgHolder"></div>   
     ${imgSlideArrowButtons()}
-    <button id="rotateImgView" class="item_share_button" style="position: absolute; left:100px; right:0; margin-inline: auto; bottom: 25px; cursor: pointer; padding: 0; border: 0; outline: none; background-color: transparent; background-image: url('static/img/icons/rotate.png');"></button>
-    <a class="item_share_button" style="position: absolute; left:0; right:0; margin-inline: auto; bottom: 25px; background-image: url('static/img/icons/del-img.png');" href="javascript:deleteCurrentImg();" title="Изтриване на снимката!!!"></a>
-    <a class="item_share_button" style="position: absolute; left:210px; right:0; margin-inline: auto; bottom: 25px; background-image: url('static/img/icons/save-edit.png');" href="javascript:executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, true);" title="Запазване на промените на снимката."></a>
-    <span style="position:absolute; right:20px; bottom: 25px;" id="imgCount"></span>
+    <button id="rotateImgView" class="item_share_button rotate-img"></button>
+    <a class="item_share_button delete-current-img" href="javascript:deleteCurrentImg();" title="Изтриване на снимката!!!"></a>
+    <a class="item_share_button save-img-edits" href="javascript:executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, true);" title="Запазване на промените на снимката."></a>
+    <span id="imgCount"></span>
     </div> 
    
     
@@ -3034,16 +3034,16 @@ function imgCompressionEventDeclaraton() {
         await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
     });
 
-    // 7. Img Rotate
-    document.getElementById('imgRotate')?.addEventListener('mousedown', async () => {
-        await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, true, false);
-    });
+    // // 7. Img Rotate
+    // document.getElementById('imgRotate')?.addEventListener('mousedown', async () => {
+    //     await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, true, false);
+    // });
 
-    // 8. Img Save
-    document.getElementById('imgCompressionSave')?.addEventListener('mousedown', async () => {
-        await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, true);
-        resetImgCompressionFields();
-    });
+    // // 8. Img Save
+    // document.getElementById('imgCompressionSave')?.addEventListener('mousedown', async () => {
+    //     await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, true);
+    //     resetImgCompressionFields();
+    // });
 
 }
 
@@ -3094,13 +3094,13 @@ function imgCompressionHtml() {
         <span id="imgBrightnessLabel"></span>
         <input type="range" min="90" max="120" value="100" id="imgBrightnessSlider">
         </div>
-
-        <div class="col">
-        <button id="imgRotate">Rotate</button>
-        <button id="imgCompressionSave">Save Image</button>
-        </div>   
         </div>`;
 }
 
 // <button id="imgRotate">Rotate</button>
 // <button id="imgCompressionSave">Save Image</button>
+
+// <div class="col">
+//         <button id="imgRotate">Rotate</button>
+//         <button id="imgCompressionSave">Save Image</button>
+//         </div>   
