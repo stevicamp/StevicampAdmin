@@ -409,7 +409,7 @@ async function caravansHtmlTemplate(obj) {
        
         ${htmlItemSold(obj)}
        <hr>
-       <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price}</span>
+       <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price} €</span>
        <hr>
        <span><img src="static/img/icons/brand.png"><b>Марка:</b> ${obj.brand}</span>
        <hr>
@@ -1014,7 +1014,7 @@ async function appliancesHtmlTemplate(obj) {
         ${htmlItemSold(obj)}
 
        <hr>
-       <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price}</span>
+       <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price} €</span>
        <hr>
        <span><img src="static/img/icons/brand.png"><b>Марка:</b> ${obj.brand}</span>
        <hr>
@@ -1967,7 +1967,7 @@ async function caravansHtmlTemplateFields() {
          <h3 class="item-title"><img src="static/img/icons/caravan.png"><u></br>Категория каравани:</u></h3> 
        
        <hr>
-       <span><img src="static/img/icons/price.png"><b>Цена:</b> </br><input id="price" name="price" placeholder="Цена"></span>
+       <span><img src="static/img/icons/price.png"><b>Цена:</b> </br><input id="price" name="price" placeholder="Цена">€</span>
        <hr>
        <span><img src="static/img/icons/brand.png"><b>Марка:</b> </br><input id="caravanBrand" name="brand" type="text" placeholder="Марка" list="caravanBrands"></span>
             <datalist id="caravanBrands">
