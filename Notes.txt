@@ -1,7 +1,7 @@
 Stevicamp
 
 
-
+1. Addsort acc and decc in the view
 ..........
 1. If needed ad edited date array to each item, so to display when the item was edited
 ............

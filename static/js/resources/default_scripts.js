@@ -1879,7 +1879,7 @@ async function readImgAsBase64AndUpload(file, imgComment, githubFilePathImg) {
 
     // Base64
     let dataBase64Img = readerFile.split(',')[1]; // Remove "data:image/png;base64," so it is raw image base64
-    return await uploadImgAsync(githubUser, githubRepo, githubFilePathImg, githubToken, dataBase64Img, '', imgComment); // Upload the image to the server
+    return await uploadImgAsync(githubUser, githubRepoPhotos, githubFilePathImg, githubToken, dataBase64Img, '', imgComment); // Upload the image to the server
 }
 
 
@@ -2291,7 +2291,7 @@ function convertToGithubPathArr(arr) {
     let path = '';
     for (let s = 0; s < arr.length; s++) {
         // itemLink.split('?search=')[1]; 
-        path = arr[s].split(`${cdn}/${githubUser}/${githubRepo}/`)[1]; // Get the path by knowing the rest. For js delivr links this is common - "https://cdn.jsdelivr.net/gh/stevicamp/Stevicamp/"
+        path = arr[s].split(`${cdn}/${githubUser}/${githubRepoPhotos}/`)[1]; // Get the path by knowing the rest. For js delivr links this is common - "https://cdn.jsdelivr.net/gh/stevicamp/Stevicamp/"
         githubPathArr.push(path); // We need only the path
 
     }
@@ -2314,7 +2314,7 @@ async function EditSave() {
         let imgGithubPathArr = convertToGithubPathArr(deleteImagesEditArr); // Passsing js delivr array and converting it to github array links
         for (let z = 0; z < imgGithubPathArr.length; z++) // loop the array with the links of the images to be deleted
         {
-            await deleteFileAsync(githubUser, githubRepo, imgGithubPathArr[z], githubToken, `Deleted - Image by Admin in the View: ${imgGithubPathArr[z]}`); // Delete the image
+            await deleteFileAsync(githubUser, githubRepoPhotos, imgGithubPathArr[z], githubToken, `Deleted - Image by Admin in the View: ${imgGithubPathArr[z]}`); // Delete the image
         }
 
         deleteImagesEditArr = []; // Clear the array for the next time to be clean
@@ -2440,7 +2440,7 @@ async function handleItemImagesEdit(itemId, type) {
                     dataBase64Img = dataBase64Img.split('base64,')[1];
                 }
 
-                okResponse = await uploadImgAsync(githubUser, githubRepo, githubFilePathForImg, githubToken, dataBase64Img, 'Admin Uploaded Image from Edit mode: ', ''); // Upload the image to the server
+                okResponse = await uploadImgAsync(githubUser, githubRepoPhotos, githubFilePathForImg, githubToken, dataBase64Img, 'Admin Uploaded Image from Edit mode: ', ''); // Upload the image to the server
 
                 editItemImgArr[v] = convertToJsDelivrPath(githubFilePathForImg); //After uploading the image assign the same index in the array with the jsdelivr image // Add the path to the array that will hold all paths. It is late used to get js delivr paths and then add it to the json object before sending to the server
             }
@@ -2648,7 +2648,7 @@ async function deleteCurrentImg() {
 // Convert to js deliver path ===================================================
 function convertToJsDelivrPath(path) {
     // let jsDelivr = 'https://cdn.jsdelivr.net/gh/stevicamp/Stevicamp@main/index.html';
-    let jsDelivrPath = `${cdn}/${githubUser}/${githubRepo}/${path}`;
+    let jsDelivrPath = `${cdn}/${githubUser}/${githubRepoPhotos}/${path}`;
     return jsDelivrPath;
 }
 
@@ -2760,8 +2760,8 @@ async function deleteLocalItemById(itemId) {
 async function deleteItemImagesByLinks(imgLinkArray) {
     // .split("/")[1]; // Is used to get the raw github link from the js delivr link
     for (let k = 0; k < imgLinkArray.length; k++) {
-        let currentImgLink = imgLinkArray[k].split(`${cdn}/${githubUser}/${githubRepo}/`)[1];
-        await deleteFileAsync(githubUser, githubRepo, currentImgLink, githubToken, `Deleted: ${imgLinkArray[k]}`);
+        let currentImgLink = imgLinkArray[k].split(`${cdn}/${githubUser}/${githubRepoPhotos}/`)[1];
+        await deleteFileAsync(githubUser, githubRepoPhotos, currentImgLink, githubToken, `Deleted: ${imgLinkArray[k]}`);
     }
 }
 

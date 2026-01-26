@@ -1,5 +1,6 @@
   var githubUser;
   var githubRepo;
+  var githubRepoPhotos = "StevicampPhotos";
   var githubToken;
   var githubFilePathDb; // Path for the DB
   var newContent ="";
