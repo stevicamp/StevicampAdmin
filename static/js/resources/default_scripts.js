@@ -1422,7 +1422,7 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
              <p>${itemsList[`${itemType}`][i].title}</p>
          </a>
        
-         <span class="price">${itemsList[`${itemType}`][i].price}</span>
+         <span class="price">${itemsList[`${itemType}`][i].price} €</span>
          
 
          <div class="item_buttons_wrapper"> 
