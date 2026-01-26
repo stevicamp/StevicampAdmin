@@ -1,6 +1,8 @@
 Stevicamp
 
 
+2. On rotate image then go out and in in another item the other item image is rotated?
+........
 1. Try avif instead of webp
 ............
 1. Mismatch between the repos for the images confusing probably Storage Repo with Photos repo and can not delete the img and sometimes can not diplay the image

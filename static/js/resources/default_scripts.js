@@ -2572,6 +2572,8 @@ async function imgPickerImagesToLocalArrEdit() {
 // Add the images from the db in the view image container
 function handleImagesEditView(assignHtml, n) {
 
+    rotatedStep = 0; // Reset the img rotation variable, so that the image is not rotated if rotating an image then going out and opening another item.
+
     let imgPrevContainer = document.getElementById('previewImgHolder');
 
     console.log('Arr 2: -------------------------' + editItemImgArr);
@@ -2966,7 +2968,7 @@ function resetImgCompressionFields() {
     document.getElementById('imgCompressionSlider').value = 55;
     document.getElementById('imgSaturrationSlider').value = 120;
     document.getElementById('imgContrastSlider').value = 100;
-    document.getElementById('imgBrightnessSlider').value = 100;
+    document.getElementById('imgBrightnessSlider').value = 100; 
 }
 
 
