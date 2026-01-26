@@ -1394,6 +1394,12 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
     var combined_items = ''; // Holder of the items, that are constructed and put in this variable
     var itemLink = ''; // Holder for the constructing of a link for every item 
 
+    // itemsList.sort((a, b) => (a.date < b.date) - (a.date > b.date)); // Sort Newest oldest
+
+ 
+
+
+ 
     for (let g = 0; g < Object.keys(itemsList).length; g++) {
         itemType = Object.keys(itemsList)[g];
 
@@ -1403,7 +1409,10 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
 
         // <div onmousedown="itemModal('')"></div>
 
-        for (let i = 0; i < itemsList[`${itemType}`].length; i++) {
+
+         for (let i = itemsList[itemType].length - 1; i >= 0; i--) // Reversed in order to show the newest first 
+        // for (let i = 0; i < itemsList[`${itemType}`].length; i++)   
+        {
             itemLink = window.location.host + '?search=' + itemsList[`${itemType}`][i].id; // Construct the link for the current item // ItemsType is for the item type. caravan, car etc.
 
             // For every iteration there is constructed item an put in the variable "combined_items".
@@ -1666,7 +1675,7 @@ async function recursiveSearchObj(obj, match) {
 async function searchArray(arr, match) {
 
     match = match.toLocaleLowerCase(); // In the search all the string are made to lowerCase, here if this is missing searching with capital letter will not find results 
-    console.time();
+ 
     let resultArr = [];
     for (let b = 0; b < arr.length; b++) {
         let type = typeof arr[b];
@@ -1688,7 +1697,11 @@ async function searchArray(arr, match) {
                 resultArr.push({ [type + 'Value']: arr[b] });
             }
         }
-    } console.timeEnd();
+    } 
+
+     
+// resultArr.sort((a, b) => b.date.localeCompare(a.date));
+    // return resultArr.sort((a, b) => (a.date < b.date) - (a.date > b.date)); // Sort Newest oldest
     return resultArr;
 }
 
