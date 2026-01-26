@@ -2423,16 +2423,16 @@ async function handleItemImagesEdit(itemId, type) {
             if (okResponse) {
 
                 // let imgExtension = images[v].slice((Math.max(0, images[v].lastIndexOf(".")) || Infinity) + 1); // Get the file extension of the image - .jpg, .png
-                let imgExtension = '.' + editItemImgArr[v].split(';')[0].split('/')[1];
+                    // let imgExtension = '.' + editItemImgArr[v].split(';')[0].split('/')[1];
 
-                githubFilePathForImg = `resources/img/${type}/${itemId}/${itemId}--${[v + 1] + '-' + Date.now() + imgExtension}`; // Ex. resources/img/caravans/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z-1
+                githubFilePathForImg = `resources/img/${type}/${itemId}/${itemId}--${[v + 1] + '-' + Date.now() + '.' + imgCompressionExtensionGlobal}`; // Ex. resources/img/caravans/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z-1
 
                 // okResponse = await readImgAsBase64AndUpload(editItemImgArr[v], `${[v + 1]} от ${[editItemImgArr.length]}`, githubFilePathForImg);
                 let dataBase64Img = editItemImgArr[v].split('base64,')[1]; // Remove "data:image/png;base64," so it is raw image base64
                 console.log('Base64Img wihtout base64,...:' + dataBase64Img);
 
                 // Check the size of the image if it is not reduced already by admin
-                if ((dataBase64Img.length * 0.75 / 1024).toFixed(1) > 165) // If size is over 165kb reduce the size
+                if ((dataBase64Img.length * 0.60 / 1024).toFixed(1) > 145) // If size is over 145kb reduce the size
                 {
                     let cleanBase64 = dataBase64Img.replace(/^data:[^;]+;base64,/, ""); // Remove the data: so to work with Unit8Array 
                     let img = new Blob([Uint8Array.fromBase64(cleanBase64)]); // Base 64 to blob to use in the canvas
@@ -2930,8 +2930,8 @@ async function compressImage(blobImg, newHeight, fromat, percent, smoothing, rot
 function resetImgCompressionFields() {
 
     rotatedStep = 0; // Reset the rotation step
-    document.getElementById('imgCompressionSlider').value = 100;
-    document.getElementById('imgSaturrationSlider').value = 100;
+    document.getElementById('imgCompressionSlider').value = 55;
+    document.getElementById('imgSaturrationSlider').value = 120;
     document.getElementById('imgContrastSlider').value = 100;
     document.getElementById('imgBrightnessSlider').value = 100;
 }
@@ -3070,7 +3070,7 @@ function imgCompressionHtml() {
         <div class="col">
         <img src="static/img/icons/compress.png"/>
         <span id="imgCompressionSliderLabel"></span>
-        <input type="range" min="1" max="100" value="100" id="imgCompressionSlider">
+        <input type="range" min="1" max="100" value="55" id="imgCompressionSlider">
         </div>
         
         <div class="col">
@@ -3093,7 +3093,7 @@ function imgCompressionHtml() {
         <div class="col">
         <img src="static/img/icons/saturate.png"/>
         <span id="imgSaturationLabel"></span>
-        <input type="range" min="50" max="350" value="100" id="imgSaturrationSlider">
+        <input type="range" min="50" max="350" value="120" id="imgSaturrationSlider">
         </div>
         
         <div class="col">

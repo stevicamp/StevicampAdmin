@@ -1,6 +1,11 @@
 Stevicamp
 
 
+1.
+.............
+1. Feature - save photos, db, categories seperatly systematicaly, so that before saving fetching a variable from github that has a value ov a page also check how may items are in a folder. So save let say 50-100 items per folder then if this folder is full start to save in another folder till there are 50-100 items, so that lazy loadiong can be implemented.
+So on load page load the first 100 items, then on scroll to botom load the next 100 items from folder 2 and hold track of wich folders have been loaded so that to load the next one correctly.
+-----------------
 1. Addsort acc and decc in the view
 ..........
 1. If needed ad edited date array to each item, so to display when the item was edited
