@@ -2792,10 +2792,43 @@ function autoLoadCredentialsGlobal() {
 // Load Credentials
 function loadCredentialsFromLocalStorageToGlobalVariables() {
     // Get data from local Storage and populate the "local variables" that are global and are found in the CRUD.js file.
-    githubUser = localStorage.getItem("githubUser");
-    githubRepo = localStorage.getItem("githubRepo");
+    if(localStorage.getItem("githubUser") == undefined || localStorage.getItem("githubUser") =='')
+    {
+        githubUser = 'stevicamp';
+       localStorage.setItem('githubUser', 'stevicamp');
+
+    }
+    else
+    {
+        githubUser = localStorage.getItem("githubUser");
+    }
+
+
+    if(localStorage.getItem("githubRepo") == undefined || localStorage.getItem("githubRepo") == '')
+    {
+       githubRepo = 'StevicampStorage';
+       localStorage.setItem('githubRepo', 'StevicampStorage');
+
+    }
+    else
+    {
+        githubRepo = localStorage.getItem('githubRepo');
+    }
+    
+
+    if(localStorage.getItem("githubFilePathDb") == undefined || localStorage.getItem("githubFilePathDb") == '')
+    {
+          githubFilePathDb = 'resources/db/database.json';
+          localStorage.setItem('githubFilePathDb', 'resources/db/database.json');
+    }
+    else
+    {
+        githubFilePathDb = localStorage.getItem("githubFilePathDb"); 
+    }
+    
+
+
     githubToken = localStorage.getItem("githubToken");
-    githubFilePathDb = localStorage.getItem("githubFilePathDb");
     console.log(githubToken);
 }
 
