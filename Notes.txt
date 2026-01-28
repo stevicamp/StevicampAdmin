@@ -2,6 +2,10 @@ Stevicamp
 
 
 
+# 1. The loading and save should have z index over all
+.........
+1. Wheels and prob. other does not apear last in the list since the new itmes should apear first in the list
+..........
 1. Missing border on horizontal banel button open close
 ..........
 1. Add News view
