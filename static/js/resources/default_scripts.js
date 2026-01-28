@@ -1465,38 +1465,47 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
 
 
     // Use of string for better performance instead of using .innerHTML += 
-    var combined_items = ''; // Holder of the items, that are constructed and put in this variable
-    var itemLink = ''; // Holder for the constructing of a link for every item 
+    let combined_items = ''; // Holder of the items, that are constructed and put in this variable
 
     // itemsList.sort((a, b) => (a.date < b.date) - (a.date > b.date)); // Sort Newest oldest
 
 
+    const allItems = Object.values(itemsList).flat().filter(Boolean); // Merge the categories in one array // .flat() removes one level of nesting from an array // .filter(Boolean); if category is empty prevents undefined
+    allItems.sort((a, b) => b.date.localeCompare(a.date)); // Sort that array by date in order to get the newest items first
 
 
 
-    for (let g = 0; g < Object.keys(itemsList).length; g++) {
-        itemType = Object.keys(itemsList)[g];
+    // for (let g = 0; g < Object.keys(itemsList).length; g++) {
+    //     itemType = Object.keys(itemsList)[g];
 
 
-        // // Object.keys(db)[0];
-        // // Object.keys(obj).length
+    // // Object.keys(db)[0];
+    // // Object.keys(obj).length
 
-        // <div onmousedown="itemModal('')"></div>
+    // <div onmousedown="itemModal('')"></div>
 
 
-        for (let i = itemsList[itemType].length - 1; i >= 0; i--) // Reversed in order to show the newest first 
-        // for (let i = 0; i < itemsList[`${itemType}`].length; i++)   
-        {
-            itemLink = window.location.host + '?search=' + itemsList[`${itemType}`][i].id; // Construct the link for the current item // ItemsType is for the item type. caravan, car etc.
+    // for (let i = itemsList[itemType].length - 1; i >= 0; i--) // Reversed in order to show the newest first, but this does not work for the rest of the categories in home the newest item if it is a trailer it will be after a caravan since in the db the trailers are after the caravans 
+    // // for (let i = 0; i < itemsList[`${itemType}`].length; i++)   
+    // {
 
-            // For every iteration there is constructed item an put in the variable "combined_items".
-            combined_items += (`<div class="content_container_item">
-         <a href="javascript:itemModalNavigation('${itemsList[`${itemType}`][i].id}');">
-             <img class="item_img" src="${itemsList[`${itemType}`][i].photos[0]}"> </img>
-             <p>${itemsList[`${itemType}`][i].title}</p>
+
+    for (let i = 0; i < allItems.length; i++) {
+        const item = allItems[i];
+   
+         const imgSrc = item.photos?.[0] ?? 'static/img/no-image.png';
+         const itemLink = `${window.location.origin}?search=${item.id}`; // Holder for the constructing of a link for every item 
+        //  const itemLink = window.location.host + '?search=' + item.id; // Holder for the constructing of a link for every item 
+        // itemLink = window.location.host + '?search=' + itemsList[`${itemType}`][i].id; // Construct the link for the current item // ItemsType is for the item type. caravan, car etc.
+
+        // For every iteration there is constructed item an put in the variable "combined_items".
+        combined_items += (`<div class="content_container_item">
+         <a href="javascript:itemModalNavigation('${item.id}');">
+             <img class="item_img" src="${imgSrc}"> </img>
+             <p>${item.title}</p>
          </a>
        
-         <span class="price">${itemsList[`${itemType}`][i].price} €</span>
+         <span class="price">${item.price} €</span>
          
 
          <div class="item_buttons_wrapper"> 
@@ -1510,13 +1519,11 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
          </div>
         
          <a class="item_share_button" style="background-image: url('static/img/icons/delete.png'); margin-top: 20px;" href="javascript:deleteItemByItemLink('${itemLink}');" title="Изтриване!!!"></a>
-         <a class="item_share_button" style="background-image: url('static/img/icons/edit.png'); margin-top: 20px;" href='/Edit?${itemsList[`${itemType}`][i].id}' data-link title="Редактиране"></a>
+         <a class="item_share_button" style="background-image: url('static/img/icons/edit.png'); margin-top: 20px;" href='/Edit?${item.id}' data-link title="Редактиране"></a>
  
                       </div>`);
 
-        }
     }
-
     return combined_items;
 }
 
