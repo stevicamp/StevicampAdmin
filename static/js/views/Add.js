@@ -45,6 +45,7 @@ export async function getHtmlAsync() {
                  <option value="appliances">7.Бяла техника</option>
                  <option value="scooters">8.Скутери</option>
                  <option value="equipment">9.Екипировка</option>
+                 <option value="boats">10.Лотка</option>
                </select>
            
                <div id="aproppiriateFieldsContainer" class="admin-content-holder modalItemContainer"></div> 

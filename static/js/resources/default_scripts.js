@@ -820,7 +820,7 @@ async function wheelsHtmlTemplate(obj) {
        <hr>
        <span><img src="static/img/icons/ruler.png"><b>Мярка:</b> ${obj.measure}</span>
        <hr>
-       <span><img src="static/img/icons/wheel.png"><b>Големина:</b> ${obj.size}</span>
+       <span><img src="static/img/icons/wheel.png"><b>Размер:</b> ${obj.measure}</span>
        <hr>
        <span><img src="static/img/icons/et.png"><b>ET:</b> ${obj.et}</span>
        <hr> 
@@ -1043,6 +1043,76 @@ async function appliancesHtmlTemplate(obj) {
 
 
 
+
+async function boatsHtmlTemplate(obj) {
+
+    let db = await getDbAsync();
+    let imagesHtml = "";
+    let itemLink = window.location.host + '?search=' + obj.id; // Construct the link for the current item
+
+    for (let h = 0; h < obj.photos.length; h++) // To handle the images, dynamic range there could be 1 or 3 or 10 etc. There is no fixed number of images
+    {
+        imagesHtml += `<img class="slide" src='${obj.photos[h]}'>`;
+    }
+
+    return `<div class="modalItemContainer" tabindex="0">
+
+   <div class="img-preview-container">
+       ${imagesHtml}
+
+      ${imgSlideArrowButtons()}
+       
+       ${modalItemShareButtonsHtml(itemLink, obj.title)}
+    </div>
+  
+   
+     
+   <div id="modalItemDetails" class="modalItemDetails" tabindex="0">
+   <h3 class="item-title"><img src="static/img/icons/appliances.png"><u>${obj.title}</u></h3>
+   <span style="margin: 0 0 0 auto;"><a class="item_share_button" href="javascript: copyToClipboard(copyElementTextById('modalItemDetails'));" title="Натиснете за да Копирате описанието"><img src="static/img/icons/copy.png"></a></span>  
+
+       <hr>
+      
+        ${phoneViberNumberInfoHtml(db.phone, db.viberPhone)}
+
+        ${htmlItemSold(obj)}
+
+       <hr>
+       <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price} €</span>
+       <hr>
+       <span><img src="static/img/icons/brand.png"><b>Марка:</b> ${obj.brand}</span>
+       <hr>
+       <span><img src="static/img/icons/model.png"><b>Модел:</b> ${obj.model}</span>
+       <hr>
+       <span><img src="static/img/icons/calendar.png"><b>Година:</b> ${obj.year}</span>
+       <hr>
+       <span><img src="static/img/icons/kind.png"><b>Тип:</b> ${obj.type}</span>
+       <hr>
+       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> ${obj.condition}</span>
+       <hr>
+       <span><img src="static/img/icons/ruler.png"><b>Размер:</b> ${obj.size}</span>
+       <hr>
+       <span><img src="static/img/icons/location.png"><b>Местоположение:</b> ${obj.location}</span>
+       <hr class="hr-orange"> 
+       <span><img src="static/img/icons/description.png"><b>Описание:</b> ${obj.description}</span>
+       <hr class="hr-orange"> 
+       <span><img src="static/img/icons/id.png"><b>ID:</b><font style="font-size:7px;">${obj.id}</font></span>
+       <hr>
+       <span><img src="static/img/icons/keywords.png"> ${obj.keywords}</span>
+       <hr>
+   </div>
+</div>`;
+
+}
+
+
+
+
+
+
+
+
+
 // ### MODAL ### --------------------------------------------------------------------------------------------------------------
 async function showModal(itemId) // Show modal is used so when navigating trough the back forward buttons to only show the modal and not push state differnt paths - other wise it does not work
 {
@@ -1081,6 +1151,10 @@ async function showModal(itemId) // Show modal is used so when navigating trough
     else if (item.category == "appliances") {
         generatedItemHtml = await appliancesHtmlTemplate(item);
     }
+    else if (item.category == "boats") {
+        generatedItemHtml = await boatsHtmlTemplate(item);
+    }
+
 
     let modal = document.getElementById("modalWindow");
     // modal.innerHTML = 
@@ -1396,10 +1470,10 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
 
     // itemsList.sort((a, b) => (a.date < b.date) - (a.date > b.date)); // Sort Newest oldest
 
- 
 
 
- 
+
+
     for (let g = 0; g < Object.keys(itemsList).length; g++) {
         itemType = Object.keys(itemsList)[g];
 
@@ -1410,7 +1484,7 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
         // <div onmousedown="itemModal('')"></div>
 
 
-         for (let i = itemsList[itemType].length - 1; i >= 0; i--) // Reversed in order to show the newest first 
+        for (let i = itemsList[itemType].length - 1; i >= 0; i--) // Reversed in order to show the newest first 
         // for (let i = 0; i < itemsList[`${itemType}`].length; i++)   
         {
             itemLink = window.location.host + '?search=' + itemsList[`${itemType}`][i].id; // Construct the link for the current item // ItemsType is for the item type. caravan, car etc.
@@ -1675,7 +1749,7 @@ async function recursiveSearchObj(obj, match) {
 async function searchArray(arr, match) {
 
     match = match.toLocaleLowerCase(); // In the search all the string are made to lowerCase, here if this is missing searching with capital letter will not find results 
- 
+
     let resultArr = [];
     for (let b = 0; b < arr.length; b++) {
         let type = typeof arr[b];
@@ -1697,10 +1771,10 @@ async function searchArray(arr, match) {
                 resultArr.push({ [type + 'Value']: arr[b] });
             }
         }
-    } 
+    }
 
-     
-// resultArr.sort((a, b) => b.date.localeCompare(a.date));
+
+    // resultArr.sort((a, b) => b.date.localeCompare(a.date));
     // return resultArr.sort((a, b) => (a.date < b.date) - (a.date > b.date)); // Sort Newest oldest
     return resultArr;
 }
@@ -1927,7 +2001,7 @@ function convertFormToJsonById(formId) {
                 formData[element.name] = '-';
             }
 
-               if (element.name == 'date') {
+            if (element.name == 'date') {
                 formData[element.name] = dateTodayIso();
             }
         }
@@ -1951,16 +2025,9 @@ function dateTodayIso() {
 
 
 
-// Base HTML For caravan -----------------------------------------------------------------------
-async function caravansHtmlTemplateFields() {
-
-    //  <img class="slide" src='${obj.photos[h]}'></img>
-
-    //<div class="admin-content-holder modalItemContainer" tabindex="0" style="margin-top: 0;">
-    return `  
-   
-    
-    <input id="imgPicker" type="file" accept="image/*;capture=camera" multiple="multiple">
+// Common HtmlTemplateFields
+function commonHtmlTemplateFields() {
+    return `<input id="imgPicker" type="file" accept="image/*;capture=camera" multiple="multiple">
     
     
     <div class="img-preview-container">
@@ -1970,7 +2037,19 @@ async function caravansHtmlTemplateFields() {
     <a class="item_share_button delete-current-img" href="javascript:deleteCurrentImg();" title="Изтриване на снимката!!!"></a>
     <a class="item_share_button save-img-edits" href="javascript:executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, true);" title="Запазване на промените на снимката."></a>
     <span id="imgCount"></span>
-    </div> 
+    </div> `;
+}
+
+// Base HTML For caravan -----------------------------------------------------------------------
+async function caravansHtmlTemplateFields() {
+
+    //  <img class="slide" src='${obj.photos[h]}'></img>
+
+    //<div class="admin-content-holder modalItemContainer" tabindex="0" style="margin-top: 0;">
+    return `  
+   
+    
+    ${commonHtmlTemplateFields()}
    
     
    <div id="modalItemDetailsEdit" class="modalItemDetails" tabindex="0">
@@ -1980,7 +2059,7 @@ async function caravansHtmlTemplateFields() {
        <hr>
        <span><img src="static/img/icons/price.png"><b>Цена:</b> </br><input id="price" name="price" placeholder="Цена">€</span>
        <hr>
-       <span><img src="static/img/icons/brand.png"><b>Марка:</b> </br><input id="caravanBrand" name="brand" type="text" placeholder="Марка" list="caravanBrands"></span>
+       <span><img src="static/img/icons/brand.png"><b>Марка:</b> </br><input id="brand" name="brand" type="text" placeholder="Марка" list="caravanBrands"></span>
             <datalist id="caravanBrands">
                 <option value="Hobby"></option>
                 <option value="Knaus"></option>
@@ -1991,9 +2070,9 @@ async function caravansHtmlTemplateFields() {
                 <option value="Dethleffs"></option>
             </datalist>
        <hr>
-       <span><img src="static/img/icons/model.png"><b>Модел:</b> </br><input id="caravanModel" name="model" placeholder="Модел"></span>
+       <span><img src="static/img/icons/model.png"><b>Модел:</b> </br><input id="model" name="model" placeholder="Модел"></span>
        <hr>
-       <span><img src="static/img/icons/calendar.png"><b>Година:</b> </br><input id="caravanYear" name="year" placeholder="Година" list="caravanYearList"></span> 
+       <span><img src="static/img/icons/calendar.png"><b>Година:</b> </br><input id="year" name="year" placeholder="Година" list="caravanYearList"></span> 
        <datalist id="caravanYearList">
                 <option value="1990г."></option>
                 <option value="1991г."></option>
@@ -2021,7 +2100,7 @@ async function caravansHtmlTemplateFields() {
             </datalist
        <hr>
 
-       <span><img src="static/img/icons/ruler.png"><b>Дължина:</b> </br><input id="caravanLength" name="length" placeholder="Дължинна" list="caravanLengthList"></span>
+       <span><img src="static/img/icons/ruler.png"><b>Дължина:</b> </br><input id="length" name="length" placeholder="Дължинна" list="caravanLengthList"></span>
        <datalist id="caravanLengthList">
                 <option value="380см"></option>
                 <option value="390см"></option>
@@ -2169,6 +2248,7 @@ async function caravansHtmlTemplateFields() {
        <hr>
        <span><img src="static/img/icons/plate.png"><b>Номер:</b> </br><input id="plate" name="plate" placeholder="Номер" list="caravanPlate"></span>
            <datalist id="caravanPlate">
+                <option value="Да - Датски"></option>
                 <option value="Да"></option>
                 <option value="Не"></option>
             </datalist>
@@ -2177,13 +2257,13 @@ async function caravansHtmlTemplateFields() {
        <hr class="hr-orange"> 
        <span><img src="static/img/icons/description.png"><b>Описание:</b> </br><textarea id="description" name="description" placeholder="Описание"></textarea ></span>
        <hr class="hr-orange"> 
-       <span><img src="static/img/icons/id.png"><b>ID:</b><input style="font-size:7px;" name="id"></span>
+       <span><img src="static/img/icons/id.png"><b>ID:</b><input style="font-size:7px;" name="id" placeholder="ID" readonly></span>
        <hr>
        <span><img src="static/img/icons/keywords.png"><b>Ключови думи:</b></br><input id="keywords" name="keywords" placeholder="Ключови думи" value="каравана, каравани, karavana, karavani, caravans, caravan"></span>
        <hr> 
        
        <h3 class="item-title"><img src="static/img/icons/caravan.png"><b>Заглавие:</b><u></br><input id="title" name="title" placeholder="Заглавие"></u></h3> 
-       <button id="generateCaravanTitleBtn">Генер. заглавие</button>
+       <button id="generateTitleBtn">Генер. заглавие</button>
 
        <hr>
          <span>Категория:</span><input id="categoryInput" name="category" readonly> 
@@ -2194,9 +2274,736 @@ async function caravansHtmlTemplateFields() {
    </div>
    ${imgCompressionHtml()}
 `;
-
-
 }
+
+
+
+
+
+
+
+
+
+// Base HTML For Trailers -----------------------------------------------------------------------
+async function trailersHtmlTemplateFields() {
+
+    return `  
+    
+     ${commonHtmlTemplateFields()}
+   
+    
+   <div id="modalItemDetailsEdit" class="modalItemDetails" tabindex="0">
+   
+         <h3 class="item-title"><img src="static/img/icons/caravan.png"><u></br>Категория ремаркета:</u></h3> 
+       
+       <hr>
+       <span><img src="static/img/icons/price.png"><b>Цена:</b> </br><input id="price" name="price" placeholder="Цена">€</span>
+       <hr>
+       <span><img src="static/img/icons/brand.png"><b>Марка:</b> </br><input id="brand" name="brand" type="text" placeholder="Марка"></span>
+       <hr>
+       <span><img src="static/img/icons/model.png"><b>Модел:</b> </br><input id="model" name="model" placeholder="Модел"></span>
+       <hr>
+       <span><img src="static/img/icons/calendar.png"><b>Година:</b> </br><input id="year" name="year" placeholder="Година"></span> 
+       <hr>
+       <span><img src="static/img/icons/axle.png"><b>Оси:</b> </br><input id="axle" name="axle" placeholder="Оси" list="trailerAxles"></span> 
+        <datalist id="trailerAxles">
+                <option value="1 Ос"></option>
+                <option value="2 Оси"></option>
+                <option value="3 Оси"></option>
+        </datalist>
+       <hr>
+       <span><img src="static/img/icons/trailer-plug.png"><b>Букса за светлини:</b> </br><input id="trailerPlug" name="plug" placeholder="Букса за светлини" list="trailersPlug"></span> 
+            <datalist id="trailersPlug">
+                <option value="7 пина"></option>
+                <option value="13 пина"></option> 
+        </datalist>
+       <hr>
+        <span><img src="static/img/icons/trailer-open.png"><b>Падащи капаци:</b> </br><input id="trailerDropSides" name="plug" placeholder="Падащи капаци" list="trailersDropSides"></span> 
+            <datalist id="trailersDropSides">
+                <option value="1 - заден"></option>
+                <option value="2 - заден и преден"></option> 
+                <option value="4 - преден, заден и странични"></option> 
+                <option value="5 - бр."></option> 
+                <option value="6 - бр."></option> 
+        </datalist>
+       <hr>
+       <span><img src="static/img/icons/ruler.png"><b>Дължина:</b> </br><input id="trailerSize" name="size" placeholder="Размер"></span>
+       <hr>
+       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> </br><input id="condition" name="condition" placeholder="Състояние" value="Използванo"></span>
+       <hr>
+       <span><img src="static/img/icons/documents.png"><b>Документи:</b> </br><input id="documents" name="documents" placeholder="Документи" value="Да"></span>
+       <hr>
+       <span><img src="static/img/icons/plate.png"><b>Номер:</b> </br><input id="plate" name="plate" placeholder="Номер" list="trailerPlate"></span>
+           <datalist id="trailerPlate">
+                <option value="Да - Датски"></option>
+                <option value="Да"></option>
+                <option value="Не"></option>
+            </datalist>
+       <hr>
+       <span><img src="static/img/icons/location.png"><b>Местоположение:</b></br><input id="location" name="location" placeholder="Местоположение" value="България - Обл. Перник"></span>
+       <hr class="hr-orange"> 
+       <span><img src="static/img/icons/description.png"><b>Описание:</b> </br><textarea id="description" name="description" placeholder="Описание"></textarea ></span>
+       <hr class="hr-orange"> 
+       <span><img src="static/img/icons/id.png"><b>ID:</b><input style="font-size:7px;"  name="id" placeholder="ID" readonly></span>
+       <hr>
+       <span><img src="static/img/icons/keywords.png"><b>Ключови думи:</b></br><input id="keywords" name="keywords" placeholder="Ключови думи" value="ремарке, колесар, remarke, trailer"></span>
+       <hr> 
+       
+       <h3 class="item-title"><img src="static/img/icons/caravan.png"><b>Заглавие:</b><u></br><input id="title" name="title" placeholder="Заглавие"></u></h3> 
+       <button id="generateTitleBtn">Генер. заглавие</button>
+
+       <hr>
+         <span>Категория:</span><input id="categoryInput" name="category" readonly> 
+         <span>Дата:</span><input id="dateInput" name="date" readonly> 
+
+       <button id="saveItemButton">Запази</button>
+    
+   </div>
+   ${imgCompressionHtml()}
+`;
+}
+
+
+
+
+
+
+
+
+// Base HTML For Cars -----------------------------------------------------------------------
+async function carsHtmlTemplateFields() {
+
+    return `  
+    
+     ${commonHtmlTemplateFields()}
+   
+    
+   <div id="modalItemDetailsEdit" class="modalItemDetails" tabindex="0">
+   
+         <h3 class="item-title"><img src="static/img/icons/car.png"><u></br>Категория коли:</u></h3> 
+       
+       <hr>
+       <span><img src="static/img/icons/price.png"><b>Цена:</b> </br><input id="price" name="price" placeholder="Цена">€</span>
+       <hr>
+       <span><img src="static/img/icons/brand.png"><b>Марка:</b> </br><input id="brand" name="brand" type="text" placeholder="Марка"></span>
+       <hr>
+       <span><img src="static/img/icons/model.png"><b>Модел:</b> </br><input id="model" name="model" placeholder="Модел"></span>
+       <hr>
+       <span><img src="static/img/icons/calendar.png"><b>Година:</b> </br><input id="year" name="year" placeholder="Година"></span> 
+       <hr>
+       <span><img src="static/img/icons/horse.png"><b>Конски сили:</b> </br><input id="carHp" name="hp" placeholder="Конски сили"></span> 
+       <hr>
+       <span><img src="static/img/icons/km.png"><b>Пробег:</b> </br><input id="царКм" name="km" placeholder="Пробег км."></span> 
+       <hr>
+       <span><img src="static/img/icons/car-door.png"><b>Врати:</b> </br><input id="carDoors" name="doors" placeholder="Врати" list="carsDoors"></span> 
+          <datalist id="carsDoors">
+                <option value="2"></option>
+                <option value="3"></option>
+                <option value="5"></option>
+          </datalist>
+       <hr>
+       <span><img src="static/img/icons/car-type.png"><b>Тип:</b> </br><input id="carType" name="type" placeholder="Тип" list="carsType"></span> 
+          <datalist id="carsType">
+                <option value="Седан"></option>
+                <option value="Комби"></option>
+                <option value="Хеджбек"></option>
+                <option value="Джип"></option>
+                <option value="Пикап"></option>
+        </datalist>
+       <hr>
+       <span><img src="static/img/icons/gears.png"><b>Скорости:</b> </br><input id="carGears" name="gears" placeholder="Скорости" list="carsGears"></span> 
+          <datalist id="carsGears">
+                <option value="Ръчни"></option>
+                <option value="Автоматични"></option> 
+        </datalist>
+       <hr>
+         <span><img src="static/img/icons/engine.png"><b>Двигател:</b> </br><input id="carEngine" name="engine" placeholder="Двигател" list="carsEngine"></span> 
+          <datalist id="carsEngine">
+                <option value="1.0"></option>
+                <option value="1.6"></option>
+                <option value="2.0"></option>
+                <option value="2.2"></option>
+                <option value="2.5"></option>
+                <option value="3.0"></option>
+        </datalist>
+       <hr> 
+       <span><img src="static/img/icons/fuel.png"><b>Гориво:</b> </br><input id="carFuel" name="fuel" placeholder="Гориво" list="carsFuel"></span>
+       <datalist id="carsFuel">
+                <option value="Бензин"></option>
+                <option value="Дизел"></option> 
+                <option value="На ток - Батерия"></option> 
+        </datalist>
+       <hr>
+       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> </br><input id="condition" name="condition" placeholder="Състояние" value="Използванo"></span>
+       <hr>
+       <span><img src="static/img/icons/tow.png"><b>Теглич:</b> </br><input id="carTow" name="tow" placeholder="Теглич" list="carsTow"></span> 
+         <datalist id="carsTow">
+                <option value="Да"></option> 
+                <option value="Не"></option> 
+        </datalist>
+       <hr>
+       <span><img src="static/img/icons/snowflake.png"><b>Климатроник:</b> </br><input id="carAc" name="ac" placeholder="Климатроник" list="carsAc"></span> 
+         <datalist id="carsAc">
+                <option value="Да"></option> 
+                <option value="Не"></option> 
+        </datalist>
+       <hr>
+       <span><img src="static/img/icons/documents.png"><b>Документи:</b> </br><input id="documents" name="documents" placeholder="Документи" value="Да"></span>
+       <hr>
+       <span><img src="static/img/icons/plate.png"><b>Номер:</b> </br><input id="plate" name="plate" placeholder="Номер" list="carPlate"></span>
+           <datalist id="carPlate">
+                <option value="Да - Датски"></option>
+                <option value="Да"></option>
+                <option value="Не"></option>
+            </datalist>
+       <hr>
+       <span><img src="static/img/icons/location.png"><b>Местоположение:</b></br><input id="location" name="location" placeholder="Местоположение" value="България - Обл. Перник"></span>
+       <hr class="hr-orange"> 
+       <span><img src="static/img/icons/description.png"><b>Описание:</b> </br><textarea id="description" name="description" placeholder="Описание"></textarea ></span>
+       <hr class="hr-orange"> 
+       <span><img src="static/img/icons/id.png"><b>ID:</b><input style="font-size:7px;"  name="id" placeholder="ID" readonly></span>
+       <hr>
+       <span><img src="static/img/icons/keywords.png"><b>Ключови думи:</b></br><input id="keywords" name="keywords" placeholder="Ключови думи" value="кола, kola, car"></span>
+       <hr> 
+       
+       <h3 class="item-title"><img src="static/img/icons/caravan.png"><b>Заглавие:</b><u></br><input id="title" name="title" placeholder="Заглавие"></u></h3> 
+       <button id="generateTitleBtn">Генер. заглавие</button>
+
+       <hr>
+         <span>Категория:</span><input id="categoryInput" name="category" readonly> 
+         <span>Дата:</span><input id="dateInput" name="date" readonly> 
+
+       <button id="saveItemButton">Запази</button>
+    
+   </div>
+   ${imgCompressionHtml()}
+`;
+}
+
+
+
+
+
+
+
+
+
+// Base HTML For Microbus -----------------------------------------------------------------------
+async function microbusesHtmlTemplateFields() {
+
+    return `  
+    
+     ${commonHtmlTemplateFields()}
+   
+    
+   <div id="modalItemDetailsEdit" class="modalItemDetails" tabindex="0">
+   
+         <h3 class="item-title"><img src="static/img/icons/microbus.png"><u></br>Категория микробуси:</u></h3> 
+       
+       <hr>
+       <span><img src="static/img/icons/price.png"><b>Цена:</b> </br><input id="price" name="price" placeholder="Цена">€</span>
+       <hr>
+       <span><img src="static/img/icons/brand.png"><b>Марка:</b> </br><input id="brand" name="brand" type="text" placeholder="Марка"></span>
+       <hr>
+       <span><img src="static/img/icons/model.png"><b>Модел:</b> </br><input id="model" name="model" placeholder="Модел"></span>
+       <hr>
+       <span><img src="static/img/icons/calendar.png"><b>Година:</b> </br><input id="year" name="year" placeholder="Година"></span> 
+       <hr>
+       <span><img src="static/img/icons/horse.png"><b>Конски сили:</b> </br><input id="microBusHp" name="hp" placeholder="Конски сили"></span> 
+       <hr>
+       <span><img src="static/img/icons/km.png"><b>Пробег:</b> </br><input id="microBusКм" name="km" placeholder="Пробег км."></span> 
+       <hr>
+       <span><img src="static/img/icons/car-door.png"><b>Врати:</b> </br><input id="microBusDoors" name="doors" placeholder="Врати" list="carsDoors"></span> 
+          <datalist id="carsDoors">
+                <option value="3"></option>
+                <option value="4"></option>
+                <option value="5"></option>
+          </datalist>
+       <hr>
+       <span><img src="static/img/icons/car-type.png"><b>Тип:</b> </br><input id="microBusType" name="type" placeholder="Тип" list="microBusesType"></span> 
+          <datalist id="microBusesType">
+                <option value="Баничарка"></option>
+                <option value="Бус"></option>
+                <option value="Малък бус"></option>
+                <option value="Среден бус"></option>
+                <option value="Голям бус"></option>
+        </datalist>
+       <hr>
+       <span><img src="static/img/icons/gears.png"><b>Скорости:</b> </br><input id="microBusGears" name="gears" placeholder="Скорости" list="microBusesGears"></span> 
+          <datalist id="microBusesGears">
+                <option value="Ръчни"></option>
+                <option value="Автоматични"></option> 
+        </datalist>
+       <hr>
+         <span><img src="static/img/icons/engine.png"><b>Двигател:</b> </br><input id="microBusEngine" name="engine" placeholder="Двигател" list="microBusesEngine"></span> 
+          <datalist id="microBusesEngine">
+                <option value="1.6"></option>
+                <option value="2.0"></option>
+                <option value="2.2"></option>
+                <option value="2.5"></option>
+                <option value="3.0"></option>
+        </datalist>
+       <hr> 
+       <span><img src="static/img/icons/fuel.png"><b>Гориво:</b> </br><input id="microBusFuel" name="fuel" placeholder="Гориво" list="microBusesFuel"></span>
+       <datalist id="microBusesFuel">
+                <option value="Бензин"></option>
+                <option value="Дизел"></option> 
+                <option value="На ток - Батерия"></option> 
+        </datalist>
+       <hr>
+       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> </br><input id="condition" name="condition" placeholder="Състояние" value="Използванo"></span>
+       <hr>
+       <span><img src="static/img/icons/tow.png"><b>Теглич:</b> </br><input id="microBusTow" name="tow" placeholder="Теглич" list="microBusesTow"></span> 
+         <datalist id="microBusesTow">
+                <option value="Да"></option> 
+                <option value="Не"></option> 
+        </datalist>
+       <hr>
+       <span><img src="static/img/icons/snowflake.png"><b>Климатроник:</b> </br><input id="microBusAc" name="ac" placeholder="Климатроник" list="microBusesAc"></span> 
+         <datalist id="microBusesAc">
+                <option value="Да"></option> 
+                <option value="Не"></option> 
+        </datalist>
+       <hr>
+        <span><img src="static/img/icons/bus-size.png"><b>Големина на товарна част:</b> </br><input id="microBusSize" name="size" placeholder="Големина на товарна част"></span>
+       <hr>
+       <span><img src="static/img/icons/documents.png"><b>Документи:</b> </br><input id="documents" name="documents" placeholder="Документи" value="Да"></span>
+       <hr>
+       <span><img src="static/img/icons/plate.png"><b>Номер:</b> </br><input id="plate" name="plate" placeholder="Номер" list="boatPlate"></span>
+           <datalist id="boatPlate">
+                <option value="Да - Датски"></option>
+                <option value="Да"></option>
+                <option value="Не"></option>
+            </datalist>
+       <hr>
+       <span><img src="static/img/icons/location.png"><b>Местоположение:</b></br><input id="location" name="location" placeholder="Местоположение" value="България - Обл. Перник"></span>
+       <hr class="hr-orange"> 
+       <span><img src="static/img/icons/description.png"><b>Описание:</b> </br><textarea id="description" name="description" placeholder="Описание"></textarea ></span>
+       <hr class="hr-orange"> 
+       <span><img src="static/img/icons/id.png"><b>ID:</b><input style="font-size:7px;"  name="id" placeholder="ID" readonly></span>
+       <hr>
+       <span><img src="static/img/icons/keywords.png"><b>Ключови думи:</b></br><input id="keywords" name="keywords" placeholder="Ключови думи" value="микробус, бус, товарен, bus, van, cargo"></span>
+       <hr> 
+       
+       <h3 class="item-title"><img src="static/img/icons/caravan.png"><b>Заглавие:</b><u></br><input id="title" name="title" placeholder="Заглавие"></u></h3> 
+       <button id="generateTitleBtn">Генер. заглавие</button>
+
+       <hr>
+         <span>Категория:</span><input id="categoryInput" name="category" readonly> 
+         <span>Дата:</span><input id="dateInput" name="date" readonly> 
+
+       <button id="saveItemButton">Запази</button>
+    
+   </div>
+   ${imgCompressionHtml()}
+`;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Base HTML For scooter -----------------------------------------------------------------------
+async function scootersHtmlTemplateFields() {
+
+    return `  
+    
+     ${commonHtmlTemplateFields()}
+   
+    
+   <div id="modalItemDetailsEdit" class="modalItemDetails" tabindex="0">
+   
+         <h3 class="item-title"><img src="static/img/icons/scooter.png"><u></br>Категория скутери:</u></h3> 
+       
+       <hr>
+       <span><img src="static/img/icons/price.png"><b>Цена:</b> </br><input id="price" name="price" placeholder="Цена">€</span>
+       <hr>
+       <span><img src="static/img/icons/brand.png"><b>Марка:</b> </br><input id="brand" name="brand" type="text" placeholder="Марка"></span>
+       <hr>
+       <span><img src="static/img/icons/model.png"><b>Модел:</b> </br><input id="model" name="model" placeholder="Модел"></span>
+       <hr>
+       <span><img src="static/img/icons/calendar.png"><b>Година:</b> </br><input id="year" name="year" placeholder="Година"></span> 
+       <hr>
+       <span><img src="static/img/icons/horse.png"><b>Кубика:</b> </br><input id="scM3" name="m3" placeholder="Кубика"></span> 
+       <hr>
+       <span><img src="static/img/icons/fuel.png"><b>Гориво:</b> </br><input id="scFuel" name="fuel" placeholder="Гориво" list="scFuel"></span>
+       <datalist id="scFuel">
+                <option value="Бензин"></option>
+                <option value="На ток - Батерия"></option> 
+        </datalist>
+       <hr>
+       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> </br><input id="condition" name="condition" placeholder="Състояние" value="Използванo"></span>
+       <hr>
+       <span><img src="static/img/icons/location.png"><b>Местоположение:</b></br><input id="location" name="location" placeholder="Местоположение" value="България - Обл. Перник"></span>
+       <hr class="hr-orange"> 
+       <span><img src="static/img/icons/description.png"><b>Описание:</b> </br><textarea id="description" name="description" placeholder="Описание"></textarea ></span>
+       <hr class="hr-orange"> 
+       <span><img src="static/img/icons/id.png"><b>ID:</b><input style="font-size:7px;"  name="id" placeholder="ID" readonly></span>
+       <hr>
+       <span><img src="static/img/icons/keywords.png"><b>Ключови думи:</b></br><input id="keywords" name="keywords" placeholder="Ключови думи" value="скутер"></span>
+       <hr> 
+       
+       <h3 class="item-title"><img src="static/img/icons/caravan.png"><b>Заглавие:</b><u></br><input id="title" name="title" placeholder="Заглавие"></u></h3> 
+       <button id="generateTitleBtn">Генер. заглавие</button>
+
+       <hr>
+         <span>Категория:</span><input id="categoryInput" name="category" readonly> 
+         <span>Дата:</span><input id="dateInput" name="date" readonly> 
+
+       <button id="saveItemButton">Запази</button>
+    
+   </div>
+   ${imgCompressionHtml()}
+`;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Base HTML For scooter -----------------------------------------------------------------------
+async function wheelsHtmlTemplateFields() {
+
+    return `  
+    
+     ${commonHtmlTemplateFields()}
+   
+    
+   <div id="modalItemDetailsEdit" class="modalItemDetails" tabindex="0">
+   
+         <h3 class="item-title"><img src="static/img/icons/scooter.png"><u></br>Категория Гуми:</u></h3> 
+       
+       <hr>
+       <span><img src="static/img/icons/price.png"><b>Цена:</b> </br><input id="price" name="price" placeholder="Цена">€</span>
+       <hr>
+       <span><img src="static/img/icons/brand.png"><b>Марка:</b> </br><input id="brand" name="brand" type="text" placeholder="Марка"></span>
+       <hr>
+       <span><img src="static/img/icons/model.png"><b>Модел:</b> </br><input id="model" name="model" placeholder="Модел"></span>
+       <hr>
+       <span><img src="static/img/icons/calendar.png"><b>Година:</b> </br><input id="year" name="year" placeholder="Година"></span> 
+       <hr>
+       <span><img src="static/img/icons/wheels-type.png"><b>Тип:</b> </br><input id="type" name="type" placeholder="Тип"></span> 
+       <hr>
+       <span><img src="static/img/icons/wheels.png"><b>Брой:</b> </br><input id="wPcs" name="pcs" placeholder="Брой" list="wsPcs"></span> 
+       <datalist id="wsPcs">
+                <option value="1"></option>
+                <option value="2"></option> 
+                <option value="3"></option> 
+                <option value="4"></option> 
+                <option value="5"></option> 
+        </datalist>
+       <hr>
+       <span><img src="static/img/icons/wheel.png"><b>Размер:</b> </br><input id="measure" name="measure" placeholder="Раззмер"></span> 
+       <hr>
+       <span><img src="static/img/icons/tread.png"><b>Грайфер:</b> </br><input id="wTread" name="tread" placeholder="Грайфер"></span> 
+       <hr>
+       <span><img src="static/img/icons/bolt-holes.png"><b>Разтояние на болтовете:</b> </br><input id="wBoltHoles" name="boltHoles" placeholder="Разтояние на болтовете"></span> 
+       <hr>
+       <span><img src="static/img/icons/et.png"><b>ЕТ - дълб. на дж.:</b> </br><input id="wEt" name="et" placeholder="ЕТ"></span> 
+       <hr>
+       <span><img src="static/img/icons/center-hole.png"><b>Център:</b> </br><input id="wCenter" name="centerHole" placeholder="Център"></span> 
+       <hr>
+       <span><img src="static/img/icons/seasson.png"><b>Сезон:</b> </br><input id="wSeasson" name="seasson" placeholder="Сезон" list="wsSeasson"></span> 
+       <datalist id="wsSeasson">
+                <option value="Летни"></option>
+                <option value="Зимни"></option> 
+                <option value="Всесезонни"></option> 
+        </datalist>
+       <hr>
+       <span><img src="static/img/icons/wheel.png"><b>За модел кола:</b> </br><input id="wМeasure" name="fromCar" placeholder="От кола / За модел кола"></span> 
+       <hr>
+       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> </br><input id="condition" name="condition" placeholder="Състояние" value="Използванo"></span>
+       <hr>
+       <span><img src="static/img/icons/location.png"><b>Местоположение:</b></br><input id="location" name="location" placeholder="Местоположение" value="България - Обл. Перник"></span>
+       <hr class="hr-orange"> 
+       <span><img src="static/img/icons/description.png"><b>Описание:</b> </br><textarea id="description" name="description" placeholder="Описание"></textarea ></span>
+       <hr class="hr-orange"> 
+       <span><img src="static/img/icons/id.png"><b>ID:</b><input style="font-size:7px;"  name="id" placeholder="ID" readonly></span>
+       <hr>
+       <span><img src="static/img/icons/keywords.png"><b>Ключови думи:</b></br><input id="keywords" name="keywords" placeholder="Ключови думи" value="гуми"></span>
+       <hr> 
+       
+       <h3 class="item-title"><img src="static/img/icons/caravan.png"><b>Заглавие:</b><u></br><input id="title" name="title" placeholder="Заглавие"></u></h3> 
+       <button id="generateTitleBtn">Генер. заглавие</button>
+
+       <hr>
+         <span>Категория:</span><input id="categoryInput" name="category" readonly> 
+         <span>Дата:</span><input id="dateInput" name="date" readonly> 
+
+       <button id="saveItemButton">Запази</button>
+    
+   </div>
+   ${imgCompressionHtml()}
+`;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Base HTML For Products -----------------------------------------------------------------------
+async function productsHtmlTemplateFields() {
+
+    return `  
+    
+     ${commonHtmlTemplateFields()}
+   
+    
+   <div id="modalItemDetailsEdit" class="modalItemDetails" tabindex="0">
+   
+         <h3 class="item-title"><img src="static/img/icons/boxes.png"><u></br>Категория Продукти:</u></h3> 
+       
+       <hr>
+       <span><img src="static/img/icons/price.png"><b>Цена:</b> </br><input id="price" name="price" placeholder="Цена">€</span>
+       <hr>
+       <span><img src="static/img/icons/brand.png"><b>Марка:</b> </br><input id="brand" name="brand" type="text" placeholder="Марка"></span>
+       <hr>
+       <span><img src="static/img/icons/model.png"><b>Модел:</b> </br><input id="model" name="model" placeholder="Модел"></span>
+       <hr>
+       <span><img src="static/img/icons/calendar.png"><b>Година:</b> </br><input id="year" name="year" placeholder="Година"></span> 
+       <hr>
+       <span><img src="static/img/icons/ruler.png"><b>Големина:</b> </br><input id="size" name="size" placeholder="Големина"></span>
+       <hr>
+       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> </br><input id="condition" name="condition" placeholder="Състояние" value="Използванo"></span>
+       <hr>
+       <span><img src="static/img/icons/location.png"><b>Местоположение:</b></br><input id="location" name="location" placeholder="Местоположение" value="България - Обл. Перник"></span>
+       <hr class="hr-orange"> 
+       <span><img src="static/img/icons/description.png"><b>Описание:</b> </br><textarea id="description" name="description" placeholder="Описание"></textarea ></span>
+       <hr class="hr-orange"> 
+       <span><img src="static/img/icons/id.png"><b>ID:</b><input style="font-size:7px;"  name="id" placeholder="ID" readonly></span>
+       <hr>
+       <span><img src="static/img/icons/keywords.png"><b>Ключови думи:</b></br><input id="keywords" name="keywords" placeholder="Ключови думи" value="продукт"></span>
+       <hr> 
+       
+       <h3 class="item-title"><img src="static/img/icons/boxes.png"><b>Заглавие:</b><u></br><input id="title" name="title" placeholder="Заглавие"></u></h3> 
+       <button id="generateTitleBtn">Генер. заглавие</button>
+
+       <hr>
+         <span>Категория:</span><input id="categoryInput" name="category" readonly> 
+         <span>Дата:</span><input id="dateInput" name="date" readonly> 
+
+       <button id="saveItemButton">Запази</button>
+    
+   </div>
+   ${imgCompressionHtml()}
+`;
+}
+
+
+
+
+
+
+
+
+
+
+// Base HTML For Equipment -----------------------------------------------------------------------
+async function equipmentHtmlTemplateFields() {
+
+    return `  
+    
+     ${commonHtmlTemplateFields()}
+   
+    
+   <div id="modalItemDetailsEdit" class="modalItemDetails" tabindex="0">
+   
+         <h3 class="item-title"><img src="static/img/icons/reol.png"><u></br>Категория Екипировка:</u></h3> 
+       
+       <hr>
+       <span><img src="static/img/icons/price.png"><b>Цена:</b> </br><input id="price" name="price" placeholder="Цена">€</span>
+       <hr>
+       <span><img src="static/img/icons/brand.png"><b>Марка:</b> </br><input id="brand" name="brand" type="text" placeholder="Марка"></span>
+       <hr>
+       <span><img src="static/img/icons/model.png"><b>Модел:</b> </br><input id="model" name="model" placeholder="Модел"></span>
+       <hr>
+       <span><img src="static/img/icons/calendar.png"><b>Година:</b> </br><input id="year" name="year" placeholder="Година"></span> 
+       <hr>
+       <span><img src="static/img/icons/ruler.png"><b>Големина:</b> </br><input id="size" name="size" placeholder="Големина"></span>
+       <hr>
+       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> </br><input id="condition" name="condition" placeholder="Състояние" value="Използванo"></span>
+       <hr>
+       <span><img src="static/img/icons/location.png"><b>Местоположение:</b></br><input id="location" name="location" placeholder="Местоположение" value="България - Обл. Перник"></span>
+       <hr class="hr-orange"> 
+       <span><img src="static/img/icons/description.png"><b>Описание:</b> </br><textarea id="description" name="description" placeholder="Описание"></textarea ></span>
+       <hr class="hr-orange"> 
+       <span><img src="static/img/icons/id.png"><b>ID:</b><input style="font-size:7px;"  name="id" placeholder="ID" readonly></span>
+       <hr>
+       <span><img src="static/img/icons/keywords.png"><b>Ключови думи:</b></br><input id="keywords" name="keywords" placeholder="Ключови думи" value="екипировка"></span>
+       <hr> 
+       
+       <h3 class="item-title"><img src="static/img/icons/boxes.png"><b>Заглавие:</b><u></br><input id="title" name="title" placeholder="Заглавие"></u></h3> 
+       <button id="generateTitleBtn">Генер. заглавие</button>
+
+       <hr>
+         <span>Категория:</span><input id="categoryInput" name="category" readonly> 
+         <span>Дата:</span><input id="dateInput" name="date" readonly> 
+
+       <button id="saveItemButton">Запази</button>
+    
+   </div>
+   ${imgCompressionHtml()}
+`;
+}
+
+
+
+
+
+
+
+
+// Base HTML For Appliances -----------------------------------------------------------------------
+async function appliancesHtmlTemplateFields() {
+
+    return `  
+    
+     ${commonHtmlTemplateFields()}
+   
+    
+   <div id="modalItemDetailsEdit" class="modalItemDetails" tabindex="0">
+   
+         <h3 class="item-title"><img src="static/img/icons/appliances.png"><u></br>Категория Бяла техника:</u></h3> 
+       
+       <hr>
+       <span><img src="static/img/icons/price.png"><b>Цена:</b> </br><input id="price" name="price" placeholder="Цена">€</span>
+       <hr>
+       <span><img src="static/img/icons/brand.png"><b>Марка:</b> </br><input id="brand" name="brand" type="text" placeholder="Марка"></span>
+       <hr>
+       <span><img src="static/img/icons/model.png"><b>Модел:</b> </br><input id="model" name="model" placeholder="Модел"></span>
+       <hr>
+       <span><img src="static/img/icons/calendar.png"><b>Година:</b> </br><input id="year" name="year" placeholder="Година"></span> 
+       <hr>
+       <span><img src="static/img/icons/ruler.png"><b>Големина:</b> </br><input id="size" name="size" placeholder="Големина"></span>
+       <hr>
+       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> </br><input id="condition" name="condition" placeholder="Състояние" value="Използванo"></span>
+       <hr>
+       <span><img src="static/img/icons/location.png"><b>Местоположение:</b></br><input id="location" name="location" placeholder="Местоположение" value="България - Обл. Перник"></span>
+       <hr class="hr-orange"> 
+       <span><img src="static/img/icons/description.png"><b>Описание:</b> </br><textarea id="description" name="description" placeholder="Описание"></textarea ></span>
+       <hr class="hr-orange"> 
+       <span><img src="static/img/icons/id.png"><b>ID:</b><input style="font-size:7px;"  name="id" placeholder="ID" readonly></span>
+       <hr>
+       <span><img src="static/img/icons/keywords.png"><b>Ключови думи:</b></br><input id="keywords" name="keywords" placeholder="Ключови думи" value="Бяла техника"></span>
+       <hr> 
+       
+       <h3 class="item-title"><img src="static/img/icons/boxes.png"><b>Заглавие:</b><u></br><input id="title" name="title" placeholder="Заглавие"></u></h3> 
+       <button id="generateTitleBtn">Генер. заглавие</button>
+
+       <hr>
+         <span>Категория:</span><input id="categoryInput" name="category" readonly> 
+         <span>Дата:</span><input id="dateInput" name="date" readonly> 
+
+       <button id="saveItemButton">Запази</button>
+    
+   </div>
+   ${imgCompressionHtml()}
+`;
+}
+
+
+
+
+
+
+
+// Base HTML For Boats -----------------------------------------------------------------------
+async function boatsHtmlTemplateFields() {
+
+    return `  
+    
+     ${commonHtmlTemplateFields()}
+   
+    
+   <div id="modalItemDetailsEdit" class="modalItemDetails" tabindex="0">
+   
+         <h3 class="item-title"><img src="static/img/icons/boat.png"><u></br>Категория лотки:</u></h3> 
+       
+       <hr>
+       <span><img src="static/img/icons/price.png"><b>Цена:</b> </br><input id="price" name="price" placeholder="Цена">€</span>
+       <hr>
+       <span><img src="static/img/icons/brand.png"><b>Марка:</b> </br><input id="brand" name="brand" type="text" placeholder="Марка"></span>
+       <hr>
+       <span><img src="static/img/icons/model.png"><b>Модел:</b> </br><input id="model" name="model" placeholder="Модел"></span>
+       <hr>
+       <span><img src="static/img/icons/calendar.png"><b>Година:</b> </br><input id="year" name="year" placeholder="Година"></span> 
+       <hr>
+
+       <span><img src="static/img/icons/ruler.png"><b>Дължина:</b> </br><input id="length" name="length" placeholder="Дължинна"></span>
+       <hr>
+       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> </br><input id="condition" name="condition" placeholder="Състояние" value="Използванo"></span>
+       <hr>
+       <span><img src="static/img/icons/battery.png"><b>Акумулатор:</b> </br><input id="battery" name="battery" placeholder="Акумулатор" list="boatBattery"></span>
+       <datalist id="boatBattery">
+                <option value="Да - 12V"></option>
+                <option value="Не"></option> 
+         </datalist>
+       <hr>
+       <span><img src="static/img/icons/documents.png"><b>Документи:</b> </br><input id="documents" name="documents" placeholder="Документи" value="Да"></span>
+       <hr>
+       <span><img src="static/img/icons/plate.png"><b>Номер:</b> </br><input id="plate" name="plate" placeholder="Номер" list="boatPlate"></span>
+           <datalist id="boatPlate">
+                <option value="Да - Датски"></option>
+                <option value="Да"></option>
+                <option value="Не"></option>
+            </datalist>
+       <hr>
+       <span><img src="static/img/icons/location.png"><b>Местоположение:</b></br><input id="location" name="location" placeholder="Местоположение" value="България - Обл. Перник"></span>
+       <hr class="hr-orange"> 
+       <span><img src="static/img/icons/description.png"><b>Описание:</b> </br><textarea id="description" name="description" placeholder="Описание"></textarea ></span>
+       <hr class="hr-orange"> 
+       <span><img src="static/img/icons/id.png"><b>ID:</b><input style="font-size:7px;"  name="id" placeholder="ID" readonly></span>
+       <hr>
+       <span><img src="static/img/icons/keywords.png"><b>Ключови думи:</b></br><input id="keywords" name="keywords" placeholder="Ключови думи" value="лотка, boat, lotka"></span>
+       <hr> 
+       
+       <h3 class="item-title"><img src="static/img/icons/caravan.png"><b>Заглавие:</b><u></br><input id="title" name="title" placeholder="Заглавие"></u></h3> 
+       <button id="generateTitleBtn">Генер. заглавие</button>
+
+       <hr>
+         <span>Категория:</span><input id="categoryInput" name="category" readonly> 
+         <span>Дата:</span><input id="dateInput" name="date" readonly> 
+
+       <button id="saveItemButton">Запази</button>
+    
+   </div>
+   ${imgCompressionHtml()}
+`;
+}
+
+
+
+
+
+
 
 
 
@@ -2216,12 +3023,49 @@ async function loadAppropriateFields(itemTypePass) {
 
     if (itemType == "caravans") {
         apFields.innerHTML = await caravansHtmlTemplateFields();
-        document.getElementById("saveItemButton")?.addEventListener("click", (e) => { saveItem(e) }); // For upload
-        document.getElementById("generateCaravanTitleBtn")?.addEventListener("click", generateCaravanTitle); // Generate caravan title
-        //  document.getElementById("imgPicker").addEventListener("change", handleImages); // For the modal
-        document.getElementById("imgPicker")?.addEventListener("change", async () => { await imgPickerHandler() }); // Imgpicker handler  // Common for all categories
-        imgCompressionEventDeclaraton();
     }
+    else if (itemType == "cars") {
+        apFields.innerHTML = await carsHtmlTemplateFields();
+
+    }
+    else if (itemType == "trailers") {
+        apFields.innerHTML = await trailersHtmlTemplateFields();
+
+    }
+    else if (itemType == "products") {
+        apFields.innerHTML = await productsHtmlTemplateFields();
+
+    }
+    else if (itemType == "equipment") {
+        apFields.innerHTML = await equipmentHtmlTemplateFields();
+
+    }
+    else if (itemType == "wheels") {
+        apFields.innerHTML = await wheelsHtmlTemplateFields();
+
+    }
+    else if (itemType == "scooters") {
+        apFields.innerHTML = await scootersHtmlTemplateFields();
+
+    }
+    else if (itemType == "appliances") {
+        apFields.innerHTML = await appliancesHtmlTemplateFields();
+
+    }
+    else if (itemType == "microbuses") {
+        apFields.innerHTML = await microbusesHtmlTemplateFields();
+
+    }
+    else if (itemType == "boats") {
+        apFields.innerHTML = await boatsHtmlTemplateFields();
+    }
+
+    document.getElementById("generateTitleBtn")?.addEventListener("click", generateItemTitle); // Generate Title
+
+    document.getElementById("saveItemButton")?.addEventListener("click", (e) => { saveItem(e) }); // For upload
+    //  document.getElementById("imgPicker").addEventListener("change", handleImages); // For the modal
+    document.getElementById("imgPicker")?.addEventListener("change", async () => { await imgPickerHandler() }); // Imgpicker handler  // Common for all categories
+    imgCompressionEventDeclaraton();
     document.getElementById('arrow-leftSlideImg')?.addEventListener('click', async () => { await toggleSlideImg(-1) }); // The img slide left button
     document.getElementById('arrow-rightSlideImg')?.addEventListener('click', async () => { await toggleSlideImg(1) }); // The img slide right button
     document.getElementById('rotateImgView')?.addEventListener('click', async () => { await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, true, false) }); // THe img rotate button
@@ -2229,15 +3073,28 @@ async function loadAppropriateFields(itemTypePass) {
 }
 
 // Generate Title ================================================================
-function generateCaravanTitle() {
-    let brand = document.getElementById('caravanBrand');
-    let model = document.getElementById('caravanModel');
-    let length = document.getElementById('caravanLength');
-    let year = document.getElementById('caravanYear');
-    let genTitle = `${brand.value}-${model.value}-${length.value}-${year.value}`;
+function generateItemTitle() {
+    const values = [
+        document.getElementById('brand')?.value,
+        document.getElementById('model')?.value,
+        document.getElementById('length')?.value,
+        document.getElementById('year')?.value,
+        document.getElementById('size')?.value,
+        document.getElementById('scM3')?.value,
+        document.getElementById('measure')?.value,
+        document.getElementById('axle')?.value
+    ];
+
+    const genTitle = values
+        .filter(v => v)       // removes undefined, null, '', 0
+        .join('-');
 
     document.getElementById('title').value = genTitle;
 }
+
+
+
+
 
 
 
@@ -2423,7 +3280,7 @@ async function handleItemImagesEdit(itemId, type) {
             if (okResponse) {
 
                 // let imgExtension = images[v].slice((Math.max(0, images[v].lastIndexOf(".")) || Infinity) + 1); // Get the file extension of the image - .jpg, .png
-                    // let imgExtension = '.' + editItemImgArr[v].split(';')[0].split('/')[1];
+                // let imgExtension = '.' + editItemImgArr[v].split(';')[0].split('/')[1];
 
                 githubFilePathForImg = `resources/img/${type}/${itemId}/${itemId}--${[v + 1] + '-' + Date.now() + '.' + imgCompressionExtensionGlobal}`; // Ex. resources/img/caravans/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z/Caravan-Knaus-Sunshine-540-D2025-01-21T17-59-45.662Z-1
 
@@ -2733,8 +3590,7 @@ async function deleteItemByItemLink(itemLink) {
         console.log(item);
         //   delete item; 
     }
-    else
-    {
+    else {
 
     }
 }
@@ -2794,40 +3650,34 @@ function autoLoadCredentialsGlobal() {
 // Load Credentials
 function loadCredentialsFromLocalStorageToGlobalVariables() {
     // Get data from local Storage and populate the "local variables" that are global and are found in the CRUD.js file.
-    if(localStorage.getItem("githubUser") == undefined || localStorage.getItem("githubUser") =='')
-    {
+    if (localStorage.getItem("githubUser") == undefined || localStorage.getItem("githubUser") == '') {
         githubUser = 'stevicamp';
-       localStorage.setItem('githubUser', 'stevicamp');
+        localStorage.setItem('githubUser', 'stevicamp');
 
     }
-    else
-    {
+    else {
         githubUser = localStorage.getItem("githubUser");
     }
 
 
-    if(localStorage.getItem("githubRepo") == undefined || localStorage.getItem("githubRepo") == '')
-    {
-       githubRepo = 'StevicampStorage';
-       localStorage.setItem('githubRepo', 'StevicampStorage');
+    if (localStorage.getItem("githubRepo") == undefined || localStorage.getItem("githubRepo") == '') {
+        githubRepo = 'StevicampStorage';
+        localStorage.setItem('githubRepo', 'StevicampStorage');
 
     }
-    else
-    {
+    else {
         githubRepo = localStorage.getItem('githubRepo');
     }
-    
 
-    if(localStorage.getItem("githubFilePathDb") == undefined || localStorage.getItem("githubFilePathDb") == '')
-    {
-          githubFilePathDb = 'resources/db/database.json';
-          localStorage.setItem('githubFilePathDb', 'resources/db/database.json');
+
+    if (localStorage.getItem("githubFilePathDb") == undefined || localStorage.getItem("githubFilePathDb") == '') {
+        githubFilePathDb = 'resources/db/database.json';
+        localStorage.setItem('githubFilePathDb', 'resources/db/database.json');
     }
-    else
-    {
-        githubFilePathDb = localStorage.getItem("githubFilePathDb"); 
+    else {
+        githubFilePathDb = localStorage.getItem("githubFilePathDb");
     }
-    
+
 
 
     githubToken = localStorage.getItem("githubToken");
@@ -2968,7 +3818,7 @@ function resetImgCompressionFields() {
     document.getElementById('imgCompressionSlider').value = 55;
     document.getElementById('imgSaturrationSlider').value = 120;
     document.getElementById('imgContrastSlider').value = 100;
-    document.getElementById('imgBrightnessSlider').value = 100; 
+    document.getElementById('imgBrightnessSlider').value = 100;
 }
 
 
