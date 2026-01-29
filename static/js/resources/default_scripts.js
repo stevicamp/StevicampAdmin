@@ -512,31 +512,33 @@ async function carsHtmlTemplate(obj) {
        <hr>
        <span><img src="static/img/icons/model.png"><b>Модел:</b> ${obj.model}</span>
        <hr>
-       <span><img src="static/img/icons/kind.png"><b>Тип:</b> ${obj.kind}</span>
-       <hr>
        <span><img src="static/img/icons/calendar.png"><b>Година:</b> ${obj.year}</span>
        <hr>
-       <span><img src="static/img/icons/engine.png"><b>Двигател:</b> ${obj.engine}; ${obj.hp}</span>
+       <span><img src="static/img/icons/kind.png"><b>Тип:</b> ${obj.kind}</span>
+       <hr>
+       <span><img src="static/img/icons/engine.png"><b>Двигател:</b> ${obj.engine}</span>
+       <hr>
+       <span><img src="static/img/icons/horse.png"><b>Конски сили:</b> ${obj.hp}</span>
        <hr>
        <span><img src="static/img/icons/km.png"><b>Пробег:</b> ${obj.km}</span>
        <hr>
-       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> ${obj.condition}</span>
+       <span><img src="static/img/icons/gears.png"><b>Скорости:</b> ${obj.gears}</span>
        <hr>
        <span><img src="static/img/icons/parctronic.png"><b>Парктроник:</b> ${obj.parktronic}</span>
        <hr>
-       <span><img src="static/img/icons/gears.png"><b>Скорости:</b> ${obj.gears}</span>
-       <hr>
-       <span><img src="static/img/icons/car-door.png"><b>Врати:</b> ${obj.doors}</span>
+       <span><img src="static/img/icons/tow.png"><b>Теглич:</b> ${obj.tow}</span>
        <hr>
        <span><img src="static/img/icons/particlefilter.png"><b>Партикфилтър:</b> ${obj.particulateFilter}</span>
        <hr>
        <span><img src="static/img/icons/snowflake.png"><b>АС/Климатик:</b> ${obj.ac}</span>
        <hr>
-       <span><img src="static/img/icons/tow.png"><b>Теглич:</b> ${obj.tow}</span>
+       <span><img src="static/img/icons/car-door.png"><b>Врати:</b> ${obj.doors}</span>
        <hr>
        <span><img src="static/img/icons/location.png"><b>ГПС:</b> ${obj.gps}</span>
        <hr>
        <span><img src="static/img/icons/car-seat.png"><b>Места:</b> ${obj.seats}</span>
+       <hr>
+       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> ${obj.condition}</span>
        <hr>
        <span><img src="static/img/icons/documents.png"><b>Документи:</b> ${obj.documents}</span>
        <hr>
