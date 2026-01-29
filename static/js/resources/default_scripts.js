@@ -516,6 +516,8 @@ async function carsHtmlTemplate(obj) {
        <hr>
        <span><img src="static/img/icons/kind.png"><b>Тип:</b> ${obj.kind}</span>
        <hr>
+       <span><img src="static/img/icons/fuel.png"><b>Гориво:</b> ${obj.fuel}</span>
+       <hr>
        <span><img src="static/img/icons/engine.png"><b>Двигател:</b> ${obj.engine}</span>
        <hr>
        <span><img src="static/img/icons/horse.png"><b>Конски сили:</b> ${obj.hp}</span>
@@ -598,12 +600,14 @@ async function microbusHtmlTemplate(obj) {
        <hr>
        <span><img src="static/img/icons/calendar.png"><b>Година:</b> ${obj.year}</span>
        <hr>
-       <span><img src="static/img/icons/engine.png"><b>Двигател:</b> ${obj.engine}; ${obj.hp}</span>
+       <span><img src="static/img/icons/fuel.png"><b>Гориво:</b> ${obj.fuel}</span>
+       <hr>
+       <span><img src="static/img/icons/engine.png"><b>Двигател:</b> ${obj.engine}</span>
+       <hr>
+       <span><img src="static/img/icons/horse.png"><b>Конски сили:</b> ${obj.hp}</span>
        <hr>
        <span><img src="static/img/icons/km.png"><b>Пробег:</b> ${obj.km}</span>
-       <hr>
-       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> ${obj.condition}</span>
-       <hr>
+       <hr> 
        <span><img src="static/img/icons/ruler.png"><b>Размер:</b> ${obj.size}</span>
        <hr>
        <span><img src="static/img/icons/parctronic.png"><b>Парктроник:</b> ${obj.parktronic}</span>
@@ -611,6 +615,8 @@ async function microbusHtmlTemplate(obj) {
        <span><img src="static/img/icons/gears.png"><b>Скорости:</b> ${obj.gears}</span>
        <hr>
        <span><img src="static/img/icons/car-door.png"><b>Врати:</b> ${obj.doors}</span>
+       <hr>
+       <span><img src="static/img/icons/load.png"><b>Товарене:</b> ${obj.load}</span>
        <hr>
        <span><img src="static/img/icons/particlefilter.png"><b>Партикфилтър:</b> ${obj.particulateFilter}</span>
        <hr>
@@ -620,11 +626,11 @@ async function microbusHtmlTemplate(obj) {
        <hr>
        <span><img src="static/img/icons/car-seat.png"><b>Места:</b> ${obj.seats}</span>
        <hr>
-       <span><img src="static/img/icons/type.png"><b>Тип:</b> ${obj.type}</span>
+       <span><img src="static/img/icons/car-type.png"><b>Тип:</b> ${obj.type}</span>
        <hr>
        <span><img src="static/img/icons/tow.png"><b>Теглич:</b> ${obj.tow}</span>
        <hr>
-       <span><img src="static/img/icons/load.png"><b>Товарене:</b> ${obj.loading}</span>
+       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> ${obj.condition}</span>
        <hr>
        <span><img src="static/img/icons/documents.png"><b>Документи:</b> ${obj.documents}</span>
        <hr>
@@ -684,6 +690,8 @@ async function scootersHtmlTemplate(obj) {
        <span><img src="static/img/icons/model.png"><b>Модел:</b> ${obj.model}</span>
        <hr>
        <span><img src="static/img/icons/wheel.png"><b>Колела:</b> ${obj.wheels}</span>
+       <hr>
+       <span><img src="static/img/icons/horse.png"><b>Кубика:</b> ${obj.m3}</span>
        <hr>
        <span><img src="static/img/icons/calendar.png"><b>Година:</b> ${obj.year}</span> 
        <hr>
@@ -818,9 +826,7 @@ async function wheelsHtmlTemplate(obj) {
        <hr>
        <span><img src="static/img/icons/model.png"><b>Модел:</b> ${obj.model}</span>
        <hr>
-       <span><img src="static/img/icons/ruler.png"><b>Мярка:</b> ${obj.measure}</span>
-       <hr>
-       <span><img src="static/img/icons/wheel.png"><b>Размер:</b> ${obj.measure}</span>
+       <span><img src="static/img/icons/ruler.png"><b>Размер:</b> ${obj.measure}</span>
        <hr>
        <span><img src="static/img/icons/et.png"><b>ET:</b> ${obj.et}</span>
        <hr> 
@@ -840,7 +846,7 @@ async function wheelsHtmlTemplate(obj) {
        <hr>
        <span><img src="static/img/icons/wheels.png"><b>Брой:</b> ${obj.pcs}</span>
        <hr>
-       <span><img src="static/img/icons/car.png"><b>От/За:</b> ${obj.fromCar}</span>
+       <span><img src="static/img/icons/car.png"><b>От/Става за:</b> ${obj.fromCar}</span>
        <hr>
        <hr class="hr-orange"> 
        <span><img src="static/img/icons/description.png"><b>Описание:</b> ${obj.description}</span>
@@ -898,9 +904,9 @@ async function productsHtmlTemplate(obj) {
        <hr>
        <span><img src="static/img/icons/calendar.png"><b>Година:</b> ${obj.year}</span>
        <hr>
-       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> ${obj.condition}</span>
-       <hr>
        <span><img src="static/img/icons/ruler.png"><b>Размер:</b> ${obj.size}</span>
+       <hr>
+       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> ${obj.condition}</span>
        <hr>
        <span><img src="static/img/icons/location.png"><b>Местоположение:</b> ${obj.location}</span>
        <hr class="hr-orange"> 
@@ -1020,13 +1026,13 @@ async function appliancesHtmlTemplate(obj) {
        <hr>
        <span><img src="static/img/icons/model.png"><b>Модел:</b> ${obj.model}</span>
        <hr>
-       <span><img src="static/img/icons/calendar.png"><b>Година:</b> ${obj.year}</span>
-       <hr>
        <span><img src="static/img/icons/kind.png"><b>Тип:</b> ${obj.type}</span>
        <hr>
-       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> ${obj.condition}</span>
+       <span><img src="static/img/icons/calendar.png"><b>Година:</b> ${obj.year}</span>
        <hr>
        <span><img src="static/img/icons/ruler.png"><b>Размер:</b> ${obj.size}</span>
+       <hr>
+       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> ${obj.condition}</span>
        <hr>
        <span><img src="static/img/icons/location.png"><b>Местоположение:</b> ${obj.location}</span>
        <hr class="hr-orange"> 
@@ -1068,7 +1074,7 @@ async function boatsHtmlTemplate(obj) {
    
      
    <div id="modalItemDetails" class="modalItemDetails" tabindex="0">
-   <h3 class="item-title"><img src="static/img/icons/appliances.png"><u>${obj.title}</u></h3>
+   <h3 class="item-title"><img src="static/img/icons/boat.png"><u>${obj.title}</u></h3>
    <span style="margin: 0 0 0 auto;"><a class="item_share_button" href="javascript: copyToClipboard(copyElementTextById('modalItemDetails'));" title="Натиснете за да Копирате описанието"><img src="static/img/icons/copy.png"></a></span>  
 
        <hr>
@@ -1088,9 +1094,14 @@ async function boatsHtmlTemplate(obj) {
        <hr>
        <span><img src="static/img/icons/kind.png"><b>Тип:</b> ${obj.type}</span>
        <hr>
-       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> ${obj.condition}</span>
-       <hr>
+       
        <span><img src="static/img/icons/ruler.png"><b>Размер:</b> ${obj.size}</span>
+       <hr>
+       <span><img src="static/img/icons/documents.png"><b>Документи:</b> ${obj.documents}</span>
+       <hr>
+       <span><img src="static/img/icons/battery.png"><b>Акумулатор:</b> ${obj.battery}</span>
+       <hr>
+       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> ${obj.condition}</span>
        <hr>
        <span><img src="static/img/icons/location.png"><b>Местоположение:</b> ${obj.location}</span>
        <hr class="hr-orange"> 
@@ -2457,7 +2468,7 @@ async function carsHtmlTemplateFields() {
                 <option value="Не"></option> 
         </datalist>
        <hr>
-       <hr>
+       
        <span><img src="static/img/icons/location.png"><b>GPS:</b> </br><input id="gps" name="gps" placeholder="GPS" list="carGps"></span>
        <datalist id="carGps">
                 <option value="Да"></option> 
@@ -2555,6 +2566,8 @@ async function microbusesHtmlTemplateFields() {
        <hr>
        <span><img src="static/img/icons/km.png"><b>Пробег:</b> </br><input id="microBusКм" name="km" placeholder="Пробег км."></span> 
        <hr>
+       <span><img src="static/img/icons/load.png"><b>Товарене:</b> </br><input id="microbusLoad" name="load" placeholder="Товарене"></span>
+       <hr>
        <span><img src="static/img/icons/car-door.png"><b>Врати:</b> </br><input id="microBusDoors" name="doors" placeholder="Врати" list="carsDoors"></span> 
           <datalist id="carsDoors">
                 <option value="3"></option>
@@ -2571,6 +2584,14 @@ async function microbusesHtmlTemplateFields() {
                 <option value="Голям бус"></option>
         </datalist>
        <hr>
+       <span><img src="static/img/icons/car-seat.png"><b>Места:</b> </br><input id="microbusSat" name="seats" placeholder="Места" list="microbusSeats"></span>
+       <datalist id="microbusSeats">
+                <option value="2"></option> 
+                <option value="4"></option> 
+                <option value="5"></option> 
+                <option value="6"></option> 
+        </datalist>
+       <hr>
        <span><img src="static/img/icons/gears.png"><b>Скорости:</b> </br><input id="microBusGears" name="gears" placeholder="Скорости" list="microBusesGears"></span> 
           <datalist id="microBusesGears">
                 <option value="Ръчни"></option>
@@ -2585,12 +2606,24 @@ async function microbusesHtmlTemplateFields() {
                 <option value="2.5"></option>
                 <option value="3.0"></option>
         </datalist>
+        <hr> 
+        <span><img src="static/img/icons/particlefilter.png"><b>Катализатор:</b> </br><input id="particulateFilter" name="particulateFilter" placeholder="Катализатор" list="microbusParticlefilter"></span>
+       <datalist id="microbusParticlefilter">
+                <option value="Да"></option> 
+                <option value="Не"></option> 
+        </datalist>
        <hr> 
        <span><img src="static/img/icons/fuel.png"><b>Гориво:</b> </br><input id="microBusFuel" name="fuel" placeholder="Гориво" list="microBusesFuel"></span>
        <datalist id="microBusesFuel">
                 <option value="Бензин"></option>
                 <option value="Дизел"></option> 
                 <option value="На ток - Батерия"></option> 
+        </datalist>
+       <hr> 
+         <span><img src="static/img/icons/parctronic.png"><b>Парктроник:</b> </br><input id="parktronic" name="parktronic" placeholder="Парктроник" list="microbusParktronic"></span>
+       <datalist id="microbusParktronic">
+                <option value="Да"></option> 
+                <option value="Не"></option> 
         </datalist>
        <hr>
        <span><img src="static/img/icons/gear.png"><b>Състояние:</b> </br><input id="condition" name="condition" placeholder="Състояние" value="Използванo"></span>
@@ -2607,6 +2640,12 @@ async function microbusesHtmlTemplateFields() {
                 <option value="Не"></option> 
         </datalist>
        <hr>
+        <span><img src="static/img/icons/location.png"><b>GPS:</b> </br><input id="gps" name="gps" placeholder="GPS" list="microbusGps"></span>
+       <datalist id="microbusGps">
+                <option value="Да"></option> 
+                <option value="Не"></option> 
+        </datalist>
+         <hr>
         <span><img src="static/img/icons/bus-size.png"><b>Големина на товарна част:</b> </br><input id="microBusSize" name="size" placeholder="Големина на товарна част"></span>
        <hr>
        <span><img src="static/img/icons/documents.png"><b>Документи:</b> </br><input id="documents" name="documents" placeholder="Документи" value="Да"></span>
@@ -2675,6 +2714,15 @@ async function scootersHtmlTemplateFields() {
        <span><img src="static/img/icons/calendar.png"><b>Година:</b> </br><input id="year" name="year" placeholder="Година"></span> 
        <hr>
        <span><img src="static/img/icons/horse.png"><b>Кубика:</b> </br><input id="scM3" name="m3" placeholder="Кубика"></span> 
+       <hr>
+       <span><img src="static/img/icons/km.png"><b>Пробег:</b> </br><input id="scKm" name="km" placeholder="Пробег"></span> 
+       <hr>
+       <span><img src="static/img/icons/wheel.png"><b>Колела:</b> </br><input id="scWheel" name="wheels" placeholder="Колела" list="scWheels"></span>
+       <datalist id="scWheels">
+                <option value="2 - колела"></option>
+                <option value="3 - колела"></option> 
+                <option value="4 - колела"></option> 
+        </datalist>
        <hr>
        <span><img src="static/img/icons/fuel.png"><b>Гориво:</b> </br><input id="scFuel" name="fuel" placeholder="Гориво" list="scFuel"></span>
        <datalist id="scFuel">
@@ -2902,7 +2950,7 @@ async function equipmentHtmlTemplateFields() {
        <span><img src="static/img/icons/keywords.png"><b>Ключови думи:</b></br><input id="keywords" name="keywords" placeholder="Ключови думи" value="екипировка"></span>
        <hr> 
        
-       <h3 class="item-title"><img src="static/img/icons/boxes.png"><b>Заглавие:</b><u></br><input id="title" name="title" placeholder="Заглавие"></u></h3> 
+       <h3 class="item-title"><img src="static/img/icons/reol.png"><b>Заглавие:</b><u></br><input id="title" name="title" placeholder="Заглавие"></u></h3> 
        <button id="generateTitleBtn">Генер. заглавие</button>
 
        <hr>
@@ -2944,6 +2992,8 @@ async function appliancesHtmlTemplateFields() {
        <hr>
        <span><img src="static/img/icons/calendar.png"><b>Година:</b> </br><input id="year" name="year" placeholder="Година"></span> 
        <hr>
+       <span><img src="static/img/icons/kind.png"><b>Тип:</b> </br><input id="type" name="type" placeholder="Тип"></span>
+       <hr>
        <span><img src="static/img/icons/ruler.png"><b>Големина:</b> </br><input id="size" name="size" placeholder="Големина"></span>
        <hr>
        <span><img src="static/img/icons/gear.png"><b>Състояние:</b> </br><input id="condition" name="condition" placeholder="Състояние" value="Използванo"></span>
@@ -2957,7 +3007,7 @@ async function appliancesHtmlTemplateFields() {
        <span><img src="static/img/icons/keywords.png"><b>Ключови думи:</b></br><input id="keywords" name="keywords" placeholder="Ключови думи" value="Бяла техника"></span>
        <hr> 
        
-       <h3 class="item-title"><img src="static/img/icons/boxes.png"><b>Заглавие:</b><u></br><input id="title" name="title" placeholder="Заглавие"></u></h3> 
+       <h3 class="item-title"><img src="static/img/icons/appliances.png"><b>Заглавие:</b><u></br><input id="title" name="title" placeholder="Заглавие"></u></h3> 
        <button id="generateTitleBtn">Генер. заглавие</button>
 
        <hr>
@@ -2998,17 +3048,26 @@ async function boatsHtmlTemplateFields() {
        <hr>
        <span><img src="static/img/icons/calendar.png"><b>Година:</b> </br><input id="year" name="year" placeholder="Година"></span> 
        <hr>
-
-       <span><img src="static/img/icons/ruler.png"><b>Дължина:</b> </br><input id="length" name="length" placeholder="Дължинна"></span>
+       <span><img src="static/img/icons/kind.png"><b>Тип:</b> </br><input id="type" name="type" placeholder="Тип" list="boatType"></span> 
+       <datalist id="boatType">
+                <option value="Риб"></option>
+                <option value="Обикновенна"></option> 
+                <option value="Обикновенна - моторна"></option> 
+                <option value="Яхта"></option> 
+         </datalist>
        <hr>
-       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> </br><input id="condition" name="condition" placeholder="Състояние" value="Използванo"></span>
+       <span><img src="static/img/icons/ruler.png"><b>Размер:</b> </br><input id="size" name="size" placeholder="Размер"></span>
        <hr>
+    
        <span><img src="static/img/icons/battery.png"><b>Акумулатор:</b> </br><input id="battery" name="battery" placeholder="Акумулатор" list="boatBattery"></span>
        <datalist id="boatBattery">
                 <option value="Да - 12V"></option>
                 <option value="Не"></option> 
          </datalist>
        <hr>
+       <span><img src="static/img/icons/gear.png"><b>Състояние:</b> </br><input id="condition" name="condition" placeholder="Състояние" value="Използванo"></span>
+       <hr>
+
        <span><img src="static/img/icons/documents.png"><b>Документи:</b> </br><input id="documents" name="documents" placeholder="Документи" value="Да"></span>
        <hr>
        <span><img src="static/img/icons/plate.png"><b>Номер:</b> </br><input id="plate" name="plate" placeholder="Номер" list="boatPlate"></span>
@@ -3027,7 +3086,7 @@ async function boatsHtmlTemplateFields() {
        <span><img src="static/img/icons/keywords.png"><b>Ключови думи:</b></br><input id="keywords" name="keywords" placeholder="Ключови думи" value="лотка, boat, lotka"></span>
        <hr> 
        
-       <h3 class="item-title"><img src="static/img/icons/caravan.png"><b>Заглавие:</b><u></br><input id="title" name="title" placeholder="Заглавие"></u></h3> 
+       <h3 class="item-title"><img src="static/img/icons/boat.png"><b>Заглавие:</b><u></br><input id="title" name="title" placeholder="Заглавие"></u></h3> 
        <button id="generateTitleBtn">Генер. заглавие</button>
 
        <hr>

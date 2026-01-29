@@ -2,6 +2,11 @@ Stevicamp
 
 
 
+
+1. Create a function that generates the title for each object based on origin not host
+...............
+1. Why sometimesphotos desapiar from the product? The image is in the github, but it is not displayed. It seems that the link is not saved to the db? So sometimes the link generated from js delivr is not saved to the db?
+.................
 # 1. The loading and save should have z index over all
 .........
 1. Wheels and prob. other does not apear last in the list since the new itmes should apear first in the list
