@@ -538,8 +538,6 @@ async function carsHtmlTemplate(obj) {
        <hr>
        <span><img src="static/img/icons/car-seat.png"><b>Места:</b> ${obj.seats}</span>
        <hr>
-       <span><img src="static/img/icons/type.png"><b>Вид:</b> ${obj.type}</span>
-       <hr>
        <span><img src="static/img/icons/documents.png"><b>Документи:</b> ${obj.documents}</span>
        <hr>
        <span><img src="static/img/icons/plate.png"><b>Номер:</b> ${obj.plate}</span>
@@ -2312,7 +2310,7 @@ async function trailersHtmlTemplateFields() {
        <hr>
        <span><img src="static/img/icons/calendar.png"><b>Година:</b> </br><input id="year" name="year" placeholder="Година"></span> 
        <hr>
-       <span><img src="static/img/icons/axle.png"><b>Оси:</b> </br><input id="axle" name="axle" placeholder="Оси" list="trailerAxles"></span> 
+       <span><img src="static/img/icons/axle.png"><b>Оси:</b> </br><input id="axle" name="axles" placeholder="Оси" list="trailerAxles"></span> 
         <datalist id="trailerAxles">
                 <option value="1 Ос"></option>
                 <option value="2 Оси"></option>
@@ -2335,6 +2333,14 @@ async function trailersHtmlTemplateFields() {
         </datalist>
        <hr>
        <span><img src="static/img/icons/ruler.png"><b>Дължина:</b> </br><input id="trailerSize" name="size" placeholder="Размер"></span>
+       <hr>
+       <span><img src="static/img/icons/load.png"><b>Товарене:</b> </br><input id="loading" name="loading" placeholder="Товарене"></span> 
+       <hr>
+       <span><img src="static/img/icons/kind.png"><b>Тип:</b> </br><input id="type" name="type" placeholder="Тип" list="trailerType"></span>
+           <datalist id="trailerType">
+                <option value="Туристическо"></option>
+                <option value="Товарно"></option>
+            </datalist>
        <hr>
        <span><img src="static/img/icons/gear.png"><b>Състояние:</b> </br><input id="condition" name="condition" placeholder="Състояние" value="Използванo"></span>
        <hr>
@@ -2409,7 +2415,7 @@ async function carsHtmlTemplateFields() {
                 <option value="5"></option>
           </datalist>
        <hr>
-       <span><img src="static/img/icons/car-type.png"><b>Тип:</b> </br><input id="carType" name="type" placeholder="Тип" list="carsType"></span> 
+       <span><img src="static/img/icons/car-type.png"><b>Тип:</b> </br><input id="carType" name="kind" placeholder="Тип" list="carsType"></span> 
           <datalist id="carsType">
                 <option value="Седан"></option>
                 <option value="Комби"></option>
@@ -2442,6 +2448,33 @@ async function carsHtmlTemplateFields() {
         </datalist>
        <hr>
        <span><img src="static/img/icons/gear.png"><b>Състояние:</b> </br><input id="condition" name="condition" placeholder="Състояние" value="Използванo"></span>
+       <hr>
+       <span><img src="static/img/icons/parctronic.png"><b>Парктроник:</b> </br><input id="parktronic" name="parktronic" placeholder="Парктроник" list="carParktronic"></span>
+       <datalist id="carParktronic">
+                <option value="Да"></option> 
+                <option value="Не"></option> 
+        </datalist>
+       <hr>
+       <hr>
+       <span><img src="static/img/icons/location.png"><b>GPS:</b> </br><input id="gps" name="gps" placeholder="GPS" list="carGps"></span>
+       <datalist id="carGps">
+                <option value="Да"></option> 
+                <option value="Не"></option> 
+        </datalist>
+         <hr>
+       <span><img src="static/img/icons/particlefilter.png"><b>Катализатор:</b> </br><input id="particulateFilter" name="particulateFilter" placeholder="Катализатор" list="carparticlefilter"></span>
+       <datalist id="carparticlefilter">
+                <option value="Да"></option> 
+                <option value="Не"></option> 
+        </datalist>
+          <hr>
+       <span><img src="static/img/icons/car-seat.png"><b>Места:</b> </br><input id="carSeat" name="seats" placeholder="Места" list="carSeats"></span>
+       <datalist id="carSeats">
+                <option value="2"></option> 
+                <option value="4"></option> 
+                <option value="5"></option> 
+                <option value="6"></option> 
+        </datalist>
        <hr>
        <span><img src="static/img/icons/tow.png"><b>Теглич:</b> </br><input id="carTow" name="tow" placeholder="Теглич" list="carsTow"></span> 
          <datalist id="carsTow">
