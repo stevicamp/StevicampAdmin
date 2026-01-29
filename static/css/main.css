@@ -1507,6 +1507,13 @@ input#imgPicker::file-selector-button {
     display: none;
 }
 
+
+
+
+#itemType
+{
+    height: 60px;
+}
 /* If window size is over 400px, than show logo otherwise dont show */
 @media screen and (min-width: 400px) {
     .logo {
