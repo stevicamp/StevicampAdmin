@@ -1557,10 +1557,19 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
          </div>
         
          <a class="item_share_button" style="background-image: url('static/img/icons/delete.png'); margin-top: 20px;" href="javascript:deleteItemByItemLink('${itemLink}');" title="Изтриване!!!"></a>
- 
+         <a class="item_share_button"style="background-image: url('static/img/icons/edit.png');" href="#" onclick="window.location.href='${location.origin}/Edit?${encodeURIComponent(itemLink.split('?search=')[1] || '')}'; return false;" data-link title="Редактиране!"></a>
+         <a class="item_share_button"style="background-image: url('static/img/icons/edit.png');" href="${editLink}" onclick="window.location.href='${location.origin}/Edit?${encodeURIComponent(itemLink.split('?search=')[1] || '')}'; return false;" data-link title="Редактиране!"></a>
+         <a class="item_share_button"style="background-image: url('static/img/icons/edit.png');" href="${editLink}" data-link title="Редактиране!"></a>
          <a class="item_share_button"
+   href="/Edit?id_${encodeURIComponent(itemLink.split('?search=')[1])}"
+   data-link
    style="background-image: url('static/img/icons/edit.png');"
-   href="${location.origin}/Edit?id=${encodeURIComponent(itemLink.split('?search=')[1] || '')}"
+   title="Редактиране!"></a>
+
+
+   <a href="${location.origin}/Edit?id_${encodeURIComponent(itemLink.split('?search=')[1])}"
+   data-link
+   style="background-image: url('static/img/icons/edit.png');"
    title="Редактиране!"></a>
 
                       </div>`);
