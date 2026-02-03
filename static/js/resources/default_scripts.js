@@ -316,7 +316,9 @@ async function itemModalNavigation(itemId) {
     showModal(itemId);
     // document.getElementById('overlayImg').src = window[imgName]; // Static img Tag
 
-    window.history.pushState({}, "", `?search=${itemId}`);
+    itemId = itemId ? itemId : ''; // If Id empty
+    window.history.pushState({}, "", window.location.origin + `/?search=${itemId}`);
+
 }
 
 
@@ -371,11 +373,10 @@ function htmlItemSold(item) {
 
 
 // Generate link from obj for the view - used in the view
-function generateLinkFromObj(obj)
-{
-      const url = new URL(window.location.origin); // .origin instead of .host because of the https:// if using host it is without the https://
-            url.searchParams.set('search', obj.id);
-  return url.toString();
+function generateLinkFromObj(obj) {
+    const url = new URL(window.location.origin); // .origin instead of .host because of the https:// if using host it is without the https://
+    url.searchParams.set('search', obj.id);
+    return url.toString();
 }
 
 
@@ -1519,9 +1520,9 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
 
     for (let i = 0; i < allItems.length; i++) {
         const item = allItems[i];
-   
-         const imgSrc = item.photos?.[0] ?? 'static/img/no-image.png';
-         const itemLink = `${window.location.origin}?search=${item.id}`; // Holder for the constructing of a link for every item 
+
+        const imgSrc = item.photos?.[0] ?? 'static/img/no-image.png';
+        const itemLink = `${window.location.origin}?search=${item.id}`; // Holder for the constructing of a link for every item 
         //  const itemLink = window.location.host + '?search=' + item.id; // Holder for the constructing of a link for every item 
         // itemLink = window.location.host + '?search=' + itemsList[`${itemType}`][i].id; // Construct the link for the current item // ItemsType is for the item type. caravan, car etc.
 
@@ -1603,10 +1604,12 @@ async function searchItems(e) {
         }
         // window.location.pathname = '/index.html'; // Change to Home View path
         if (searchTxt == "") {
-            window.history.replaceState({}, "title", "/");
+            window.history.replaceState({}, "title", window.location.origin);
+
         }
         else {
-            window.history.replaceState({}, "title", `?search=${searchTxt}`);
+            window.history.replaceState({}, "title", window.location.origin + `/?search=${searchTxt}`);
+
         }
         // window.history.replaceState( {} , "title", `?search=${searchTxt}`);
         let items = await recursiveSearchObj(db.items, searchTxt); // Search and get the matched items

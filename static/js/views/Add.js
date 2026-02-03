@@ -11,13 +11,13 @@ export async function getHtmlAsync() {
    
             <div id="credentialsContainer" class="admin-credentials-holder" style="display: none;">
             <span>Github User:</span>
-            <input id="githubUser" type="text" placeholder="Github User - 'stevicamp'" value="stevicamp"> 
+            <input id="githubUser" type="text" placeholder="stevicamp" value="stevicamp"> 
             <span>Github Repo:</span>
-            <input id="githubRepo" type="text" placeholder="Github Repository - 'Stevicamp'" value="Stevicamp">
+            <input id="githubRepo" type="text" placeholder="StevicampStorage" value="StevicampStorage">
             <span>Github Token:</span>
             <input id="githubToken" type="password" placeholder="Github acces token">
             <span>File path: <a target="_blank" id="githubFilePathDbLink" href="">Отваряне на Файла</a></span>
-            <input id="githubFilePathDbInput" type="text" placeholder="Github file path - to update - 'the DB'" value="">
+            <input id="githubFilePathDbInput" type="text" placeholder="resources/db/database.json" value="resources/db/database.json">
             
             <button id="saveCredentialsBtn">Запази парола / данни</button>
             <button id="loadCredentials">Зареди парола / данни</button>
