@@ -1557,26 +1557,27 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
          </div>
         
          <a class="item_share_button" style="background-image: url('static/img/icons/delete.png'); margin-top: 20px;" href="javascript:deleteItemByItemLink('${itemLink}');" title="Изтриване!!!"></a>
-         <a class="item_share_button"style="background-image: url('static/img/icons/edit.png');" href="#" onclick="window.location.href='${location.origin}/Edit?${encodeURIComponent(itemLink.split('?search=')[1] || '')}'; return false;" data-link title="Редактиране!"></a>
-         <a class="item_share_button"style="background-image: url('static/img/icons/edit.png');" href="${editLink}" onclick="window.location.href='${location.origin}/Edit?${encodeURIComponent(itemLink.split('?search=')[1] || '')}'; return false;" data-link title="Редактиране!"></a>
-         <a class="item_share_button"style="background-image: url('static/img/icons/edit.png');" href="${editLink}" data-link title="Редактиране!"></a>
-         <a class="item_share_button"
-   href="/Edit?id_${encodeURIComponent(itemLink.split('?search=')[1])}"
-   data-link
-   style="background-image: url('static/img/icons/edit.png');"
+        <a class="item_share_button" style="background-image: url('static/img/icons/edit.png');" href="#"
+   onclick="openEditItem('${itemLink.split('?search=')[1]}'); return false;"
    title="Редактиране!"></a>
 
-
-   <a href="${location.origin}/Edit?id_${encodeURIComponent(itemLink.split('?search=')[1])}"
-   data-link
-   style="background-image: url('static/img/icons/edit.png');"
-   title="Редактиране!"></a>
 
                       </div>`);
 
     }
     return combined_items;
 }
+
+
+function openEditItem(id) {
+    // Build absolute URL
+    const url = `${location.origin}/Edit?id_${encodeURIComponent(id)}`;
+
+    // Update browser URL without reloading
+    history.pushState({}, '', url);
+}
+
+
 
 //  <a class="item_share_button" style="background-image: url('static/img/icons/edit.png'); margin-top: 20px;" href="javascript:editItemByItemLink('${itemLink}');" title="Редактиране"></a>
 
