@@ -336,7 +336,7 @@ function modalItemShareButtonsHtml(itemLink, title) {
      <a class="item_share_button" style="background-image: url('static/img/icons/email.png');" href="mailto:?subject=${title}&amp;body=${title},${itemLink}" title="Пратете по имейл"></a>
      <a class="item_share_button" style="background-image: url('static/img/icons/sms.png');" href="sms:?&body=${title},${itemLink}" title="Пратете по СМС"></a>
      <a class="item_share_button" style="background-image: url('static/img/icons/delete.png');" href="javascript:deleteItemByItemLink('${itemLink}');" title="Изтриване!!!"></a>
-     <a class="item_share_button" style="background-image: url('static/img/icons/edit.png');" href='${location.origin}/Edit?${itemLink.split('?search=')[1]}' target="_self" data-link title="Редактиране!"></a>
+     <a class="item_share_button" style="background-image: url('static/img/icons/edit.png');" href='javascript:void(0);' onclick="window.location.href= ${location.origin}/Edit?${itemLink.split('?search=')[1]}"  data-link title="Редактиране!"></a>
      
     <span style="float:right; margin-right:2%; margin-top: 20px;" id="imgCount"></span>
     </div>`;
@@ -1547,7 +1547,7 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
          </div>
         
          <a class="item_share_button" style="background-image: url('static/img/icons/delete.png'); margin-top: 20px;" href="javascript:deleteItemByItemLink('${itemLink}');" title="Изтриване!!!"></a>
-         <a class="item_share_button" style="background-image: url('static/img/icons/edit.png'); margin-top: 20px;" href='${location.origin}/Edit?${item.id}' target="_self" data-link title="Редактиране!"></a>
+         <a class="item_share_button" style="background-image: url('static/img/icons/edit.png'); margin-top: 20px;" href='${location.origin}/Edit?${item.id}' data-link title="Редактиране!"></a>
          
                       </div>`);
 
