@@ -1522,8 +1522,17 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
     for (let i = 0; i < allItems.length; i++) {
         const item = allItems[i];
 
+
+ 
+
+
+
         const imgSrc = item.photos?.[0] ?? 'static/img/no-image.png';
         const itemLink = `${window.location.origin}?search=${item.id}`; // Holder for the constructing of a link for every item 
+
+        let editLink = new URL(itemLink, location.origin);
+
+
         //  const itemLink = window.location.host + '?search=' + item.id; // Holder for the constructing of a link for every item 
         // itemLink = window.location.host + '?search=' + itemsList[`${itemType}`][i].id; // Construct the link for the current item // ItemsType is for the item type. caravan, car etc.
 
@@ -1548,7 +1557,9 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
          </div>
         
          <a class="item_share_button" style="background-image: url('static/img/icons/delete.png'); margin-top: 20px;" href="javascript:deleteItemByItemLink('${itemLink}');" title="Изтриване!!!"></a>
-         <a class="item_share_button"style="background-image: url('static/img/icons/edit.png');"href="#" onclick="window.location.href='${location.origin}/Edit?${encodeURIComponent(itemLink.split('?search=')[1] || '')}'; return false;" data-link title="Редактиране!"></a>
+         <a class="item_share_button"style="background-image: url('static/img/icons/edit.png');" href="#" onclick="window.location.href='${location.origin}/Edit?${encodeURIComponent(itemLink.split('?search=')[1] || '')}'; return false;" data-link title="Редактиране!"></a>
+         <a class="item_share_button"style="background-image: url('static/img/icons/edit.png');" href="${editLink}" onclick="window.location.href='${location.origin}/Edit?${encodeURIComponent(itemLink.split('?search=')[1] || '')}'; return false;" data-link title="Редактиране!"></a>
+         <a class="item_share_button"style="background-image: url('static/img/icons/edit.png');" href="${editLink}" data-link title="Редактиране!"></a>
          
                       </div>`);
 
