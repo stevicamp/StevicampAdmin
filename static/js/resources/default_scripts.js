@@ -522,7 +522,7 @@ async function carsHtmlTemplate(obj) {
 
         ${htmlItemSold(obj)}
        <hr>
-       <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price}</span>
+       <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price} €</span>
        <hr>
        <span><img src="static/img/icons/brand.png"><b>Марка:</b> ${obj.brand}</span>
        <hr>
@@ -608,7 +608,7 @@ async function microbusHtmlTemplate(obj) {
 
         ${htmlItemSold(obj)}
        <hr>
-       <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price}</span>
+       <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price} €</span>
        <hr>
        <span><img src="static/img/icons/brand.png"><b>Марка:</b> ${obj.brand}</span>
        <hr>
@@ -699,7 +699,7 @@ async function scootersHtmlTemplate(obj) {
 
         ${htmlItemSold(obj)}
        <hr>
-       <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price}</span>
+       <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price} €</span>
        <hr>
        <span><img src="static/img/icons/brand.png"><b>Марка:</b> ${obj.brand}</span>
        <hr>
@@ -764,7 +764,7 @@ async function trailersHtmlTemplate(obj) {
         ${htmlItemSold(obj)}
 
        <hr>
-       <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price}</span>
+       <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price} €</span>
        <hr>
        <span><img src="static/img/icons/brand.png"><b>Марка:</b> ${obj.brand}</span>
        <hr>
@@ -836,7 +836,7 @@ async function wheelsHtmlTemplate(obj) {
         ${htmlItemSold(obj)}
 
        <hr>
-       <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price}</span>
+       <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price} €</span>
        <hr>
        <span><img src="static/img/icons/brand.png"><b>Марка:</b> ${obj.brand}</span>
        <hr>
@@ -912,7 +912,7 @@ async function productsHtmlTemplate(obj) {
         ${htmlItemSold(obj)}
 
        <hr>
-       <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price}</span>
+       <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price} €</span>
        <hr>
        <span><img src="static/img/icons/brand.png"><b>Марка:</b> ${obj.brand}</span>
        <hr>
@@ -976,7 +976,7 @@ async function equipmentHtmlTemplate(obj) {
         ${htmlItemSold(obj)}
 
        <hr>
-       <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price}</span>
+       <span><img src="static/img/icons/price.png"><b>Цена:</b> ${obj.price} €</span>
        <hr>
        <span><img src="static/img/icons/brand.png"><b>Марка:</b> ${obj.brand}</span>
        <hr>
@@ -1400,7 +1400,7 @@ function removeElementsByClassName(className) {
 
 async function checkForSearchKeywords() // Check for keywords in the adressbar also used for the modal
 {
-    const search = decodeURI(window.location.search);
+    const search = decodeURI(window.location.search); // In order to work with cyrilic as well as to have clean link without encodings
 
     // If search keywords in the path
     if (search !== "") {

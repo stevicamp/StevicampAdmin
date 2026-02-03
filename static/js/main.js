@@ -43,7 +43,9 @@ import * as Boats from './views/Boats.js';
 function router(e) {
     // e = event || window.event;
     e.preventDefault(); // Prevent deafult behavior don't follow the link
-    window.history.pushState(null, null, e.target.href); // Add the url to the history api of js so we can navigate back and forth with the browser buttons
+    const url = new URL(e.target.href);
+    const path = url.pathname; // Only local path since there is problem with blogger and the <base> url.
+    window.history.pushState(null, null, window.location.origin + path); // Add the url to the history api of js so we can navigate back and forth with the browser buttons
     handleLocation();
 }
 
@@ -51,6 +53,7 @@ function router(e) {
 //Routes ------------ The defined routes of the SPA APP ---------------------------------------------------
 const routes = {
     '/': Home, // On Path "/" use the HomeView class and inject html in the #app div
+    '': Home,  
     '/Caravans': Caravans,
     '/Cars': Cars,
     '/Products': Products,

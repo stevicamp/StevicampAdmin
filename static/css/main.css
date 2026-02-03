@@ -81,6 +81,7 @@ html {
 #top-bar-toggler {
     border-bottom: 2px solid rgb(138, 138, 138);
     padding-top: 2px;
+    border-top: 2px solid rgb(44, 41, 41);
 }
 
 
@@ -95,11 +96,12 @@ html {
 #bottom-bar-toggler {
     border-top: 2px solid rgb(138, 138, 138);
     padding-top: 2px;
+    border-bottom: 2px solid rgb(44, 41, 41);
 }
 
-
 .main-bars-holder {
-    display: inline-flex;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     min-height: 50px;
     height: 100%;
@@ -128,8 +130,9 @@ html {
     /* border-left: 2px solid rgb(53, 51, 51);
     border-right: 2px solid  rgb(53, 51, 51); */
 
-    border-left: 3px solid rgb(53, 51, 51);
-    border-right: 2px solid rgb(43, 42, 42);
+    
+    border-left: 2px solid rgb(44, 41, 41);
+    border-right: 2px solid rgb(44, 41, 41);
 }
 
 
@@ -295,7 +298,7 @@ html {
 .button-toggle-horizontal-bar {
     width: 100%;
     min-height: 20px;
-    max-height: 20px;
+    max-height: 20px; 
 }
 
 
@@ -308,8 +311,7 @@ html {
     /* word-wrap: break-word; */
     /* overflow: auto; */
 
-    display: flex;
-    flex-direction: column;
+    display: inline-flex; 
     /* box-sizing: border-box; */
     padding: 0;
     overflow: hidden;
@@ -604,7 +606,8 @@ html {
 /* --------Content - Item---IMG--TXT---SHARE--BUTTONS-----------*/
 .content_container_item {
     background-color: rgb(34, 36, 43);
-    min-width: 150px;
+    min-width: 160px;
+    max-width: 200px;
     min-height: 200px;
     width: fit-content;
     height: fit-content;
@@ -851,8 +854,8 @@ h3 {
 
 .modalItemDetails img {
     min-width: 20px;
-    width: 3vw;
-    max-width: 30px;
+    width: 4vw;
+    max-width: 35px;
     height: auto;
     vertical-align: middle;
     margin-right: 5px;
@@ -871,7 +874,8 @@ h3 {
 .modalItemDetails span {
     margin: 5px 0 5px 5px;
     filter: drop-shadow(4px 4px 4px rgb(0, 0, 0));
-    font-size: clamp(10px, 2vw, 12px);
+    font-size: clamp(12px, 2vw, 14+
+    px);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-shadow: 1px 1px #000000;
 }
@@ -1523,34 +1527,66 @@ input#imgPicker::file-selector-button {
 
 
 
+@media screen and (max-width: 850px) {
 
-
-@media screen and (max-width: 450px) {
-
-    .modalItemContainer {
-        display: flex !important;
-        /* flex-direction: column; */
-        flex-flow: column !important;
-        /* flex-wrap: wrap; */
-        width: 100% !important;
-        max-height: 100% !important;
+    .bars-holder {
+        min-height: 100dvh;
+        /*Used for the mobile devices for the browser bottom bar, because it hides the bottom bar of the page */
+        max-height: 100dvh;
     }
 
+    .modalContentContainer {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+         max-height: 80dvh;
+         margin-top: -7svh;
+         overflow-y: auto;
+
+    }
+
+
+    .modalItemContainer {
+        display: flex;
+        /* flex-direction: column; */
+        flex-flow: column;
+        /* flex-wrap: wrap; */
+        width: 100%;
+        max-height: 100%;
+    }
+
+    
     .img-preview-container {
-        height: 40% !important;
+        min-height: 50%;
+        max-height: 50%;
     }
 
     .modalItemDetails {
-        max-width: 100% !important;
-        min-width: 100% !important;
-        height: 60% !important;
-        width: 100% !important;
-        border: 2px solid rgb(78, 130, 182) !important;
-        border-top: 3px solid rgb(78, 130, 182) !important;
-
+        max-width: 100%;
+        min-width: 100%;
+        min-height: 50%;
+        max-height: 50%;
+        width: 100%;
+        border: 2px solid rgb(78, 130, 182);
+        border-top: 3px solid rgb(78, 130, 182); 
         /* min-width: 100%; */
         /* width: 100%; */
-        /* max-width: 100%; */
-
+        /* max-width: 100%; */ 
     }
+     
+    .modalItemDetails span, .modalItemDetails span u {
+    margin: 5px 0 5px 5px;
+    filter: drop-shadow(4px 4px 4px rgb(0, 0, 0));
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-shadow: 1px 1px #000000;
+}
+
+.modalItemDetails img {
+    min-width: 30px;
+    width: 4vw;
+    max-width: 40px;
+}
+
 }

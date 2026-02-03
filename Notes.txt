@@ -44,7 +44,8 @@ SPA APP
 1. Different categories in differnet files + max 100 products per file - inplement dynamic scroll + buttons
 2. Images for every product in folder in gathered in a gategory folder.
 3. Spa without modules? or only with modules?
-
+4. THe routing should not rely only on liks but also buttons data-link="home" not exactly - try data-action="home" the links are data links decorated but try with buttons as well
+5. Like in the Admin view - execute script before injecting html and after injecting the html
 .....
 1. Add timestamp and add loading message after the time is over remove the message and fetch the db from the github
 .......
