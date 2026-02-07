@@ -1577,7 +1577,7 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
 function openEditItem(itemId) {
     prevUrl = window.location.href;
     // Build absolute URL
-    const url = `${location.origin}/Edit?id_${encodeURIComponent(itemId)}`;
+    const url = `${location.origin}/Edit?${encodeURIComponent(itemId)}`;
     window.history.pushState({}, "", url);
 }
 
