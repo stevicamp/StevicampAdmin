@@ -1576,15 +1576,16 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
 }
 
 
-function openEditItem(id) {
-    // Build absolute URL
-    const url = `${location.origin}/Edit?id_${encodeURIComponent(id)}`;
-    history.replaceState({}, '', url);
-    let editVariable;
-     editVariable.href = url;
+function openEditItem(itemId) {
+    prevUrl = window.location.href;
 
-     window.router(editVariable);
+    // Build absolute URL
+    const url = `${location.origin}/Edit?id_${encodeURIComponent(itemId)}`;
+    window.history.pushState({}, "", url);
 }
+
+
+
 
 
 
