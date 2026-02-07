@@ -1530,8 +1530,8 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
         const imgSrc = item.photos?.[0] ?? 'static/img/no-image.png';
         const itemLink = `${window.location.origin}?search=${item.id}`; // Holder for the constructing of a link for every item 
 
-        let editLink = new URL(itemLink, location.origin);
-
+        // let editLink = new URL(itemLink, location.origin);
+        const editLink = `${location.origin}/Edit?${encodeURIComponent(item.id)}`;
 
         //  const itemLink = window.location.host + '?search=' + item.id; // Holder for the constructing of a link for every item 
         // itemLink = window.location.host + '?search=' + itemsList[`${itemType}`][i].id; // Construct the link for the current item // ItemsType is for the item type. caravan, car etc.
@@ -1558,6 +1558,12 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
         
          <a class="item_share_button" style="background-image: url('static/img/icons/delete.png'); margin-top: 20px;" href="javascript:deleteItemByItemLink('${itemLink}');" title="Изтриване!!!"></a>
        
+       <a class="item_share_button"
+   href="${editLink}"  
+   data-link
+   style="background-image: url('static/img/icons/edit.png');"
+   title="Редактиране!"></a>
+   
        <a class="item_share_button"
    href="#" onclick="openEditItem('${itemLink.split('?search=')[1]}'); return false;"  
    data-link

@@ -41,7 +41,6 @@ import * as Boats from './views/Boats.js';
 
 // Router  ------------------------------------------------------------------------------------------------
 export function router(e) {
-    const prevUrl12365 = window.location.href;
     // e = event || window.event;
     e.preventDefault(); // Prevent deafult behavior don't follow the link
     const url = new URL(e.target.href);
@@ -115,8 +114,6 @@ window.addEventListener("popstate", handleLocation); // On popstate "If back but
 document.addEventListener("DOMContentLoaded", () => { // On Dom loaded add bodyEventlistener to listen for click in the body
     document.body.addEventListener("click", e => { //Listen for click in the body
         if (e.target.matches("[data-link]")) {  // If body item was clicked and it is data-link decorated 
-    const prevUrl123 = window.location.href;
-
             router(e); // Load the content if the url is defined in our "Spa Urls"
         }
     });
