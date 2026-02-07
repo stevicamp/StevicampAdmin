@@ -84,9 +84,9 @@ const routes = {
 const handleLocation = async () => {
     if (window.location.search == "" || window.location.pathname == "/Edit") // /Edit is so that the Edit view can be opened - since there are parameters after the /Edit?id_33245. And the window.search is not empty but has the id and it will no go in to this function otherwise 
     {
-        // const path = window.location.pathname;
-        const url = new URL(window.location.href);
-        const path = url.pathname + url.search;
+        const path = window.location.pathname;
+        // const url = new URL(window.location.href);
+        // const path = url.pathname + url.search;
 
 
         const currentRoute = routes[path] || routes['/']; // If there is no match go to Home "/" if the url is not found in the "routes object" than load Home View

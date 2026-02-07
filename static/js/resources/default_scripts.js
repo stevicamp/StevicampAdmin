@@ -1559,7 +1559,7 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
          <a class="item_share_button" style="background-image: url('static/img/icons/delete.png'); margin-top: 20px;" href="javascript:deleteItemByItemLink('${itemLink}');" title="Изтриване!!!"></a>
        
        <a class="item_share_button"
-   href="#" onclick="openEditItem('${itemLink.split('?search=')[1]}')"  
+   href="#" onclick="openEditItem('${itemLink.split('?search=')[1]}'); return false;"  
    data-link
    style="background-image: url('static/img/icons/edit.png');"
    title="Редактиране!"></a>
@@ -1578,6 +1578,7 @@ function openEditItem(itemId) {
     prevUrl = window.location.href;
     // Build absolute URL
     const url = `${location.origin}/Edit?${encodeURIComponent(itemId)}`;
+ 
     window.history.pushState({}, "", url);
 }
 
