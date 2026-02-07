@@ -1578,7 +1578,7 @@ function openEditItem(itemId) {
     prevUrl = window.location.href;
 
     // Build absolute URL
-    const url = `${location.origin}/Edit?id_${encodeURIComponent(itemId)}`;
+    const url = `/Edit?id_${encodeURIComponent(itemId)}`;
     window.history.pushState({}, "", url);
 }
 
