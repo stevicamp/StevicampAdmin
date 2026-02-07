@@ -1559,15 +1559,13 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
          <a class="item_share_button" style="background-image: url('static/img/icons/delete.png'); margin-top: 20px;" href="javascript:deleteItemByItemLink('${itemLink}');" title="Изтриване!!!"></a>
        
        <a class="item_share_button"
-   href="javascript:void(0)" onclick="openEditItem(${itemLink.split('?search=')[1]})"  
+   href="javascript:void(0)" onclick="openEditItem('${itemLink.split('?search=')[1]}')"  
    data-link
    style="background-image: url('static/img/icons/edit.png');"
    title="Редактиране!"></a>
 
 
-         <a class="item_share_button" style="background-image: url('static/img/icons/edit.png');" href=""
-   onclick="openEditItem('${itemLink.split('?search=')[1]}');"
-   title="Редактиране!"></a>
+   
 
                       </div>`);
 
