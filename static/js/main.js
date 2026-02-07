@@ -41,6 +41,7 @@ import * as Boats from './views/Boats.js';
 
 // Router  ------------------------------------------------------------------------------------------------
 export function router(e) {
+    const prevUrl12365 = window.location.href;
     // e = event || window.event;
     e.preventDefault(); // Prevent deafult behavior don't follow the link
     const url = new URL(e.target.href);
@@ -49,7 +50,7 @@ export function router(e) {
     handleLocation();
 }
 
-window.router = router;
+ 
 
 //Routes ------------ The defined routes of the SPA APP ---------------------------------------------------
 const routes = {
