@@ -3536,6 +3536,7 @@ async function imgPickerHandler() {
 
     }
 
+    document.getElementById("imgPicker").value = '';
     // await handleImages(); // Add & show the images in the imgView container // This one is moved to   await imgPickerImagesToLocalArrEdit();
 }
 
