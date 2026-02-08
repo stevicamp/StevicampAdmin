@@ -1405,7 +1405,7 @@ body {
 input#imgPicker::file-selector-button {
     /* display: block; */
 
-    background: url('/static/img/icons/cam.png') no-repeat top left;
+    background: url('https://cdn.jsdelivr.net/gh/stevicamp/StevicampAdmin@main/static/img/icons/cam.png') no-repeat top left;
     background-size: contain;
     cursor: pointer;
     color: transparent;
@@ -1477,7 +1477,7 @@ input#imgPicker::file-selector-button {
     border: 0;
     outline: none;
     background-color: transparent;
-    background-image: url('static/img/icons/rotate.png');
+    background-image: url('https://cdn.jsdelivr.net/gh/stevicamp/StevicampAdmin@main/static/img/icons/rotate.png');
 }
 
 
@@ -1487,7 +1487,7 @@ input#imgPicker::file-selector-button {
     right: 0;
     margin-inline: auto;
     bottom: 25px;
-    background-image: url('static/img/icons/del-img.png');
+    background-image: url('https://cdn.jsdelivr.net/gh/stevicamp/StevicampAdmin@main/static/img/icons/del-img.png');
 }
 
 
@@ -1497,7 +1497,7 @@ input#imgPicker::file-selector-button {
     right: -100px;
     margin-inline: auto;
     bottom: 25px;
-    background-image: url('static/img/icons/save-edit.png');
+    background-image: url('https://cdn.jsdelivr.net/gh/stevicamp/StevicampAdmin@main/static/img/icons/save-edit.png');
 }
 
 
