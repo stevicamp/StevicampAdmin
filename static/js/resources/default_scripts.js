@@ -3282,6 +3282,7 @@ async function AddSave() {
     // Check
     console.log("Form Data:" + formData);
     console.log("Json DB:" + jsonDb);
+    
 }
 
 
@@ -3325,6 +3326,7 @@ async function EditSave() {
         deleteImagesEditArr = []; // Clear the array for the next time to be clean
     }
 
+    alert('Before handleItemImagesEdit');
 
     let imagesJsDelivrPathArray = await handleItemImagesEdit(itemId, type);// Upload Images and return jsDelivr path for the images
     console.log("Arr#########---------------:" + imagesJsDelivrPathArray);
@@ -3350,6 +3352,7 @@ async function EditSave() {
 
     let jsonDb = JSON.stringify(db);
     //    document.getElementById("developerInput").value = jsonDb;  // Populate the textbox that shows the db in developer mode
+    alert('Before UPDATE');
     await constructUpdateAndUpdate(jsonDb, githubFilePathDb, `Admin - Edited item in APP: ${formData.id}`);
 }
 
