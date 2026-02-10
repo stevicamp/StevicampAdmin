@@ -1330,11 +1330,11 @@ async function toggleSlideImg(n) {
     updateViewImageIndexIndication();
 
 
-    if (window.location.pathname == "/Add" || window.location.pathname == "/Edit") // Only in Add or Edit View otherwise can not find the fields undefined
-    {
-        resetImgCompressionFields(); // Reset the fields and the rotation variable on img change
-        await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
-    }
+    // if (window.location.pathname == "/Add" || window.location.pathname == "/Edit") // Only in Add or Edit View otherwise can not find the fields undefined
+    // {
+    //     resetImgCompressionFields(); // Reset the fields and the rotation variable on img change
+    //     // await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
+    // }
 
 }
 
@@ -2091,6 +2091,7 @@ function dateTodayIso() {
 
 
 // Common HtmlTemplateFields
+    // <a class="item_share_button save-img-edits" href="javascript:executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, true);" title="Запазване на промените на снимката."></a>
 function commonHtmlTemplateFields() {
     return `<input id="imgPicker" type="file" accept="image/*;capture=camera" multiple="multiple">
     
@@ -2100,7 +2101,6 @@ function commonHtmlTemplateFields() {
     ${imgSlideArrowButtons()}
     <button id="rotateImgView" class="item_share_button rotate-img"></button>
     <a class="item_share_button delete-current-img" href="javascript:deleteCurrentImg();" title="Изтриване на снимката!!!"></a>
-    <a class="item_share_button save-img-edits" href="javascript:executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, true);" title="Запазване на промените на снимката."></a>
     <span id="imgCount"></span>
     </div> `;
 }
@@ -3213,10 +3213,10 @@ async function loadAppropriateFields(itemTypePass) {
     document.getElementById("saveItemButton")?.addEventListener("click", (e) => { saveItem(e) }); // For upload
     //  document.getElementById("imgPicker").addEventListener("change", handleImages); // For the modal
     document.getElementById("imgPicker")?.addEventListener("change", async () => { await imgPickerHandler() }); // Imgpicker handler  // Common for all categories
-    imgCompressionEventDeclaraton();
+    // imgCompressionEventDeclaraton();
     document.getElementById('arrow-leftSlideImg')?.addEventListener('click', async () => { await toggleSlideImg(-1) }); // The img slide left button
     document.getElementById('arrow-rightSlideImg')?.addEventListener('click', async () => { await toggleSlideImg(1) }); // The img slide right button
-    document.getElementById('rotateImgView')?.addEventListener('click', async () => { await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, true, false) }); // THe img rotate button
+    // document.getElementById('rotateImgView')?.addEventListener('click', async () => { await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, true, false) }); // THe img rotate button
 
 }
 
@@ -3518,10 +3518,10 @@ function validateImgPickerFilesOnlyImg() {
 
 async function imgPickerHandler() {
 
-    if (editItemImgArr[slideImgIndex] != null) // Only if not null or undefined - if in add view mode then it will be null since there are no images in add mode when opening it
-    {
-        await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false); // The compression tools options, saturation, rotation etc.
-    }
+    // if (editItemImgArr[slideImgIndex] != null) // Only if not null or undefined - if in add view mode then it will be null since there are no images in add mode when opening it
+    // {
+    //     await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false); // The compression tools options, saturation, rotation etc.
+    // }
 
 
     validateImgPickerFilesOnlyImg(); // Validate if images else remove from the img picker
@@ -4043,56 +4043,56 @@ async function executeCompression(newHeight, extension, rotate, save) {
 // });
 
 
-function imgCompressionEventDeclaraton() {
+// function imgCompressionEventDeclaraton() {
 
 
 
-    // 2. The compression slider
-    document.getElementById('imgCompressionSlider')?.addEventListener('input', async () => {
+//     // 2. The compression slider
+//     document.getElementById('imgCompressionSlider')?.addEventListener('input', async () => {
 
-        await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
-    });
-
-
-    // 3. The saturation slider
-    document.getElementById('imgSaturrationSlider')?.addEventListener('input', async () => {
-
-        await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
-    });
+//         await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
+//     });
 
 
-    // 4. The Contrast slider
-    document.getElementById('imgContrastSlider')?.addEventListener('input', async () => {
+//     // 3. The saturation slider
+//     document.getElementById('imgSaturrationSlider')?.addEventListener('input', async () => {
 
-        await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
-    });
-
-
-    // 5. The Brightness slider
-    document.getElementById('imgBrightnessSlider')?.addEventListener('input', async () => {
-
-        await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
-    });
+//         await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
+//     });
 
 
+//     // 4. The Contrast slider
+//     document.getElementById('imgContrastSlider')?.addEventListener('input', async () => {
 
-    // 6. The checkbox
-    document.getElementById('enableSmoothCheckbox')?.addEventListener('change', async () => {
-        await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
-    });
+//         await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
+//     });
 
-    // // 7. Img Rotate
-    // document.getElementById('imgRotate')?.addEventListener('mousedown', async () => {
-    //     await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, true, false);
-    // });
 
-    // // 8. Img Save
-    // document.getElementById('imgCompressionSave')?.addEventListener('mousedown', async () => {
-    //     await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, true);
-    //     resetImgCompressionFields();
-    // });
+//     // 5. The Brightness slider
+//     document.getElementById('imgBrightnessSlider')?.addEventListener('input', async () => {
 
-}
+//         await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
+//     });
+
+
+
+//     // 6. The checkbox
+//     document.getElementById('enableSmoothCheckbox')?.addEventListener('change', async () => {
+//         await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false);
+//     });
+
+//     // // 7. Img Rotate
+//     // document.getElementById('imgRotate')?.addEventListener('mousedown', async () => {
+//     //     await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, true, false);
+//     // });
+
+//     // // 8. Img Save
+//     // document.getElementById('imgCompressionSave')?.addEventListener('mousedown', async () => {
+//     //     await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, true);
+//     //     resetImgCompressionFields();
+//     // });
+
+// }
 
 
 
