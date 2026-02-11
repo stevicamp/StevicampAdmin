@@ -375,7 +375,7 @@ function htmlItemSold(item) {
 
 // Generate link from obj for the view - used in the view
 function generateLinkFromObj(obj) {
-    const url = new URL(window.location.origin); // .origin instead of .host because of the https:// if using host it is without the https://
+    const url = new URL('https://stevicamp.blogspot.com/'); // .origin instead of .host because of the https:// if using host it is without the https://
     url.searchParams.set('search', obj.id);
     return url.toString();
 }
@@ -1528,7 +1528,7 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
 
 
         const imgSrc = item.photos?.[0] ?? 'static/img/no-image.png';
-        const itemLink = `${window.location.origin}?search=${item.id}`; // Holder for the constructing of a link for every item 
+        const itemLink = `https://stevicamp.blogspot.com/?search=${item.id}`; // Holder for the constructing of a link for every item 
 
         // let editLink = new URL(itemLink, location.origin);
         const editLink = `${location.origin}/Edit?${encodeURIComponent(item.id)}`;
