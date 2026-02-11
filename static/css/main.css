@@ -1567,12 +1567,11 @@ input#imgPicker::file-selector-button {
     .modalItemDetails {
         max-width: 100%;
         min-width: 100%;
-        min-height: 50dvh;
-        max-height: 50dvh;
+       
         width: 100%;
         border: 2px solid rgb(78, 130, 182);
         border-top: 3px solid rgb(78, 130, 182);
-        overflow-y: auto;
+        overflow: visible;
         /* min-width: 100%; */
         /* width: 100%; */
         /* max-width: 100%; */
@@ -1601,11 +1600,7 @@ input#imgPicker::file-selector-button {
         overflow-y: auto;
     }
 
-    .imgCompressionContainer {
-        position: relative;
-        bottom: 0;
-        z-index: 999999;
-    }
+    
 
     #modalItemDetailsEdit {
         max-height: 40%;

@@ -2091,7 +2091,8 @@ function dateTodayIso() {
 
 
 // Common HtmlTemplateFields
-    // <a class="item_share_button save-img-edits" href="javascript:executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, true);" title="Запазване на промените на снимката."></a>
+    // <a class="item_share_button save-img-edits" href="javascript:executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, true);" title="Запазване на промените на снимката."></a> 
+    // <button id="rotateImgView" class="item_share_button rotate-img"></button>
 function commonHtmlTemplateFields() {
     return `<input id="imgPicker" type="file" accept="image/*;capture=camera" multiple="multiple">
     
@@ -2099,7 +2100,7 @@ function commonHtmlTemplateFields() {
     <div class="img-preview-container">
     <div id="previewImgHolder"></div>   
     ${imgSlideArrowButtons()}
-    <button id="rotateImgView" class="item_share_button rotate-img"></button>
+    
     <a class="item_share_button delete-current-img" href="javascript:deleteCurrentImg();" title="Изтриване на снимката!!!"></a>
     <span id="imgCount"></span>
     </div> `;
@@ -3326,7 +3327,6 @@ async function EditSave() {
         deleteImagesEditArr = []; // Clear the array for the next time to be clean
     }
 
-    alert('Before handleItemImagesEdit');
 
     let imagesJsDelivrPathArray = await handleItemImagesEdit(itemId, type);// Upload Images and return jsDelivr path for the images
     console.log("Arr#########---------------:" + imagesJsDelivrPathArray);
@@ -3352,7 +3352,6 @@ async function EditSave() {
 
     let jsonDb = JSON.stringify(db);
     //    document.getElementById("developerInput").value = jsonDb;  // Populate the textbox that shows the db in developer mode
-    alert('Before UPDATE');
     await constructUpdateAndUpdate(jsonDb, githubFilePathDb, `Admin - Edited item in APP: ${formData.id}`);
 }
 
@@ -4122,51 +4121,56 @@ async function executeCompression(newHeight, extension, rotate, save) {
 // ---------IMG-Compression-Html--------------------------------------------------------------------------
 
 function imgCompressionHtml() {
-    return `   <div class="imgCompressionContainer">
-        
-        <div class="col">
-        <img src="static/img/icons/compress.png"/>
-        <span id="imgCompressionSliderLabel"></span>
-        <input type="range" min="1" max="100" value="55" id="imgCompressionSlider">
-        </div>
-        
-        <div class="col">
-        <img src="static/img/icons/load.png"/>
-        <span id="imgSizeLabel"></span>
-        <span id="imgOriginalSizeLabel"></span>
-        </div>
-
-        <div class="col">
-        <span id="imgSizeInPx"></span>
-        <span id="imgFileName"></span>
-        </div>
-        
-        <div class="col">
-        <img src="static/img/icons/smoothing.png"/>
-        <span>Smoothnes:</span>
-        <input type="checkbox" id="enableSmoothCheckbox">
-        </div>
-
-        <div class="col">
-        <img src="static/img/icons/saturate.png"/>
-        <span id="imgSaturationLabel"></span>
-        <input type="range" min="50" max="350" value="120" id="imgSaturrationSlider">
-        </div>
-        
-        <div class="col">
-        <img src="static/img/icons/contrast.png"/>
-        <span id="imgContrastLabel"></span>
-        <input type="range" min="90" max="120" value="100" id="imgContrastSlider">
-        </div>
-
-        <div class="col">
-        <img src="static/img/icons/brightness.png"/>
-        <span id="imgBrightnessLabel"></span>
-        <input type="range" min="90" max="120" value="100" id="imgBrightnessSlider">
-        </div>
-        </div>`;
+    return ``;
 }
 
+
+
+// function imgCompressionHtml() {
+//     return `   <div class="imgCompressionContainer">
+        
+//         <div class="col">
+//         <img src="static/img/icons/compress.png"/>
+//         <span id="imgCompressionSliderLabel"></span>
+//         <input type="range" min="1" max="100" value="55" id="imgCompressionSlider">
+//         </div>
+        
+//         <div class="col">
+//         <img src="static/img/icons/load.png"/>
+//         <span id="imgSizeLabel"></span>
+//         <span id="imgOriginalSizeLabel"></span>
+//         </div>
+
+//         <div class="col">
+//         <span id="imgSizeInPx"></span>
+//         <span id="imgFileName"></span>
+//         </div>
+        
+//         <div class="col">
+//         <img src="static/img/icons/smoothing.png"/>
+//         <span>Smoothnes:</span>
+//         <input type="checkbox" id="enableSmoothCheckbox">
+//         </div>
+
+//         <div class="col">
+//         <img src="static/img/icons/saturate.png"/>
+//         <span id="imgSaturationLabel"></span>
+//         <input type="range" min="50" max="350" value="120" id="imgSaturrationSlider">
+//         </div>
+        
+//         <div class="col">
+//         <img src="static/img/icons/contrast.png"/>
+//         <span id="imgContrastLabel"></span>
+//         <input type="range" min="90" max="120" value="100" id="imgContrastSlider">
+//         </div>
+
+//         <div class="col">
+//         <img src="static/img/icons/brightness.png"/>
+//         <span id="imgBrightnessLabel"></span>
+//         <input type="range" min="90" max="120" value="100" id="imgBrightnessSlider">
+//         </div>
+//         </div>`;
+// }
 // <button id="imgRotate">Rotate</button>
 // <button id="imgCompressionSave">Save Image</button>
 
