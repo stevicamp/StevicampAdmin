@@ -1296,6 +1296,8 @@ body {
     font-weight: bold;
     border: 2px solid rgb(11, 158, 68);
     margin: 5px;
+    min-width: 2rem;
+    max-width: 10rem;
 }
 
 .admin-content-holder span {
@@ -1592,10 +1594,7 @@ input#imgPicker::file-selector-button {
         max-width: 40px;
     }
 
-    .modalItemDetails input
-    {
-        width: auto;
-    }
+    
 
 
     #aproppiriateFieldsContainer {
