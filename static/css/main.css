@@ -1592,6 +1592,10 @@ input#imgPicker::file-selector-button {
         max-width: 40px;
     }
 
+    .modalItemDetails input
+    {
+        width: auto;
+    }
 
 
     #aproppiriateFieldsContainer {
