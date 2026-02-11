@@ -1296,6 +1296,8 @@ body {
     font-weight: bold;
     border: 2px solid rgb(11, 158, 68);
     margin: 5px;
+    margin-left: auto;
+    margin-right: auto;
     min-width: 2rem;
     max-width: 10rem;
 }
