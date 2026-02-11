@@ -3440,10 +3440,11 @@ async function handleItemImagesEdit(itemId, type) {
                 console.log('Base64Img wihtout base64,...:' + dataBase64Img);
 
                 // Check the size of the image if it is not reduced already by admin
-                if ((dataBase64Img.length * 0.60 / 1024).toFixed(1) > 145) // If size is over 145kb reduce the size
+                if ((dataBase64Img.length * 0.75 / 1024).toFixed(1) > 145) // If size is over 145kb reduce the size
                 {
                     let cleanBase64 = dataBase64Img.replace(/^data:[^;]+;base64,/, ""); // Remove the data: so to work with Unit8Array 
-                    let img = new Blob([Uint8Array.fromBase64(cleanBase64)]); // Base 64 to blob to use in the canvas
+                    // let img = new Blob([Uint8Array.fromBase64(cleanBase64)]); // Base 64 to blob to use in the canvas
+                    let img = base64ToBlob(cleanBase64); // Base 64 to blob to use in the canvas
                     dataBase64Img = await compressImage(img, imgCompressionSizeGlobal, imgCompressionExtensionGlobal, imgCompressionPercentFixed, true, false, 100, 100, 100);
                     dataBase64Img = dataBase64Img.split('base64,')[1];
                 }
@@ -3461,6 +3462,25 @@ async function handleItemImagesEdit(itemId, type) {
     }
     return editItemImgArr;
 }
+
+
+
+
+
+
+
+function base64ToBlob(base64, mimeType = "image/jpeg") {
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length);
+
+    for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type: mimeType });
+}
+
 
 
 
