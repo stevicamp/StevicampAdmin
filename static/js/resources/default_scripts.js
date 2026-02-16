@@ -1401,7 +1401,7 @@ function removeElementsByClassName(className) {
 
 async function checkForSearchKeywords() // Check for keywords in the adressbar also used for the modal
 {
-    const search = decodeURI(window.location.search); // In order to work with cyrilic as well as to have clean link without encodings
+    const search = decodeURI(window.location.search).replace(/\+/g, ' '); // In order to work with cyrilic as well as to have clean link without encodings // .replace(/\+/g, ' '); because of mobile it adds + instead of encoding - even after pasting encoded link the mobile changes the encoded empty space to +
 
     // If search keywords in the path
     if (search !== "") {
@@ -1638,7 +1638,9 @@ async function searchItems(e) {
 
         }
         else {
-            window.history.replaceState({}, "title", window.location.origin + `/?search=${searchTxt}`);
+            // window.history.replaceState({}, "title", window.location.origin + `/?search=${searchTxt}`);
+            window.history.replaceState({}, "title", window.location.origin + `/?search=${encodeURIComponent(searchTxt)}`);
+
 
         }
         // window.history.replaceState( {} , "title", `?search=${searchTxt}`);
