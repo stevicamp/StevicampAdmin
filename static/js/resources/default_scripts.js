@@ -329,7 +329,7 @@ function modalItemShareButtonsHtml(itemLink, title) {
     return `<div style="display:inline-block; position: absolute; bottom: 0; left:0; right:0; margin-inline: auto; 
                         min-width: 100%; text-align:center; background-color: transparent;"> 
 
-     <a class="item_share_button" style="background-image: url('static/img/icons/copy.png');" href="javascript:copyToClipboard(encodeURIComponent('${itemLink}'));" title="Натиснете за да Копирате линка"></a>
+     <a class="item_share_button" style="background-image: url('static/img/icons/copy.png');" href="javascript:copyToClipboard('${itemLink}');" title="Натиснете за да Копирате линка"></a>
      <a class="item_share_button" style="background-image: url('static/img/icons/viber.png');"href="viber://forward?text=${itemLink}" title="Споделете във Вибър"></a>
      <a class="item_share_button" style="background-image: url('static/img/icons/whatsapp.png');" target="_blank" rel="noopener noreferrer" href="https://api.whatsapp.com/send?text=${itemLink}" title="Споделете в Уатсап"></a>
      <a class="item_share_button" style="background-image: url('static/img/icons/messenger.png');" href="fb-messenger://share/?link=${itemLink}" title="Споделете в Месинджър"></a>
@@ -1528,7 +1528,8 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
 
 
         const imgSrc = item.photos?.[0] ?? 'static/img/no-image.png';
-        const itemLink = `https://stevicamp.blogspot.com/?search=${item.id}`; // Holder for the constructing of a link for every item 
+        // const itemLink = `https://stevicamp.blogspot.com/?search=${item.id}`; // Holder for the constructing of a link for every item 
+        const itemLink = 'https://stevicamp.blogspot.com/?search=' + encodeURIComponent(item.id);  // Holder for the constructing of a link for every item 
 
         // let editLink = new URL(itemLink, location.origin);
         const editLink = `${location.origin}/Edit?${encodeURIComponent(item.id)}`;
@@ -1549,7 +1550,7 @@ async function getItems(itemType, itemsList)  // ItemType = car, caravan, produc
          <div class="item_buttons_wrapper"> 
      
 
-             <a class="item_share_button" style="background-image: url('static/img/icons/copy.png');" href="javascript:copyToClipboard(encodeURIComponent('${itemLink}'));"></a>
+             <a class="item_share_button" style="background-image: url('static/img/icons/copy.png');" href="javascript:copyToClipboard('${itemLink}');"></a>
              <a class="item_share_button" style="background-image: url('static/img/icons/viber.png');"
                  href="viber://forward?text=${itemLink}"></a>
              <a class="item_share_button" style="background-image: url('static/img/icons/whatsapp.png');"
