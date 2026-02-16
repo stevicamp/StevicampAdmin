@@ -1412,7 +1412,9 @@ async function checkForSearchKeywords() // Check for keywords in the adressbar a
             await showModal(itemId);
         }
 
-        const searchKeyword = search.split('?search=')[1];
+        // const searchKeyword = search.split('?search=')[1];
+        const searchKeyword = search.split('?search=')[1].replace(/\+/g, ' ');
+
         let e = { "currentTarget": { "value": `${searchKeyword}`, "id": "searchKeywordFromUrl" } } // Mimic the pattern that the search function accepts
         await searchItems(e);
 
