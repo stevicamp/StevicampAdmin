@@ -375,9 +375,8 @@ function htmlItemSold(item) {
 
 // Generate link from obj for the view - used in the view
 function generateLinkFromObj(obj) {
-    const url = new URL('https://stevicamp.blogspot.com/'); // .origin instead of .host because of the https:// if using host it is without the https://
-    url.searchParams.set('search', obj.id);
-    return url.toString();
+ return 'https://stevicamp.blogspot.com/?search=' +
+           encodeURIComponent(obj.id);
 }
 
 
