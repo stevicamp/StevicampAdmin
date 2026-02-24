@@ -1401,7 +1401,7 @@ function removeElementsByClassName(className) {
 
 async function checkForSearchKeywords() // Check for keywords in the adressbar also used for the modal
 {
-    const search = decodeURI(window.location.search).replace(/\+/g, ' '); // In order to work with cyrilic as well as to have clean link without encodings // .replace(/\+/g, ' '); because of mobile it adds + instead of encoding - even after pasting encoded link the mobile changes the encoded empty space to +
+    const search = decodeURI(window.location.search); // In order to work with cyrilic as well as to have clean link without encodings // Not up to date comment stars here  ---> // .replace(/\+/g, ' '); because of mobile it adds + instead of encoding - even after pasting encoded link the mobile changes the encoded empty space to +
 
     // If search keywords in the path
     if (search !== "") {
@@ -1413,7 +1413,7 @@ async function checkForSearchKeywords() // Check for keywords in the adressbar a
         }
 
         // const searchKeyword = search.split('?search=')[1];
-        const searchKeyword = search.split('?search=')[1].replace(/\+/g, ' ');
+        const searchKeyword = search.split('?search=')[1];
 
         let e = { "currentTarget": { "value": `${searchKeyword}`, "id": "searchKeywordFromUrl" } } // Mimic the pattern that the search function accepts
         await searchItems(e);
