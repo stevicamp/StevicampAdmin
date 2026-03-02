@@ -43,8 +43,13 @@ import * as Boats from './views/Boats.js';
 export function router(e) {
     // e = event || window.event;
     e.preventDefault(); // Prevent deafult behavior don't follow the link
-    const url = new URL(e.target.href);
-    const path = url.pathname + url.search;; // Only local path since there is problem with blogger and the <base> url.
+   
+    const anchor = e.target.closest("[data-link]");  // Find the <a> tag starting from where the user clicked // Finding the closest a tag
+     
+
+    const url = new URL(anchor.href); // Current target is the 
+    const rawPath = url.pathname + url.search; // Only local path since there is problem with blogger and the <base> url.
+    const path = rawPath.replaceAll("+", "%20"); 
     window.history.pushState(null, null, window.location.origin + path); // Add the url to the history api of js so we can navigate back and forth with the browser buttons
     handleLocation();
 }
@@ -113,7 +118,7 @@ window.addEventListener("popstate", handleLocation); // On popstate "If back but
 // Listen for document fully Loaded
 document.addEventListener("DOMContentLoaded", () => { // On Dom loaded add bodyEventlistener to listen for click in the body
     document.body.addEventListener("click", e => { //Listen for click in the body
-        if (e.target.matches("[data-link]")) {  // If body item was clicked and it is data-link decorated 
+        if (e.target.closest("[data-link]")) {  // If body item was clicked and it is data-link decorated 
             router(e); // Load the content if the url is defined in our "Spa Urls"
         }
     });
