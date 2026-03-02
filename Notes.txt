@@ -47,6 +47,7 @@ SPA APP :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 4. THe routing should not rely only on liks but also buttons data-link="home" not exactly - try data-action="home" the links are data links decorated but try with buttons as well
 5. Like in the Admin view - execute script before injecting html and after injecting the html
 6. Maybe in order to be more robust use e.target.closest("[data-link]") - using closest in the router and before the router, because of the google translate bug.
+7. Using const params = new URLSearchParams(window.location.search); for the search parameters and whn handling url in order to be safe the current SPA does not implement this fully.
 .....
 1. Add timestamp and add loading message after the time is over remove the message and fetch the db from the github
 .......

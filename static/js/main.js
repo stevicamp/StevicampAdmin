@@ -43,10 +43,7 @@ import * as Boats from './views/Boats.js';
 export function router(e) {
     // e = event || window.event;
     e.preventDefault(); // Prevent deafult behavior don't follow the link
-   
     const anchor = e.target.closest("[data-link]");  // Find the <a> tag starting from where the user clicked // Finding the closest a tag
-     
-
     const url = new URL(anchor.href); // Current target is the 
     const rawPath = url.pathname + url.search; // Only local path since there is problem with blogger and the <base> url.
     const path = rawPath.replaceAll("+", "%20"); 
@@ -92,8 +89,6 @@ const handleLocation = async () => {
         const path = window.location.pathname;
         // const url = new URL(window.location.href);
         // const path = url.pathname + url.search;
-
-
         const currentRoute = routes[path] || routes['/']; // If there is no match go to Home "/" if the url is not found in the "routes object" than load Home View
 
         await currentRoute.executeCommonViewScriptBeforeHtmlInjAsync();// Execute the View script "If there is specific script to be executet to the specific view"

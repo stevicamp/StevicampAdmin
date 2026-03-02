@@ -1399,26 +1399,30 @@ function removeElementsByClassName(className) {
 
 
 
+
+
 async function checkForSearchKeywords() // Check for keywords in the adressbar also used for the modal
 {
-    const search = decodeURI(window.location.search); // In order to work with cyrilic as well as to have clean link without encodings // Not up to date comment stars here  ---> // .replace(/\+/g, ' '); because of mobile it adds + instead of encoding - even after pasting encoded link the mobile changes the encoded empty space to +
+    const search = decodeURI(window.location.search); // In order to work with cyrilic as well as to have clean link without encodings
 
     // If search keywords in the path
-    if (search !== "") {
+    if (search !== '' && search.includes('?search=')) // the search parameter is after ? and we need ?search=  {
+    {
+        const rawValue = search.split('?search=')[1];
+        if (!rawValue) return; // Safety check
 
-        if (search.match("id_")) // If id_ then open modal
+        const searchKeyword = rawValue.replaceAll("+", " ");
+
+        if (searchKeyword.includes("id_")) // If id_ than open modal
         {
-            const rawItemId = search.split('?search=')[1]; // If it includes id_ than after the search is the id including id_ it is part of every id 
-            const itemId = rawItemId.replaceAll("+", " "); // Because of the mobile it adds + instead of empty spaces if there are empty spaces
-            await showModal(itemId);
+            // If it includes id_ than after the search is the id including id_ it is part of every id 
+            // Because on mobile it adds + instead of empty spaces if there are empty spaces, here the + is rplaced with " "
+            await showModal(searchKeyword);
         }
 
-        // const searchKeyword = search.split('?search=')[1];
-        const searchKeyword = search.split('?search=')[1];
-
+         
         let e = { "currentTarget": { "value": `${searchKeyword}`, "id": "searchKeywordFromUrl" } } // Mimic the pattern that the search function accepts
         await searchItems(e);
-
     }
 }
 
