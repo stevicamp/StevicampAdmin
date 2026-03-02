@@ -109,6 +109,7 @@ window.addEventListener("popstate", handleLocation); // On popstate "If back but
 
 // window.addEventListener('pushstate', handleLocation); // on location change handle the location, so view is updated
 
+document.getElementById('app').style.overflow = "auto"; // Overflow for the app container otherwise sometimes it hidden
 
 // Listen for document fully Loaded
 document.addEventListener("DOMContentLoaded", () => { // On Dom loaded add bodyEventlistener to listen for click in the body
