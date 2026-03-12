@@ -177,6 +177,7 @@ async function updateJsonFileAsync(githubUser, githubRepo, githubFilePathDb, git
       const result = await response.json();
       console.log("File updated! Commit URL:", result.commit.html_url);
       successMsg('Успешно запазено'); 
+      window.history.back();
     }
     else
     {
