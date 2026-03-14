@@ -84,6 +84,7 @@ const routes = {
 // The method that gets the current view and injects it in the "app"" container div.
 // Handle location  ---------------------------------------------------------------------------------------
 const handleLocation = async () => {
+    document.getElementById('app').style.overflow = "auto"; // Overflow for the app container otherwise sometimes it hidden
     if (window.location.search == "" || window.location.pathname == "/Edit") // /Edit is so that the Edit view can be opened - since there are parameters after the /Edit?id_33245. And the window.search is not empty but has the id and it will no go in to this function otherwise 
     {
         const path = window.location.pathname;
