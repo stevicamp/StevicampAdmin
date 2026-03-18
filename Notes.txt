@@ -48,6 +48,31 @@ SPA APP :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 5. Like in the Admin view - execute script before injecting html and after injecting the html
 6. Maybe in order to be more robust use e.target.closest("[data-link]") - using closest in the router and before the router, because of the google translate bug.
 7. Using const params = new URLSearchParams(window.location.search); for the search parameters and whn handling url in order to be safe the current SPA does not implement this fully.
+8. alt on images
+9. When saving image url in the db object item use only PATH withour origin so to be able easly to change from jsdelivr to github raw in the blogger html layout
+
+The bellow code is only for the js,html, css files the images are in another repository also the db
+
+    <script>
+  (async () =&gt; {
+  try {
+    const response = await fetch(&#39;https://cdn.jsdelivr.net/gh/stevicamp/Stevicamp@5f196664891b3d5cda3bd9cb87c8eead90ed63e0/index.html&#39;);
+    
+   //(if status not 200-299)
+    if (!response.ok) {
+      throw new Error(&#39;Bad response&#39;);
+    }
+  } catch (error) { 
+    const baseTag = document.getElementsByTagName(&#39;base&#39;)[0];
+    
+    if (baseTag) {
+      baseTag.href = &#39;https://raw.githubusercontent.com/Stevicamp/stevicamp/5f196664891b3d5cda3bd9cb87c8eead90ed63e0/&#39;;
+      console.log(&#39;Base URL changed to github raw.&#39;);
+    }
+  }
+})();
+
+  </script>
 .....
 1. Add timestamp and add loading message after the time is over remove the message and fetch the db from the github
 .......
