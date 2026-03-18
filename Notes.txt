@@ -91,7 +91,10 @@ The bellow code is only for the js,html, css files the images are in another rep
 
   The other problem will be if scrolling back down the old file that is already loaded will be loaded again twith this logic in order to prevent that we must hold the loaded local files 
   in a array and before loading the next file check if the file is already loaded if it is do not load the next files and do not sort them and do not inject them.But do nothing since they are already in the app container.
-  
+
+  15. Every category should have its own repository for the images max size for repo will be 5GB, also avg one item will have 1,4MB of images so 3571 items or products per repository for a single category.
+  jsdelivr will not fetch if the repository is bigger than 5Gb also a single folder should not exeed 50MB.... also 100,000 files per repo limit for jsdelivr.
+  16. 
 .....
 1. Add timestamp and add loading message after the time is over remove the message and fetch the db from the github
 .......
