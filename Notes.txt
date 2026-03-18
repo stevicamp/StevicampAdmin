@@ -94,7 +94,10 @@ The bellow code is only for the js,html, css files the images are in another rep
 
   15. Every category should have its own repository for the images max size for repo will be 5GB, also avg one item will have 1,4MB of images so 3571 items or products per repository for a single category.
   jsdelivr will not fetch if the repository is bigger than 5Gb also a single folder should not exeed 50MB.... also 100,000 files per repo limit for jsdelivr.
-  16. 
+ 
+  16. For common html like save button use js function and reuse it.
+
+  
 .....
 1. Add timestamp and add loading message after the time is over remove the message and fetch the db from the github
 .......

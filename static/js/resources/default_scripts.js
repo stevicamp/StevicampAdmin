@@ -2366,7 +2366,7 @@ async function caravansHtmlTemplateFields() {
          <span>Категория:</span><input id="categoryInput" name="category" readonly> 
          <span>Дата:</span><input id="dateInput" name="date" readonly> 
 
-       <button id="saveItemButton">Запази</button>
+       <button class="save-btn" id="saveItemButton">Запази</button>
     
    </div>
    ${imgCompressionHtml()}
@@ -2461,7 +2461,7 @@ async function trailersHtmlTemplateFields() {
          <span>Категория:</span><input id="categoryInput" name="category" readonly> 
          <span>Дата:</span><input id="dateInput" name="date" readonly> 
 
-       <button id="saveItemButton">Запази</button>
+       <button class="save-btn" id="saveItemButton">Запази</button>
     
    </div>
    ${imgCompressionHtml()}
@@ -2605,7 +2605,7 @@ async function carsHtmlTemplateFields() {
          <span>Категория:</span><input id="categoryInput" name="category" readonly> 
          <span>Дата:</span><input id="dateInput" name="date" readonly> 
 
-       <button id="saveItemButton">Запази</button>
+       <button class="save-btn" id="saveItemButton">Запази</button>
     
    </div>
    ${imgCompressionHtml()}
@@ -2752,7 +2752,7 @@ async function microbusesHtmlTemplateFields() {
          <span>Категория:</span><input id="categoryInput" name="category" readonly> 
          <span>Дата:</span><input id="dateInput" name="date" readonly> 
 
-       <button id="saveItemButton">Запази</button>
+       <button class="save-btn" id="saveItemButton">Запази</button>
     
    </div>
    ${imgCompressionHtml()}
@@ -2827,7 +2827,7 @@ async function scootersHtmlTemplateFields() {
          <span>Категория:</span><input id="categoryInput" name="category" readonly> 
          <span>Дата:</span><input id="dateInput" name="date" readonly> 
 
-       <button id="saveItemButton">Запази</button>
+       <button class="save-btn" id="saveItemButton">Запази</button>
     
    </div>
    ${imgCompressionHtml()}
@@ -2917,7 +2917,7 @@ async function wheelsHtmlTemplateFields() {
          <span>Категория:</span><input id="categoryInput" name="category" readonly> 
          <span>Дата:</span><input id="dateInput" name="date" readonly> 
 
-       <button id="saveItemButton">Запази</button>
+       <button class="save-btn" id="saveItemButton">Запази</button>
     
    </div>
    ${imgCompressionHtml()}
@@ -2979,7 +2979,7 @@ async function productsHtmlTemplateFields() {
          <span>Категория:</span><input id="categoryInput" name="category" readonly> 
          <span>Дата:</span><input id="dateInput" name="date" readonly> 
 
-       <button id="saveItemButton">Запази</button>
+       <button class="save-btn" id="saveItemButton">Запази</button>
     
    </div>
    ${imgCompressionHtml()}
@@ -3036,7 +3036,7 @@ async function equipmentHtmlTemplateFields() {
          <span>Категория:</span><input id="categoryInput" name="category" readonly> 
          <span>Дата:</span><input id="dateInput" name="date" readonly> 
 
-       <button id="saveItemButton">Запази</button>
+       <button class="save-btn" id="saveItemButton">Запази</button>
     
    </div>
    ${imgCompressionHtml()}
@@ -3093,7 +3093,7 @@ async function appliancesHtmlTemplateFields() {
          <span>Категория:</span><input id="categoryInput" name="category" readonly> 
          <span>Дата:</span><input id="dateInput" name="date" readonly> 
 
-       <button id="saveItemButton">Запази</button>
+       <button class="save-btn" id="saveItemButton">Запази</button>
     
    </div>
    ${imgCompressionHtml()}
@@ -3172,7 +3172,7 @@ async function boatsHtmlTemplateFields() {
          <span>Категория:</span><input id="categoryInput" name="category" readonly> 
          <span>Дата:</span><input id="dateInput" name="date" readonly> 
 
-       <button id="saveItemButton">Запази</button>
+       <button class="save-btn" id="saveItemButton">Запази</button>
     
    </div>
    ${imgCompressionHtml()}
@@ -3389,21 +3389,27 @@ async function EditSave() {
 }
 
 
+let saving = false;
 
 // Save Item - ADD & EDIT ---------------------------------------------------------------------
 async function saveItem(e) {
 
-    let currentUrlPath = window.location.pathname; // The current path - ex. Edit or Add
-
-    if (currentUrlPath == "/Add") {
-        await AddSave(); // Add save logic
-        // removeViewSessionElements();
-    }
-    else if (currentUrlPath == "/Edit") {
-        // Edit is not working properly - instead of editing it copies the item edits it and add it to the db, but the old item is still in the db
-        await EditSave();
-    }
-
+    if(saving == false)
+    { 
+        console.log('saving...');
+        saving = true; 
+         let currentUrlPath = window.location.pathname; // The current path - ex. Edit or Add
+     
+         if (currentUrlPath == "/Add") {
+             await AddSave(); // Add save logic
+             // removeViewSessionElements();
+         }
+         else if (currentUrlPath == "/Edit") {
+             // Edit is not working properly - instead of editing it copies the item edits it and add it to the db, but the old item is still in the db
+             await EditSave();
+         }
+        saving = false;
+     }
 
 
     //    let itemName = document.getElementById('title').value; // For Creating Id
