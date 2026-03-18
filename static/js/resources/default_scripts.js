@@ -3584,6 +3584,7 @@ async function imgPickerHandler() {
     //     await executeCompression(imgCompressionSizeGlobal, imgCompressionExtensionGlobal, false, false); // The compression tools options, saturation, rotation etc.
     // }
 
+    loadingMsg('Зареждане на снимките...');
 
     validateImgPickerFilesOnlyImg(); // Validate if images else remove from the img picker
     let currentUrlPath = window.location.pathname; // The current path - ex. Edit or Add
@@ -3599,6 +3600,7 @@ async function imgPickerHandler() {
 
     document.getElementById("imgPicker").value = '';
     // await handleImages(); // Add & show the images in the imgView container // This one is moved to   await imgPickerImagesToLocalArrEdit();
+     document.getElementById('loadingMsg').remove(); // Remove loading msg
 }
 
 
