@@ -30,22 +30,10 @@ export async function getHtmlAsync() {
             
            <button id="saveDbBtn">Запази в ДБ</button>
             </div>
-               <button id="admin-credentials-toggler"  style="display: none;"> 
+               <button id="admin-credentials-toggler"  style="width: 100%;">
+                    Покажи данни ▼
                </button> 
 
-              <select name="itemType" id="itemType">
-                 <option value="">--Избери Артикул--</option>
-                 <option value="caravans">1.Каравана</option>
-                 <option value="trailers">2.Ремарке</option>
-                 <option value="cars">3.Кола</option>
-                 <option value="products">4.Продукти</option>
-                 <option value="wheels">5.Гуми</option>
-                 <option value="microbuses">6.Микробус</option>
-                 <option value="appliances">7.Бяла техника</option>
-                 <option value="scooters">8.Скутери</option>
-                 <option value="equipment">9.Екипировка</option>
-                 <option value="boats">10.Лотка</option>
-               </select>
            
                <div id="aproppiriateFieldsContainer" class="admin-content-holder modalItemContainer"></div> 
                </div> 
@@ -234,11 +222,16 @@ autoLoadCredentials();
 
         function clearLocalStorageCredentials()
         {
+          const response = confirm("Истриване на паролата от това устройство?");
+          
+          if(response){
+            console.log('Credentials deleted.');
           // Clear the local storage
           localStorage.removeItem("githubUser");
           localStorage.removeItem("githubRepo");
           localStorage.removeItem("githubToken");
           localStorage.removeItem("githubFilePathDb");
+          }
         }
 
 

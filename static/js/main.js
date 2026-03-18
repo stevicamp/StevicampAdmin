@@ -37,6 +37,7 @@ import * as Add from './views/Add.js';
 import * as Delete from './views/Delete.js';
 import * as Edit from './views/Edit.js';
 import * as Boats from './views/Boats.js';
+import * as Settings from './views/Settings.js';
 
 
 // Router  ------------------------------------------------------------------------------------------------
@@ -76,7 +77,8 @@ const routes = {
     '/Add': Add,
     '/Delete': Delete,
     '/Edit': Edit,
-    '/Boats': Boats
+    '/Boats': Boats,
+    '/Settings': Settings
 };
 
 
