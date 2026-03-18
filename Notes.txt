@@ -73,6 +73,9 @@ The bellow code is only for the js,html, css files the images are in another rep
 })();
 
   </script>
+
+  10. Using Blob instead of base64 localy.
+  11. 
 .....
 1. Add timestamp and add loading message after the time is over remove the message and fetch the db from the github
 .......
