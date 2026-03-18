@@ -75,7 +75,23 @@ The bellow code is only for the js,html, css files the images are in another rep
   </script>
 
   10. Using Blob instead of base64 localy.
-  11. 
+  11. Split the db to different reppos for each category and dynamicaly create new files in new folders and link them to the previouse json like lazy loading and similar to binary three also (in another folder eventually if js delivr will be used).
+  12. If implementing the decentrialized db with js delivr the hash - SHA for the commit should be retrived in order to build url and then update the js dile that will hold the urls so to bypass the js delivr cashing since long time will be needed to wait for the js delivr to update the db file.
+  13. Later use the lazy loading while scrolling fetch the json file then before bottom is reached the json file will have a variable that holds the path for the next json file that will be loaded then load the next file.
+  14. THe problem is that if in Home view then all categories should be fetched and sorted let say all first files from all categories circa 100 items per file.
+  Then after fetching sort the files by date.
+  After sorting inject in the app container.
+  Then before reaching the bottom in order to prevent waiting load the new second files by the middle of the scroll.
+  If a product is avg. 16 kb ie. 0,016MB and the safe side for mobile browser tab RAM is 100MB then before reaching 6250 items loaded from all the categories, the loaded items should be removed from js marking them as null in order to free up RAM for the next.
+  The second problem is when scrolling back up. In such case the old items are removed from the app container and js marked null.
+  Then when the user scrolls back up to the top of the container all categories should be loaded again by looking at the current loaded file by each category this file will have variable that holds the path for the previouse json file
+  Then the previouse json files will be loaded, sorted and injected in the app BEFORE the OLD CONTENT.
+
+  Then reaching the top the first files will not have another path to link to a previouse file and the procedure will stop.
+
+  The other problem will be if scrolling back down the old file that is already loaded will be loaded again twith this logic in order to prevent that we must hold the loaded local files 
+  in a array and before loading the next file check if the file is already loaded if it is do not load the next files and do not sort them and do not inject them.But do nothing since they are already in the app container.
+  
 .....
 1. Add timestamp and add loading message after the time is over remove the message and fetch the db from the github
 .......
