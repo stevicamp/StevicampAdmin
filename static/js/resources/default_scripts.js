@@ -1262,11 +1262,11 @@ let touchendX = 0
 async function checkDirection() {
     // Left .....................
     if (touchendX < touchstartX && (touchstartX - touchendX) > 50) {
-        await toggleSlideImg(-1);
+        await toggleSlideImg(1);
     }
     else if (touchendX > touchstartX && (touchendX - touchstartX) > 50) // Right ..................
     {
-        await toggleSlideImg(1);
+        await toggleSlideImg(-1);
     }
 
 }

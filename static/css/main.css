@@ -1555,6 +1555,11 @@ input#imgPicker::file-selector-button {
   background-image: linear-gradient(#0deadf, #0d99ea);
 }
 
+.save-btn:active
+{
+  background-image: linear-gradient(#0dea0d, #0deaa8);
+}
+
 /* Media Styles ----------------------------------------------------------------- */
 /* LOGO (Hide Logo when the view is small [Mobile devices]) ======================================================================================================================================================*/
 .logo {
