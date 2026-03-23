@@ -97,7 +97,9 @@ The bellow code is only for the js,html, css files the images are in another rep
  
   16. For common html like save button use js function and reuse it.
 
+17. Using id on the image container instead of getting both classes on img resize to full screen
   
+18. All clickable elements to be buttons or other similar in order to be possible to interact with tab 
 .....
 1. Add timestamp and add loading message after the time is over remove the message and fetch the db from the github
 .......

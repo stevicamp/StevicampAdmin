@@ -3116,7 +3116,7 @@ async function boatsHtmlTemplateFields() {
     
    <div id="modalItemDetailsEdit" class="modalItemDetails" tabindex="0">
    
-         <h3 class="item-title"><img src="static/img/icons/boat.png"><u></br>Категория лотки:</u></h3> 
+         <h3 class="item-title"><img src="static/img/icons/boat.png"><u></br>Категория лодки:</u></h3> 
        
        <hr>
        <span><img src="static/img/icons/price.png"><b>Цена:</b> </br><input id="price" name="price" placeholder="Цена">€</span>
@@ -3162,7 +3162,7 @@ async function boatsHtmlTemplateFields() {
        <hr class="hr-orange"> 
        <span><img src="static/img/icons/id.png"><b>ID:</b><input style="font-size:7px;"  name="id" placeholder="ID" readonly></span>
        <hr>
-       <span><img src="static/img/icons/keywords.png"><b>Ключови думи:</b></br><input id="keywords" name="keywords" placeholder="Ключови думи" value="лотка, boat, lotka"></span>
+       <span><img src="static/img/icons/keywords.png"><b>Ключови думи:</b></br><input id="keywords" name="keywords" placeholder="Ключови думи" value="лодка, лодки, boat, lodka, лотка, lodki, lotka, lotki"></span>
        <hr> 
        
        <h3 class="item-title"><img src="static/img/icons/boat.png"><b>Заглавие:</b><u></br><input id="title" name="title" placeholder="Заглавие"></u></h3> 
