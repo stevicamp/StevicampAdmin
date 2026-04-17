@@ -1,8 +1,12 @@
 Stevicamp
 
 
-
-
+BUG 
+1. uploading images ass null
+2. Block UI while uploading
+3. Scrollbar reset on view change for Main site
+4. Right panel arrow fix
+-----------------------
 1. Create a function that generates the title for each object based on origin not host
 ...............
 1. Why sometimesphotos desapiar from the product? The image is in the github, but it is not displayed. It seems that the link is not saved to the db? So sometimes the link generated from js delivr is not saved to the db?
